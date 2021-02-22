@@ -35,6 +35,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       backgroundColor: AppColours.black,
       appBar: AppBar(
         backgroundColor: AppColours.black,
+          centerTitle: true,
           title: Text(title,style: TextStyle(color: AppColours.white),)),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(

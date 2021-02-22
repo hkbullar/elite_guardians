@@ -16,8 +16,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      //home: SplashScreen(),
-      home: DashBoardScreen(),
+      home: SplashScreen(),
+      //home: DashBoardScreen(),
     );
   }
 }

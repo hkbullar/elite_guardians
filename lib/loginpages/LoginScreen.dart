@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                Constants.LOCAL_IMAGE+"app_icon.png",height: MediaQuery.of(context).size.height/4,
+                Constants.LOCAL_IMAGE+"logo.png",height: MediaQuery.of(context).size.height/6,
               ),
               SizedBox(height: MediaQuery.of(context).size.height/15),
               TextFormField(

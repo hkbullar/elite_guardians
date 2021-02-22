@@ -11,6 +11,7 @@ class EliteAppBar extends PreferredSize {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      centerTitle: true,
       title: Text(title,style: TextStyle(color: AppColours.white),),
       automaticallyImplyLeading: true,
       iconTheme: IconThemeData(

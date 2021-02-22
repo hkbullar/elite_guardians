@@ -51,6 +51,11 @@ flutter:
    - assets/images/app_icon.png
    - assets/images/splash.jpeg
    - assets/images/ic_profile.png
+   - assets/images/logo.png
+   - assets/images/man_black.png
+   - assets/images/woman_black.png
+   - assets/images/intersex_black.png
+   - assets/images/splash_bg.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

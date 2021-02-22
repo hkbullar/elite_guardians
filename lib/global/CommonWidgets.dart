@@ -20,7 +20,15 @@ class CommonWidgets{
       hintText: text,
     );
   }
-
+ //check the validation
+ static bool isValidate(GlobalKey<FormState> formKey) {
+   final FormState form = formKey.currentState;
+   if (form.validate()) {
+     return true;
+   } else {
+     return false;
+   }
+ }
   static Widget settingsIcon(IconData icon){
    return Container(
        padding: EdgeInsets.all(10),

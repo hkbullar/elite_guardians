@@ -16,7 +16,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
 
   String _versionName = 'V1.0';
-  final splashDelay = 5;
+  final splashDelay = 4;
 
   @override
   void initState() {
@@ -42,14 +42,14 @@ class _SplashScreenState extends State<SplashScreen> {
           fit: StackFit.expand,
           children: <Widget>[
             Image.asset(
-              Constants.LOCAL_IMAGE+"splash.jpeg",
+              Constants.LOCAL_IMAGE+"splash.jpeg",fit: BoxFit.cover,
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Expanded(
                   flex: 7,
-                  child: Container(),
+                  child: Center(),
                 ),
                 Expanded(
                   child: Column(
@@ -66,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
                             Spacer(
                               flex: 4,
                             ),
-                            Text('androing',style: TextStyle(color: AppColours.off_white),),
+                            Text('Elite Academy',style: TextStyle(color: AppColours.off_white),),
                             Spacer(),
                           ])
                     ],

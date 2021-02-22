@@ -1,6 +1,5 @@
 
 import 'package:elite_guardians/global/AppColours.dart';
-import 'package:elite_guardians/global/CommonWidgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -28,9 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(25.0),
                       child: Column(children: [
-                        Icon(Icons.directions_car,color: AppColours.white,size: 40,) ,
+                        Icon(Icons.directions_car,color: AppColours.golden_button_bg,size: 40,) ,
                         SizedBox(height: 10),
-                        Text("Book a Journey",style: TextStyle(fontSize: 16,color: AppColours.white,fontWeight: FontWeight.bold),)
+                        Text("Book a Journey",style: TextStyle(fontSize: 20,color: AppColours.white,fontWeight: FontWeight.bold),)
                       ],),
                     ),
                   ),
@@ -46,9 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(25.0),
                       child: Column(children: [
-                        Icon(Icons.security,color: AppColours.white,size: 40,) ,
+                        Icon(Icons.security,color: AppColours.golden_button_bg,size: 40,) ,
                         SizedBox(height: 10),
-                        Text("Hire a Guard",style: TextStyle(fontSize: 16,color: AppColours.white,fontWeight: FontWeight.bold),)
+                        Text("Hire a Guard",style: TextStyle(fontSize: 20,color: AppColours.white,fontWeight: FontWeight.bold),)
                       ],),
                     ),
                   ),

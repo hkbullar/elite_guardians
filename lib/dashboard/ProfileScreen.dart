@@ -1,6 +1,7 @@
 
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/CommonWidgets.dart';
+import 'package:elite_guardians/global/Constants.dart';
 import 'package:elite_guardians/screens/ChangePasswordScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -105,7 +106,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               padding: const EdgeInsets.all(25.0),
                               child: Column(
                                 children: [
-                                  Icon(Icons.mail_outline,color: maleBoxVal==0?AppColours.black:AppColours.white,size: 30),
+                                  Image.asset(Constants.LOCAL_IMAGE+"man_black.png",height: 30,color: maleBoxVal==0?AppColours.black:AppColours.white,),
                                   SizedBox(height: 10),
                                   Text("MALE",style: TextStyle(color: maleBoxVal==0?AppColours.black:AppColours.white),)
                                 ],
@@ -129,7 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               padding: const EdgeInsets.all(25.0),
                               child: Column(
                                 children: [
-                                  Icon(Icons.mail_outline,color: maleBoxVal==1?AppColours.black:AppColours.white,size: 30),
+                                  Image.asset(Constants.LOCAL_IMAGE+"woman_black.png",height: 30,color: maleBoxVal==1?AppColours.black:AppColours.white,),
                                   SizedBox(height: 10),
                                   Text("FEMALE",style: TextStyle(color: maleBoxVal==1?AppColours.black:AppColours.white),)
                                 ],
@@ -152,7 +153,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               padding: const EdgeInsets.all(25.0),
                               child: Column(
                                 children: [
-                                  Icon(Icons.mail_outline,color: maleBoxVal==2?AppColours.black:AppColours.white,size: 30),
+                                  Image.asset(Constants.LOCAL_IMAGE+"intersex_black.png",height: 30,color: maleBoxVal==2?AppColours.black:AppColours.white,),
                                   SizedBox(height: 10,),
                                   Text("I'M ME",style: TextStyle(color: maleBoxVal==2?AppColours.black:AppColours.white),)
                                 ],
