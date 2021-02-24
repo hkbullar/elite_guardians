@@ -21,6 +21,9 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  intl:
+  google_maps_flutter:
+  google_maps_place_picker:
   flutter:
     sdk: flutter
 

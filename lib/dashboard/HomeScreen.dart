@@ -1,5 +1,7 @@
 
 import 'package:elite_guardians/global/AppColours.dart';
+import 'package:elite_guardians/screens/BookJourneyScreen.dart';
+import 'package:elite_guardians/screens/HireGuardScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,15 +24,21 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               children: [
                 Expanded(
-                  child: Card(
-                    color: AppColours.textFeildBG,
-                    child: Padding(
-                      padding: const EdgeInsets.all(25.0),
-                      child: Column(children: [
-                        Icon(Icons.directions_car,color: AppColours.golden_button_bg,size: 40,) ,
-                        SizedBox(height: 10),
-                        Text("Book a Journey",style: TextStyle(fontSize: 20,color: AppColours.white,fontWeight: FontWeight.bold),)
-                      ],),
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BookJourneyScreen()));
+
+                    },
+                    child: Card(
+                      color: AppColours.textFeildBG,
+                      child: Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Column(children: [
+                          Icon(Icons.directions_car,color: AppColours.golden_button_bg,size: 40,) ,
+                          SizedBox(height: 10),
+                          Text("Book a Journey",style: TextStyle(fontSize: 20,color: AppColours.white,fontWeight: FontWeight.bold),)
+                        ],),
+                      ),
                     ),
                   ),
                 ),
@@ -40,15 +48,21 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               children: [
                 Expanded(
-                  child: Card(
-                    color: AppColours.textFeildBG,
-                    child: Padding(
-                      padding: const EdgeInsets.all(25.0),
-                      child: Column(children: [
-                        Icon(Icons.security,color: AppColours.golden_button_bg,size: 40,) ,
-                        SizedBox(height: 10),
-                        Text("Hire a Guard",style: TextStyle(fontSize: 20,color: AppColours.white,fontWeight: FontWeight.bold),)
-                      ],),
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => HireGuardScreen()));
+
+                    },
+                    child: Card(
+                      color: AppColours.textFeildBG,
+                      child: Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Column(children: [
+                          Icon(Icons.security,color: AppColours.golden_button_bg,size: 40,) ,
+                          SizedBox(height: 10),
+                          Text("Hire a Guard",style: TextStyle(fontSize: 20,color: AppColours.white,fontWeight: FontWeight.bold),)
+                        ],),
+                      ),
                     ),
                   ),
                 ),
