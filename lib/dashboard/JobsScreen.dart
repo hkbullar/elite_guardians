@@ -16,7 +16,17 @@ class _JobsScreenState extends State<JobsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Center(child: Text("Screen yet Pending",style: TextStyle(color: AppColours.white,fontSize: 25),),)
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text("From: Lake District National Park\nTo: New York Moors National Park\nDate \& Time: 4th March at 4:15 PM",style: TextStyle(color: AppColours.white,fontSize: 16),),
+          ),
+          Text("Awaiting Quote",style: TextStyle(color: AppColours.white,fontSize: 18),),
+
+        ],
+      )
     );
   }
 }

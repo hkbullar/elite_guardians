@@ -17,11 +17,16 @@ class HireGuardScreen extends StatefulWidget
 
 class _HireGuardScreenState extends State<HireGuardScreen> {
   DateTime selectedDateFrom,selectedDateTo;
+
   int bookNowOrLater=0;
   int guardSelection=0;
+
   bool guardCheckedOrNot=false;
+
   TimeOfDay timeFrom,timeTo;
+
   PickResult selectedPlace;
+
   LatLng kInitialPosition = LatLng(51.507351,-0.127758);
   @override
   Widget build(BuildContext context) {
@@ -48,9 +53,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                                 apiKey: Constants.API_KEY,
                                 initialPosition: kInitialPosition,
                                 useCurrentLocation: true,
-
                                 selectInitialPosition: true,
-
                                 //usePlaceDetailSearch: true,
                                 onPlacePicked: (result) {
                                   Navigator.of(context).pop();
@@ -65,7 +68,6 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                   decoration: CommonWidgets.loginFormDecoration("Enter Your Location",Icons.location_on_outlined),
                 ),
               ),
-
               SizedBox(height: 20,),
               Row(children: [
                 Expanded(

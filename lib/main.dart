@@ -1,5 +1,6 @@
 
 import 'package:elite_guardians/dashboard/DashBoardScreen.dart';
+import 'package:elite_guardians/dashboard/JobsScreen.dart';
 import 'package:elite_guardians/loginpages/SplashScreen.dart';
 import 'package:elite_guardians/screens/BookJourneyScreen.dart';
 import 'package:elite_guardians/screens/HireGuardScreen.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      home: SplashScreen(),
+      home: JobsScreen(),
       //home: HireGuardScreen(),
     );
   }
