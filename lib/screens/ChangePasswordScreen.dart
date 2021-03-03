@@ -1,13 +1,9 @@
-
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/CommonWidgets.dart';
 import 'package:elite_guardians/global/EliteAppBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-class ChangePasswordScreen extends StatefulWidget
-{
-
+class ChangePasswordScreen extends StatefulWidget {
   @override
   _ChangePasswordScreenState createState() => _ChangePasswordScreenState();
 }

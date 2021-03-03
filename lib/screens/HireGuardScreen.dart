@@ -1,4 +1,3 @@
-
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/CommonWidgets.dart';
 import 'package:elite_guardians/global/Constants.dart';
@@ -62,7 +61,8 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                                   setState(() {
                                     selectedPlace = result;
                                   });
-                                });}));
+                                });})
+                  );
                 },
                 child: TextField(
                   enabled: false,
@@ -128,7 +128,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       value: 0,
                       toggleable: true,
                       groupValue: bookNowOrLater,
-                      tileColor: AppColours.textFeildBG,
+//                      tileColor: AppColours.textFeildBG,
                       title: Text("Once",style: TextStyle(color: AppColours.white,fontSize: 16)),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -147,7 +147,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       value: 1,
                       toggleable: true,
                       groupValue: bookNowOrLater,
-                      tileColor: AppColours.textFeildBG,
+//                      tileColor: AppColours.textFeildBG,
                       title: Text("Multiple Days",style: TextStyle(color: AppColours.white,fontSize: 16)),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -216,7 +216,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       value: 0,
                       toggleable: true,
                       groupValue: weekDayOrFull,
-                      tileColor: AppColours.textFeildBG,
+//                      tileColor: AppColours.textFeildBG,
                       title: Text("Full Week",style: TextStyle(color: AppColours.white,fontSize: 16)),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -235,7 +235,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       value: 1,
                       toggleable: true,
                       groupValue: weekDayOrFull,
-                      tileColor: AppColours.textFeildBG,
+//                      tileColor: AppColours.textFeildBG,
                       title: Text("Selected Days",style: TextStyle(color: AppColours.white,fontSize: 16)),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -250,9 +250,18 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                   ),
                 ],
               ),
+              /*Container(height: CommonWidgets.widthFactor(context)*0.1,
+                child: ListView.builder(
+                  itemCount: 1,
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) {
+                      return _checkBox("Sun");
+                    },),),*/
               Row(
                 children: [
-                  _checkBox("Sun")
+                  _checkBox("Sun"),
+//                  Expanded(child: _checkBox("Mon")),
+
                 ],
               ),
               SizedBox(height: 20),
@@ -269,11 +278,10 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       value: 0,
                       toggleable: true,
                       groupValue: guardSelection,
-                      tileColor: AppColours.textFeildBG,
+//                      tileColor: AppColours.textFeildBG,
                       title: Text("1 Guard",style: TextStyle(color: AppColours.white,fontSize: 16)),
                       activeColor: AppColours.golden_button_bg,
-                      onChanged: (val)
-                      {
+                      onChanged: (val) {
                         if(val!=null){
                           setState((){
                             guardSelection=val;
@@ -288,7 +296,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       value: 1,
                       toggleable: true,
                       groupValue: guardSelection,
-                      tileColor: AppColours.textFeildBG,
+//                      tileColor: AppColours.textFeildBG,
                       title: Text("2 Guards",style: TextStyle(color: AppColours.white,fontSize: 16)),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -311,7 +319,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       value: 2,
                       toggleable: true,
                       groupValue: guardSelection,
-                      tileColor: AppColours.textFeildBG,
+//                      tileColor: AppColours.textFeildBG,
                       title: Text("3 Guard",style: TextStyle(color: AppColours.white,fontSize: 16)),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -330,7 +338,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       value: 3,
                       toggleable: true,
                       groupValue: guardSelection,
-                      tileColor: AppColours.textFeildBG,
+//                      tileColor: AppColours.textFeildBG,
                       title: Text("4 Guards",style: TextStyle(color: AppColours.white,fontSize: 16)),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -353,7 +361,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                 style: TextStyle(color: Colors.white),
                 decoration: CommonWidgets.loginFormDecoration("Enter Your Comments",Icons.comment_bank_outlined),
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
               CommonWidgets.goldenFullWidthButton("Get Quote",onClick: (){})
             ],
           )
@@ -377,15 +385,11 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
   }
   Widget _checkBox(String text){
     return Expanded(child: Container(
-      child: Column(
-        children: [
-          CheckboxListTile(
-              value: true,
-              activeColor: AppColours.golden_button_bg,
-              onChanged: (value){}),
-          Text("Mon",style: TextStyle(fontSize: 16,color: AppColours.golden_button_bg),)
-        ],
-      ),
+      child: CheckboxListTile(
+          value: true,
+          title: Text(text,style: TextStyle(fontSize: 16,color: AppColours.golden_button_bg),),
+          activeColor: AppColours.golden_button_bg,
+          onChanged: (value){}),
     ));
   }
   _selectToDate(BuildContext context) async {

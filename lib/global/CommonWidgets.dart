@@ -3,6 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CommonWidgets{
+  //width
+  static widthFactor(BuildContext context){
+    return MediaQuery.of(context).size.width;
+  }
+
+  //height
+  static heightFactor(BuildContext context){
+    return MediaQuery.of(context).size.width;
+  }
 
  static InputDecoration loginFormDecoration(String text,IconData data){
     return InputDecoration(

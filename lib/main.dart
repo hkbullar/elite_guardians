@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.grey,
       ),
       home: HireGuardScreen(),
-      //home: HireGuardScreen(),
+//      home: SplashScreen(),
     );
   }
 }
