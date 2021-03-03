@@ -1,8 +1,8 @@
 
+import 'package:elite_guardians/dashboard/AboutScreen.dart';
 import 'package:elite_guardians/dashboard/HomeScreen.dart';
 import 'package:elite_guardians/dashboard/JobsScreen.dart';
 import 'package:elite_guardians/dashboard/ProfileScreen.dart';
-import 'package:elite_guardians/dashboard/SettingsScreen.dart';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,16 +17,21 @@ class DashBoardScreen extends StatefulWidget
 class _DashBoardScreenState extends State<DashBoardScreen> {
 
   int _selectedIndex = 0;
-  static const List<String> titleList=<String>["Home","Jobs","Profile","Settings"];
+  static const List<String> titleList=<String>["Home","Jobs","Profile","Privacy Policy","Contact Us","Support","About Us","Log Out"];
    List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),JobsScreen(),ProfileScreen(),SettingsScreen(),
+    HomeScreen(),JobsScreen(),ProfileScreen(),AboutScreen(),AboutScreen(),AboutScreen(),AboutScreen(),
   ];
     String title="Home";
   void _onItemTapped(int index) {
-    setState(() {
-      title=titleList[index];
-      _selectedIndex = index;
-    });
+    if(index!=7){
+      if(_selectedIndex!=index)
+      {
+        setState(() {
+          _selectedIndex = index;
+        });
+      }
+    }
+    Navigator.of(context).pop();
   }
 
   @override
@@ -91,38 +96,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         ),
       appBar: AppBar(
         backgroundColor: AppColours.black,
+          iconTheme:IconThemeData(color: Colors.white),
           centerTitle: true,
-          title: Text(title,style: TextStyle(color: AppColours.white),)),
+          title: Text(titleList[_selectedIndex],style: TextStyle(color: AppColours.white),)),
       body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined),
-                label: "Home",
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.list),
-              label: "Jobs",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-                label: "Profile",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings_outlined),
-              label: "Settings",
-            ),
-          ],
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _selectedIndex,
-          selectedItemColor: AppColours.golden_button_bg,
-          unselectedItemColor: AppColours.off_white,
-          iconSize: 35,
-          backgroundColor: AppColours.black,
-          selectedFontSize: 16,
-          unselectedFontSize: 12,
-          onTap: _onItemTapped,
-      ),
+
     );
   }
 

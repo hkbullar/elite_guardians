@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      home: JobsScreen(),
+      home: HireGuardScreen(),
       //home: HireGuardScreen(),
     );
   }

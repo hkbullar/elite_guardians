@@ -165,37 +165,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                   SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: RaisedButton(
-                            padding: EdgeInsets.all(14),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                            color: AppColours.golden_button_bg,
-                            child: Text("Change Password",style: TextStyle(color: AppColours.black,fontWeight: FontWeight.bold,fontSize: 18),),
-                            onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => ChangePasswordScreen()));
-                            }),
-                      ),
-                    ],
-                  ),
+                  CommonWidgets.goldenFullWidthButton("Change Password",onClick: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => ChangePasswordScreen()));
+                  }),
                   SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: RaisedButton(
-                            padding: EdgeInsets.all(14),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                            color: AppColours.golden_button_bg,
-                            child: Text(editButtonPressed?"Save Changes":"Edit Profile",style: TextStyle(color: AppColours.black,fontWeight: FontWeight.bold,fontSize: 18),),
-                            onPressed: (){
-                                  setState(() {
-                                    editButtonPressed=!editButtonPressed;
-                                  });
-                            }),
-                      ),
-                    ],
-                  ),
+                  CommonWidgets.goldenFullWidthButton(editButtonPressed?"Save Changes":"Edit Profile",onClick: (){
+                    setState(() {
+                      editButtonPressed=!editButtonPressed;
+                    });
+                  })
                 ],
               ),
             )

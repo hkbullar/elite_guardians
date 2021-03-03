@@ -20,6 +20,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
 
   int bookNowOrLater=0;
   int guardSelection=0;
+  int weekDayOrFull=0;
 
   bool guardCheckedOrNot=false;
 
@@ -28,6 +29,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
   PickResult selectedPlace;
 
   LatLng kInitialPosition = LatLng(51.507351,-0.127758);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +70,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                   decoration: CommonWidgets.loginFormDecoration("Enter Your Location",Icons.location_on_outlined),
                 ),
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
               Row(children: [
                 Expanded(
                   child: Column(
@@ -91,7 +93,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                     ],
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,7 +116,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                   ),
                 )
               ],),
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text("Book For",style: TextStyle(color: AppColours.white,fontSize: 16),),
@@ -139,7 +141,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       },
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  SizedBox(width: 10),
                   Expanded(
                     child: RadioListTile(
                       value: 1,
@@ -160,7 +162,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
               bookNowOrLater==1?Row(children: [
                 Expanded(
                   child: Column(
@@ -168,7 +170,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Select Days",style: TextStyle(color: AppColours.white,fontSize: 16),),
+                        child: Text("Select Date",style: TextStyle(color: AppColours.white,fontSize: 16),),
                       ),
                       InkWell(
                         onTap: (){
@@ -183,7 +185,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                     ],
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,7 +207,54 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                     ],
                   ),
                 )
-              ],):SizedBox(),
+              ]):SizedBox(),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Expanded(
+                    child: RadioListTile(
+                      value: 0,
+                      toggleable: true,
+                      groupValue: weekDayOrFull,
+                      tileColor: AppColours.textFeildBG,
+                      title: Text("Full Week",style: TextStyle(color: AppColours.white,fontSize: 16)),
+                      activeColor: AppColours.golden_button_bg,
+                      onChanged: (val)
+                      {
+                        if(val!=null){
+                          setState((){
+                            weekDayOrFull=val;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: RadioListTile(
+                      value: 1,
+                      toggleable: true,
+                      groupValue: weekDayOrFull,
+                      tileColor: AppColours.textFeildBG,
+                      title: Text("Selected Days",style: TextStyle(color: AppColours.white,fontSize: 16)),
+                      activeColor: AppColours.golden_button_bg,
+                      onChanged: (val)
+                      {
+                        if(val!=null){
+                          setState((){
+                            weekDayOrFull=val;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  _checkBox("Sun")
+                ],
+              ),
               SizedBox(height: 20),
               TextField(
                 enabled: false,
@@ -233,7 +282,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       },
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  SizedBox(width: 10),
                   Expanded(
                     child: RadioListTile(
                       value: 1,
@@ -254,7 +303,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
               Row(
                 children: [
                   Expanded(
@@ -275,7 +324,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       },
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  SizedBox(width: 10),
                   Expanded(
                     child: RadioListTile(
                       value: 3,
@@ -296,23 +345,16 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 20,),
-              Row(
-                children: [
-                  Expanded(
-                    child: RaisedButton(
-                        padding: EdgeInsets.all(14),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                        color: AppColours.golden_button_bg,
-                        child: Text("Get Quote",style: TextStyle(color: AppColours.black,fontWeight: FontWeight.bold,fontSize: 18),),
-                        onPressed: (){
-                          setState(() {
-
-                          });
-                        }),
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Comments",style: TextStyle(color: AppColours.white,fontSize: 16),),
               ),
+              TextField(
+                style: TextStyle(color: Colors.white),
+                decoration: CommonWidgets.loginFormDecoration("Enter Your Comments",Icons.comment_bank_outlined),
+              ),
+              SizedBox(height: 20,),
+              CommonWidgets.goldenFullWidthButton("Get Quote",onClick: (){})
             ],
           )
         ),
@@ -332,6 +374,19 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
       setState(() {
         selectedDateFrom = picked;
       });
+  }
+  Widget _checkBox(String text){
+    return Expanded(child: Container(
+      child: Column(
+        children: [
+          CheckboxListTile(
+              value: true,
+              activeColor: AppColours.golden_button_bg,
+              onChanged: (value){}),
+          Text("Mon",style: TextStyle(fontSize: 16,color: AppColours.golden_button_bg),)
+        ],
+      ),
+    ));
   }
   _selectToDate(BuildContext context) async {
     DateTime currentDate = selectedDateFrom==null?DateTime.now():selectedDateFrom;

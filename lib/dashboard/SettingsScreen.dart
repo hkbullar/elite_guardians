@@ -19,26 +19,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
       backgroundColor: Colors.transparent,
       body: Column(
         children: [
-          SizedBox(height: 10,),
+          SizedBox(height: 10),
         Container(
           padding: EdgeInsets.all(10),
           color: AppColours.textFeildBG,
           child: Row(
             children: [
             CommonWidgets.settingsIcon(Icons.check),
-              SizedBox(width: 10,),
+              SizedBox(width: 10),
               Text("About App",style: TextStyle(color: AppColours.white,fontSize: 16))
             ],
           ),
         ),
-          SizedBox(height: 10,),
+          SizedBox(height: 10),
           Container(
             padding: EdgeInsets.all(10),
             color: AppColours.textFeildBG,
             child: Row(
               children: [
                 CommonWidgets.settingsIcon(Icons.contact_support_outlined),
-                SizedBox(width: 10,),
+                SizedBox(width: 10),
                 Text("Contact Us",style: TextStyle(color: AppColours.white,fontSize: 16))
               ],
             ),
@@ -50,12 +50,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: Row(
               children: [
                 CommonWidgets.settingsIcon(Icons.privacy_tip_outlined),
-                SizedBox(width: 10,),
+                SizedBox(width: 10),
                 Text("Privacy Policy",style: TextStyle(color: AppColours.white,fontSize: 16))
               ],
             ),
           ),
-          SizedBox(height: 10,),
+          SizedBox(height: 10),
           Container(
             padding: EdgeInsets.all(10),
             color: AppColours.textFeildBG,

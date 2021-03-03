@@ -20,6 +20,20 @@ class CommonWidgets{
       hintText: text,
     );
   }
+ static Widget goldenFullWidthButton(String text,{Function onClick})
+ {
+   return Row(
+       children: [
+         Expanded(
+           child: RaisedButton(
+               padding: EdgeInsets.all(14),
+               shape: RoundedRectangleBorder(
+                   borderRadius: BorderRadius.circular(8.0)),
+               color: AppColours.golden_button_bg,
+               child: Text(text,style: TextStyle(color: AppColours.black,fontWeight: FontWeight.bold,fontSize: 18),),
+               onPressed: onClick),
+         )]);
+ }
  //check the validation
  static bool isValidate(GlobalKey<FormState> formKey) {
    final FormState form = formKey.currentState;
@@ -28,6 +42,36 @@ class CommonWidgets{
    } else {
      return false;
    }
+ }
+
+ static Widget requestTextContainer(String title,String text,IconData icon){
+   return Column(
+     crossAxisAlignment: CrossAxisAlignment.start,
+     children: [
+       SizedBox(height: 10,),
+       Padding(
+         padding: const EdgeInsets.only(left: 6,bottom: 6),
+         child: Text(title,style: TextStyle(color: AppColours.white,fontSize: 16),),
+       ),
+       Container(
+         decoration: BoxDecoration(
+             color: AppColours.textFeildBG,
+             borderRadius: BorderRadius.all(Radius.circular(10))
+         ),
+         child: Padding(
+           padding: const EdgeInsets.all(12.0),
+           child: Row(
+             children: [
+               Icon(icon,color: AppColours.white,),
+               SizedBox(width: 5,),
+               Expanded(child: Text(text,style: TextStyle(color: AppColours.white,fontSize: 16),)),
+             ],
+           ),
+         ),
+       ),
+       SizedBox(height: 10,),
+     ],
+   );
  }
   static Widget settingsIcon(IconData icon){
    return Container(
@@ -40,4 +84,9 @@ class CommonWidgets{
          color: AppColours.golden_button_bg,
        ));
   }
+ //selectedFont text
+ static Widget selectedFontWidget(String title,Color textColor,double fontSize,FontWeight _boldOrNot){
+   return Text(title, style: new TextStyle( fontSize: fontSize,color: textColor,
+       fontFamily: "Lato",fontWeight: _boldOrNot));
+ }
 }

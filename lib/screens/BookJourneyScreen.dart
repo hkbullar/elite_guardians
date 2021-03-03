@@ -194,22 +194,16 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
                 ],
               ):SizedBox(),
               SizedBox(height: 20,),
-              Row(
-                children: [
-                  Expanded(
-                    child: RaisedButton(
-                        padding: EdgeInsets.all(14),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                        color: AppColours.golden_button_bg,
-                        child: Text("Get Quote",style: TextStyle(color: AppColours.black,fontWeight: FontWeight.bold,fontSize: 18),),
-                        onPressed: (){
-                          setState(() {
-
-                          });
-                        }),
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Comments",style: TextStyle(color: AppColours.white,fontSize: 16),),
               ),
+              TextField(
+                style: TextStyle(color: Colors.white),
+                decoration: CommonWidgets.loginFormDecoration("Enter Your Comments",Icons.comment_bank_outlined),
+              ),
+              SizedBox(height: 20,),
+              CommonWidgets.goldenFullWidthButton("Get Quote",onClick: (){})
             ],
           )
         ),

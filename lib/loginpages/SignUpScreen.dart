@@ -81,74 +81,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(height: 20),
                   Row(
                     children: [
-                      Expanded(
-                        child: InkWell(
-                          onTap: (){
-                            setState(() {
-                              maleBoxVal=0;
-                            });
-
-                          },
-                          child: Card(
-                            color: maleBoxVal==0?AppColours.golden_button_bg:AppColours.textFeildBG,
-                            child: Padding(
-                              padding: const EdgeInsets.all(25.0),
-                              child: Column(
-                                children: [
-                                  Image.asset(Constants.LOCAL_IMAGE+"man_black.png",height: 30,color: maleBoxVal==0?AppColours.black:AppColours.white,),
-                                  SizedBox(height: 10),
-                                  Text("MALE",style: TextStyle(color: maleBoxVal==0?AppColours.black:AppColours.white),)
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: InkWell(
-                          onTap: (){
-                            setState(() {
-                              maleBoxVal=1;
-                            });
-
-                          },
-                          child: Card(
-                            color: maleBoxVal==1?AppColours.golden_button_bg:AppColours.textFeildBG,
-                            child: Padding(
-                              padding: const EdgeInsets.all(25.0),
-                              child: Column(
-                                children: [
-                                  Image.asset(Constants.LOCAL_IMAGE+"woman_black.png",height: 30,color: maleBoxVal==1?AppColours.black:AppColours.white,),
-                                  SizedBox(height: 10),
-                                  Text("FEMALE",style: TextStyle(color: maleBoxVal==1?AppColours.black:AppColours.white),)
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: InkWell(
-                          onTap: (){
-                            setState(() {
-                              maleBoxVal=2;
-                            });
-                          },
-                          child: Card(
-                            color: maleBoxVal==2?AppColours.golden_button_bg:AppColours.textFeildBG,
-                            child: Padding(
-                              padding: const EdgeInsets.all(25.0),
-                              child: Column(
-                                children: [
-                                  Image.asset(Constants.LOCAL_IMAGE+"intersex_black.png",height: 30,color: maleBoxVal==2?AppColours.black:AppColours.white,),
-                                  SizedBox(height: 10,),
-                                  Text("I'M ME",style: TextStyle(color: maleBoxVal==2?AppColours.black:AppColours.white),)
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
+                      maleFemaleButton(0, "MALE", "man_black.png"),
+                      maleFemaleButton(1, "FEMALE", "woman_black.png"),
+                      maleFemaleButton(2, "I'M ME", "intersex_black.png")
                     ],
                   ),
                   SizedBox(height: 20),
@@ -186,31 +121,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(height: 20,),
 
                   SizedBox(height: MediaQuery.of(context).size.width/99),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: RaisedButton(
-                          padding: EdgeInsets.all(14),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                                ),
-                          color: AppColours.golden_button_bg,
-                            child: Text("SIGNUP",style: TextStyle(color: AppColours.black,fontWeight: FontWeight.bold,fontSize: 18),),
-                            onPressed: (){
-                              if(CommonWidgets.isValidate(_formKey)){
-                                Map jsonPost = {
-                                  Constants.FIRST_NAME: _nameController.text,
-                                  Constants.EMAIL: _emailController.text,
-                                  Constants.PASSWORD: _passwordController.text,
-                                  Constants.PASSWORD_CONFIRMATION: _confirmPasswordController.text
-                                };
-                                print(jsonPost);
-                               // ServiceHttp().registerUser(jsonPost,context);
-                              }
-                        }),
-                      ),
-                    ],
-                  ),
+                  CommonWidgets.goldenFullWidthButton("SIGNUP",onClick: ()=>_signUpClick()),
                   SizedBox(height: MediaQuery.of(context).size.height/15),
                   InkWell(
                     onTap: (){
@@ -235,8 +146,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-
-  _loginClick(){}
+  Widget maleFemaleButton(int defButtonValue,String text,String image){
+    return Expanded(
+      child: InkWell(
+        onTap: (){
+          setState(() {
+            maleBoxVal=defButtonValue;
+          });
+        },
+        child: Card(
+          color: maleBoxVal==defButtonValue?AppColours.golden_button_bg:AppColours.textFeildBG,
+          child: Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Column(
+              children: [
+                Image.asset(Constants.LOCAL_IMAGE+image,height: 30,color: maleBoxVal==defButtonValue?AppColours.black:AppColours.white,),
+                SizedBox(height: 10),
+                Text(text,style: TextStyle(color: maleBoxVal==defButtonValue?AppColours.black:AppColours.white),)
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+  _signUpClick(){
+    if(CommonWidgets.isValidate(_formKey)){
+    Map jsonPost = {
+      Constants.FIRST_NAME: _nameController.text,
+      Constants.EMAIL: _emailController.text,
+      Constants.PASSWORD: _passwordController.text,
+      Constants.PASSWORD_CONFIRMATION: _confirmPasswordController.text
+    };
+    print(jsonPost);
+    // ServiceHttp().registerUser(jsonPost,context);
+  }}
   _fieldFocusChange(BuildContext context, FocusNode currentFocus,FocusNode nextFocus) {
     currentFocus.unfocus();
     FocusScope.of(context).requestFocus(nextFocus);

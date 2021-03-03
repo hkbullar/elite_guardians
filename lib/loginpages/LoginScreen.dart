@@ -92,22 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 25,),
               SizedBox(height: MediaQuery.of(context).size.width/99),
-              Row(
-                children: [
-                  Expanded(
-                    child: RaisedButton(
-                      padding: EdgeInsets.all(14),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            ),
-                      color: AppColours.golden_button_bg,
-                        child: Text("LOGIN",style: TextStyle(color: AppColours.black,fontWeight: FontWeight.bold,fontSize: 18),),
-                        onPressed: (){
-                      _loginClick();
-                    }),
-                  ),
-                ],
-              ),
+              CommonWidgets.goldenFullWidthButton("LOGIN",onClick: ()=> _loginClick()),
               SizedBox(height: MediaQuery.of(context).size.height/15),
               InkWell(
                 onTap: (){
