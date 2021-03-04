@@ -4,6 +4,7 @@ import 'package:elite_guardians/dashboard/DashBoardScreen.dart';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/CommonWidgets.dart';
 import 'package:elite_guardians/global/Constants.dart';
+import 'package:elite_guardians/global/Size.dart';
 import 'package:elite_guardians/loginpages/SignUpScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,18 +28,19 @@ class _LoginScreenState extends State<LoginScreen> {
   
   @override
   Widget build(BuildContext context) {
+    Size().init(context);
     return Scaffold(
       backgroundColor: Colors.black,
       body: Padding(
-        padding: const EdgeInsets.all(25.0),
+        padding: EdgeInsets.all(Size.size(25)),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                Constants.LOCAL_IMAGE+"logo.png",height: MediaQuery.of(context).size.height/6,
+                Constants.LOCAL_IMAGE+"logo.png",height: Size.size(150),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height/15),
+              SizedBox(height: Size.size(20)),
               TextFormField(
                 validator: (value) => value.isEmpty ? 'Email cannot be blank': null,
                 textInputAction: TextInputAction.next,
@@ -51,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 decoration: CommonWidgets.loginFormDecoration("Email",Icons.mail_outline),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: Size.size(20)),
               TextFormField(
                 enableSuggestions: false,
                 autocorrect: false,
@@ -67,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 decoration: CommonWidgets.loginFormDecoration("Password",Icons.lock_outline),
               ),
-              SizedBox(height: 5,),
+              SizedBox(height: Size.size(5),),
               Row(
                 children: [
                   Expanded(
@@ -77,8 +79,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Row(
                           children: [
                             Icon(Icons.check_circle,color: AppColours.golden_button_bg,),
-                            SizedBox(width: 5,),
-                            Text('Remember me',style: TextStyle(color: AppColours.off_white,fontSize: 14),),
+                            SizedBox(width: Size.size(5)),
+                            Text('Remember me',style: TextStyle(color: AppColours.off_white,fontSize: Size.size(14))),
                           ],
                         ),
                       ),
@@ -86,14 +88,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Expanded(child: Padding(
                     padding: const EdgeInsets.all(7.0),
-                    child: Text("Forgot Password ?",textAlign: TextAlign.end,style: TextStyle(color: AppColours.off_white,fontSize: 14),),
+                    child: Text("Forgot Password ?",textAlign: TextAlign.end,style: TextStyle(color: AppColours.off_white,fontSize: Size.size(14)),),
                   )),
                 ],
               ),
-              SizedBox(height: 25,),
+              SizedBox(height: Size.size(25)),
               SizedBox(height: MediaQuery.of(context).size.width/99),
               CommonWidgets.goldenFullWidthButton("LOGIN",onClick: ()=> _loginClick()),
-              SizedBox(height: MediaQuery.of(context).size.height/15),
+              SizedBox(height: Size.size(30)),
               InkWell(
                 onTap: (){
                   navigationToSignUp();
@@ -103,8 +105,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Don\'t have an account? ',style: TextStyle(color: AppColours.off_white,fontSize: 16)),
-                      Text('Signup Here',style: TextStyle(color: AppColours.golden_button_bg,fontSize: 16)),
+                     Text('Don\'t have an account? ',style: TextStyle(color: AppColours.off_white,fontSize: Size.size(16))),
+                     Text('Signup Here',style: TextStyle(color: AppColours.golden_button_bg,fontSize: Size.size(18))),
                     ],
                   ),
                 ),

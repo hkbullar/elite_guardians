@@ -1,9 +1,6 @@
 
-import 'package:elite_guardians/dashboard/DashBoardScreen.dart';
-import 'package:elite_guardians/dashboard/JobsScreen.dart';
+import 'package:elite_guardians/loginpages/LoginScreen.dart';
 import 'package:elite_guardians/loginpages/SplashScreen.dart';
-import 'package:elite_guardians/screens/BookJourneyScreen.dart';
-import 'package:elite_guardians/screens/HireGuardScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      home: HireGuardScreen(),
+      home: LoginScreen(),
 //      home: SplashScreen(),
     );
   }

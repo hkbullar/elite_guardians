@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(children: [
                           Icon(Icons.security,color: AppColours.golden_button_bg,size: 40,) ,
                           SizedBox(height: 10),
-                          Text("Book a Guardian",style: TextStyle(fontSize: 20,color: AppColours.white,fontWeight: FontWeight.bold),)
+                          Text("Hire a Guardian",style: TextStyle(fontSize: 20,color: AppColours.white,fontWeight: FontWeight.bold),)
                         ],),
                       ),
                     ),

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/CommonWidgets.dart';
 import 'package:elite_guardians/global/Constants.dart';
+import 'package:elite_guardians/global/Size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +42,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         backgroundColor: Colors.transparent,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(25.0),
+        padding: EdgeInsets.only(left: Size.width(25),right: Size.width(25)),
         child: Center(
           child: SingleChildScrollView(
             child: Form(

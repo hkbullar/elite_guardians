@@ -1,11 +1,23 @@
 import 'package:elite_guardians/global/AppColours.dart';
+import 'package:elite_guardians/global/Size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CommonWidgets{
   //width
-  static widthFactor(BuildContext context){
+  static double widthFactor(BuildContext context){
     return MediaQuery.of(context).size.width;
+  }
+
+  static double textSize(BuildContext context,{double size}){
+    double width=MediaQuery.of(context).size.width;
+    double defaultSize=12;
+    if(size!=null) {
+      defaultSize = size;
+    }
+      defaultSize=defaultSize*0.2;
+      return (defaultSize/100)*width;
+
   }
 
   //height
@@ -25,7 +37,8 @@ class CommonWidgets{
         ),
       ),
       fillColor: AppColours.textFeildBG,
-      hintStyle: TextStyle( color: AppColours.off_white),
+
+      hintStyle: TextStyle( color: AppColours.off_white,fontSize: Size.size(14)),
       hintText: text,
     );
   }
@@ -35,11 +48,11 @@ class CommonWidgets{
        children: [
          Expanded(
            child: RaisedButton(
-               padding: EdgeInsets.all(14),
+               padding: EdgeInsets.all(Size.width(14)),
                shape: RoundedRectangleBorder(
                    borderRadius: BorderRadius.circular(8.0)),
                color: AppColours.golden_button_bg,
-               child: Text(text,style: TextStyle(color: AppColours.black,fontWeight: FontWeight.bold,fontSize: 18),),
+               child: Text(text,style: TextStyle(color: AppColours.black,fontWeight: FontWeight.bold,fontSize: Size.size(16)),),
                onPressed: onClick),
          )]);
  }
@@ -78,7 +91,7 @@ class CommonWidgets{
            ),
          ),
        ),
-       SizedBox(height: 10,),
+       SizedBox(height: Size.height(10),),
      ],
    );
  }
