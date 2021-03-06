@@ -20,6 +20,5 @@ class EliteAppBar extends PreferredSize {
       elevation: 0,
       backgroundColor: Colors.transparent,
     );
-
   }
 }

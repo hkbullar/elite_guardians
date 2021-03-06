@@ -16,7 +16,8 @@ class HireGuardScreen extends StatefulWidget
 
 class _HireGuardScreenState extends State<HireGuardScreen> {
   DateTime selectedDateFrom,selectedDateTo;
-
+  List<CheckBoxListTileModel> checkBoxListTileModel =
+  CheckBoxListTileModel.getUsers();
   int bookNowOrLater=0;
   int guardSelection=0;
   int weekDayOrFull=0;
@@ -250,21 +251,48 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                   ),
                 ],
               ),
-              /*Container(height: CommonWidgets.widthFactor(context)*0.1,
-                child: ListView.builder(
-                  itemCount: 1,
-                    scrollDirection: Axis.vertical,
+              Container(height: 200,
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 0.0,
+                      childAspectRatio: 4.0,mainAxisSpacing: 3.0),
+                  itemCount: checkBoxListTileModel.length,
+                   scrollDirection: Axis.vertical,
                     itemBuilder: (context, index) {
-                      return _checkBox("Sun");
-                    },),),*/
+                      return _checkBox(index);
+                    },),
+              ),
+              /*Row(
+                children: [
+                  Expanded(child: _checkBox("Sun")),
+                  Expanded(child: _checkBox("Mon")),
+                ],
+              ),
               Row(
+                children: [
+                  Expanded(child: _checkBox("Tue")),
+                  Expanded(child: _checkBox("Wed")),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(child: _checkBox("Thu")),
+                  Expanded(child: _checkBox("Fri")),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(child: _checkBox("Sat")),
+                  Expanded(child: Container()),
+                ],
+              ),*/
+             /* Row(
                 children: [
                   _checkBox("Sun"),
 //                  Expanded(child: _checkBox("Mon")),
 
                 ],
-              ),
-              SizedBox(height: 20),
+              ),*/
+//              SizedBox(height: 20),
               TextField(
                 enabled: false,
                 style: TextStyle(color: Colors.white),
@@ -383,14 +411,17 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
         selectedDateFrom = picked;
       });
   }
-  Widget _checkBox(String text){
-    return Expanded(child: Container(
-      child: CheckboxListTile(
-          value: true,
-          title: Text(text,style: TextStyle(fontSize: 16,color: AppColours.golden_button_bg),),
-          activeColor: AppColours.golden_button_bg,
-          onChanged: (value){}),
-    ));
+  Widget _checkBox(int index){
+    return CheckboxListTile(
+        value: checkBoxListTileModel[index].isCheck,
+        title: Text(checkBoxListTileModel[index].title,style: TextStyle(fontSize: 16,color: AppColours.golden_button_bg),),
+        activeColor: AppColours.golden_button_bg,
+        dense: true,
+        onChanged: (value){
+          setState(() {
+            checkBoxListTileModel[index].isCheck = value;
+          });
+        });
   }
   _selectToDate(BuildContext context) async {
     DateTime currentDate = selectedDateFrom==null?DateTime.now():selectedDateFrom;
@@ -433,5 +464,49 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
     final dt = DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
     final format = DateFormat.jm();  //"6:00 AM"
     return format.format(dt);
+  }
+
+}
+
+
+class CheckBoxListTileModel {
+  int dayId;
+  String img;
+  String title;
+  bool isCheck;
+
+  CheckBoxListTileModel({this.dayId, this.img, this.title, this.isCheck});
+
+  static List<CheckBoxListTileModel> getUsers() {
+    return <CheckBoxListTileModel>[
+      CheckBoxListTileModel(
+          dayId: 1,
+          title: "Sun",
+          isCheck: true),
+      CheckBoxListTileModel(
+          dayId: 2,
+          title: "Mon",
+          isCheck: false),
+      CheckBoxListTileModel(
+          dayId: 3,
+          title: "Tue",
+          isCheck: false),
+      CheckBoxListTileModel(
+          dayId: 4,
+          title: "Wed",
+          isCheck: false),
+      CheckBoxListTileModel(
+          dayId: 5,
+          title: "Thu",
+          isCheck: false),
+      CheckBoxListTileModel(
+          dayId: 6,
+          title: "Fri",
+          isCheck: false),
+      CheckBoxListTileModel(
+          dayId: 7,
+          title: "Sat",
+          isCheck: false),
+    ];
   }
 }
