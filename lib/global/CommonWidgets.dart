@@ -38,7 +38,7 @@ class CommonWidgets{
       ),
       fillColor: AppColours.textFeildBG,
 
-      hintStyle: TextStyle( color: AppColours.off_white,fontSize: Size.size(14)),
+      hintStyle: TextStyle( color: AppColours.off_white,fontSize: Size.size(16)),
       hintText: text,
     );
   }

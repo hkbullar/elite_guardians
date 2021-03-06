@@ -21,6 +21,13 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  http:
+  progress_dialog:
+  flutter_absolute_path:
+  shared_preferences:
+  dio:
+  toast:
+  path_provider:
   intl:
   google_maps_flutter:
   google_maps_place_picker:

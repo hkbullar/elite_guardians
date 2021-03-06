@@ -2,6 +2,7 @@ import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/CommonWidgets.dart';
 import 'package:elite_guardians/global/Constants.dart';
 import 'package:elite_guardians/global/EliteAppBar.dart';
+import 'package:elite_guardians/global/Size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -32,18 +33,19 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size().init(context);
     return Scaffold(
       appBar: EliteAppBar("Hire Guards"),
       backgroundColor: AppColours.black,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 25,right: 25,top: 5,bottom: 15),
+          padding: EdgeInsets.only(left: Size.size(25),right: Size.size(25),top: Size.size(5),bottom: Size.size(5)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("For",style: TextStyle(color: AppColours.white,fontSize: 16),),
+                padding: EdgeInsets.all(Size.size(8)),
+                child: Text("For",style: TextStyle(color: AppColours.white,fontSize: Size.size(16)),),
               ),
               InkWell(
                 onTap: (){
@@ -71,15 +73,15 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                   decoration: CommonWidgets.loginFormDecoration("Enter Your Location",Icons.location_on_outlined),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: Size.size(20)),
               Row(children: [
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Timing",style: TextStyle(color: AppColours.white,fontSize: 16),),
+                        padding:  EdgeInsets.all(Size.size(8)),
+                        child: Text("Timing",style: TextStyle(color: AppColours.white,fontSize: Size.size(16)),),
                       ),
                       InkWell(
                         onTap: (){
@@ -94,14 +96,14 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                     ],
                   ),
                 ),
-                SizedBox(width: 10),
+                SizedBox(width: Size.size(10)),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("",style: TextStyle(color: AppColours.white,fontSize: 16),),
+                        padding: EdgeInsets.all(Size.size(8)),
+                        child: Text("",style: TextStyle(color: AppColours.white,fontSize: Size.size(16)),),
                       ),
                       InkWell(
                         onTap: (){
@@ -117,10 +119,10 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                   ),
                 )
               ],),
-              SizedBox(height: 20),
+              SizedBox(height: Size.size(20)),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("Book For",style: TextStyle(color: AppColours.white,fontSize: 16),),
+                child: Text("Book For",style: TextStyle(color: AppColours.white,fontSize: Size.size(16)),),
               ),
               Row(
                 children: [
@@ -129,8 +131,8 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       value: 0,
                       toggleable: true,
                       groupValue: bookNowOrLater,
-//                      tileColor: AppColours.textFeildBG,
-                      title: Text("Once",style: TextStyle(color: AppColours.white,fontSize: 16)),
+                     tileColor: AppColours.textFeildBG,
+                      title: Text("Once",style: TextStyle(color: AppColours.white,fontSize: Size.size(16))),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
                       {
@@ -142,14 +144,14 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       },
                     ),
                   ),
-                  SizedBox(width: 10),
+                  SizedBox(width: Size.size(10)),
                   Expanded(
                     child: RadioListTile(
                       value: 1,
                       toggleable: true,
                       groupValue: bookNowOrLater,
-//                      tileColor: AppColours.textFeildBG,
-                      title: Text("Multiple Days",style: TextStyle(color: AppColours.white,fontSize: 16)),
+                      tileColor: AppColours.textFeildBG,
+                      title: Text("Multiple Days",style: TextStyle(color: AppColours.white,fontSize: Size.size(16))),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
                       {
@@ -163,15 +165,15 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: Size.size(20)),
               bookNowOrLater==1?Row(children: [
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Select Date",style: TextStyle(color: AppColours.white,fontSize: 16),),
+                        padding: EdgeInsets.all(Size.size(8)),
+                        child: Text("Select Date",style: TextStyle(color: AppColours.white,fontSize: Size.size(16)),),
                       ),
                       InkWell(
                         onTap: (){
@@ -186,14 +188,14 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                     ],
                   ),
                 ),
-                SizedBox(width: 10),
+                SizedBox(width: Size.size(10)),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("",style: TextStyle(color: AppColours.white,fontSize: 16),),
+                        padding: EdgeInsets.all(Size.size(8)),
+                        child: Text("",style: TextStyle(color: AppColours.white,fontSize: Size.size(16)),),
                       ),
                       InkWell(
                         onTap: (){
@@ -209,16 +211,16 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                   ),
                 )
               ]):SizedBox(),
-              SizedBox(height: 20),
-              Row(
+              SizedBox(height: bookNowOrLater==1?Size.size(20):0),
+              bookNowOrLater==1?Row(
                 children: [
                   Expanded(
                     child: RadioListTile(
                       value: 0,
                       toggleable: true,
                       groupValue: weekDayOrFull,
-//                      tileColor: AppColours.textFeildBG,
-                      title: Text("Full Week",style: TextStyle(color: AppColours.white,fontSize: 16)),
+                      tileColor: AppColours.textFeildBG,
+                      title: Text("Full Week",style: TextStyle(color: AppColours.white,fontSize: Size.size(16))),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
                       {
@@ -230,14 +232,14 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       },
                     ),
                   ),
-                  SizedBox(width: 10),
+                  SizedBox(width: Size.size(10)),
                   Expanded(
                     child: RadioListTile(
                       value: 1,
                       toggleable: true,
                       groupValue: weekDayOrFull,
-//                      tileColor: AppColours.textFeildBG,
-                      title: Text("Selected Days",style: TextStyle(color: AppColours.white,fontSize: 16)),
+                     tileColor: AppColours.textFeildBG,
+                      title: Text("Selected Days",style: TextStyle(color: AppColours.white,fontSize: Size.size(16))),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
                       {
@@ -250,151 +252,75 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                     ),
                   ),
                 ],
-              ),
-              Container(height: 200,
-                child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 0.0,
-                      childAspectRatio: 4.0,mainAxisSpacing: 3.0),
-                  itemCount: checkBoxListTileModel.length,
-                   scrollDirection: Axis.vertical,
-                    itemBuilder: (context, index) {
-                      return _checkBox(index);
-                    },),
-              ),
-              /*Row(
-                children: [
-                  Expanded(child: _checkBox("Sun")),
-                  Expanded(child: _checkBox("Mon")),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(child: _checkBox("Tue")),
-                  Expanded(child: _checkBox("Wed")),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(child: _checkBox("Thu")),
-                  Expanded(child: _checkBox("Fri")),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(child: _checkBox("Sat")),
-                  Expanded(child: Container()),
-                ],
-              ),*/
-             /* Row(
-                children: [
-                  _checkBox("Sun"),
-//                  Expanded(child: _checkBox("Mon")),
-
-                ],
-              ),*/
-//              SizedBox(height: 20),
+              ):SizedBox(),
+              SizedBox(height: weekDayOrFull==1 && bookNowOrLater==1?Size.size(15):0),
+              weekDayOrFull==1 && bookNowOrLater==1?GridView.count(
+                crossAxisCount: 4,
+                shrinkWrap: true,
+                childAspectRatio: Size.size(10)/10,
+                padding: EdgeInsets.all(0),
+                physics: NeverScrollableScrollPhysics(),
+                  children: List.generate(7,(index){
+                    return _checkBox(index);
+                  })
+                  ):SizedBox(),
+              SizedBox(height: Size.size(15)),
               TextField(
                 enabled: false,
                 style: TextStyle(color: Colors.white),
-                decoration: CommonWidgets.loginFormDecoration("Number of Guards Needed ?",Icons.person_outline),
+                decoration: CommonWidgets.loginFormDecoration("Number of Guardians Needed ?",Icons.person_outline),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: Size.size(20)),
               Row(
                 children: [
-                  Expanded(
-                    child: RadioListTile(
-                      value: 0,
-                      toggleable: true,
-                      groupValue: guardSelection,
-//                      tileColor: AppColours.textFeildBG,
-                      title: Text("1 Guard",style: TextStyle(color: AppColours.white,fontSize: 16)),
-                      activeColor: AppColours.golden_button_bg,
-                      onChanged: (val) {
-                        if(val!=null){
-                          setState((){
-                            guardSelection=val;
-                          });
-                        }
-                      },
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: RadioListTile(
-                      value: 1,
-                      toggleable: true,
-                      groupValue: guardSelection,
-//                      tileColor: AppColours.textFeildBG,
-                      title: Text("2 Guards",style: TextStyle(color: AppColours.white,fontSize: 16)),
-                      activeColor: AppColours.golden_button_bg,
-                      onChanged: (val)
-                      {
-                        if(val!=null){
-                          setState((){
-                            guardSelection=val;
-                          });
-                        }
-                      },
-                    ),
-                  ),
+                  guardListTile(1),
+                  SizedBox(width: Size.size(10)),
+                  guardListTile(2),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: Size.size(10)),
               Row(
                 children: [
-                  Expanded(
-                    child: RadioListTile(
-                      value: 2,
-                      toggleable: true,
-                      groupValue: guardSelection,
-//                      tileColor: AppColours.textFeildBG,
-                      title: Text("3 Guard",style: TextStyle(color: AppColours.white,fontSize: 16)),
-                      activeColor: AppColours.golden_button_bg,
-                      onChanged: (val)
-                      {
-                        if(val!=null){
-                          setState((){
-                            guardSelection=val;
-                          });
-                        }
-                      },
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: RadioListTile(
-                      value: 3,
-                      toggleable: true,
-                      groupValue: guardSelection,
-//                      tileColor: AppColours.textFeildBG,
-                      title: Text("4 Guards",style: TextStyle(color: AppColours.white,fontSize: 16)),
-                      activeColor: AppColours.golden_button_bg,
-                      onChanged: (val)
-                      {
-                        if(val!=null){
-                          setState((){
-                            guardSelection=val;
-                          });
-                        }
-                      },
-                    ),
-                  ),
+                  guardListTile(3),
+                  SizedBox(width: Size.size(10)),
+                  guardListTile(4),
                 ],
               ),
+              SizedBox(height: Size.size(20)),
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("Comments",style: TextStyle(color: AppColours.white,fontSize: 16),),
+                padding: EdgeInsets.all(Size.size(8)),
+                child: Text("Comments",style: TextStyle(color: AppColours.white,fontSize: Size.size(16)),),
               ),
               TextField(
                 style: TextStyle(color: Colors.white),
                 decoration: CommonWidgets.loginFormDecoration("Enter Your Comments",Icons.comment_bank_outlined),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: Size.size(20)),
               CommonWidgets.goldenFullWidthButton("Get Quote",onClick: (){})
             ],
           )
         ),
       )
+    );
+  }
+ Widget guardListTile(int value){
+   return Expanded(
+      child: RadioListTile(
+        value: value,
+        toggleable: true,
+        groupValue: guardSelection,
+        tileColor: AppColours.textFeildBG,
+        title: Text("$value",style: TextStyle(color: AppColours.white,fontSize: Size.size(16))),
+        activeColor: AppColours.golden_button_bg,
+        onChanged: (val)
+        {
+          if(val!=null){
+            setState((){
+              guardSelection=val;
+            });
+          }
+        },
+      ),
     );
   }
   _selectFromDate(BuildContext context) async {
@@ -412,16 +338,34 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
       });
   }
   Widget _checkBox(int index){
-    return CheckboxListTile(
-        value: checkBoxListTileModel[index].isCheck,
-        title: Text(checkBoxListTileModel[index].title,style: TextStyle(fontSize: 16,color: AppColours.golden_button_bg),),
-        activeColor: AppColours.golden_button_bg,
-        dense: true,
-        onChanged: (value){
+    return Padding(
+      padding: EdgeInsets.all(Size.size(5)),
+      child: InkWell(
+        onTap: (){
           setState(() {
-            checkBoxListTileModel[index].isCheck = value;
+            checkBoxListTileModel[index].isCheck = !checkBoxListTileModel[index].isCheck;
           });
-        });
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppColours.textFeildBG,
+            borderRadius: BorderRadius.all(Radius.circular(10))
+        ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Checkbox(
+                  value: checkBoxListTileModel[index].isCheck,
+                  activeColor: AppColours.golden_button_bg,
+                  onChanged: (value){}),
+              Text(checkBoxListTileModel[index].title,style: TextStyle(fontSize: Size.size(16),color: AppColours.white),),
+              SizedBox(height: Size.size(5))
+            ],
+          ),
+        ),
+      ),
+    );
   }
   _selectToDate(BuildContext context) async {
     DateTime currentDate = selectedDateFrom==null?DateTime.now():selectedDateFrom;
@@ -465,9 +409,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
     final format = DateFormat.jm();  //"6:00 AM"
     return format.format(dt);
   }
-
 }
-
 
 class CheckBoxListTileModel {
   int dayId;
