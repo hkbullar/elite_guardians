@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:elite_guardians/dashboard/DashBoardScreen.dart';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/Constants.dart';
+import 'package:elite_guardians/global/Global.dart';
 import 'package:elite_guardians/loginpages/LoginScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -31,8 +33,16 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigationPage() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => LoginScreen()));
-  }
+    Global.isRegistered().then((isLogged) {
+      if (isLogged) {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (context) => DashBoardScreen()));
+      } else {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
+      }
+    });
+    }
 
   @override
   Widget build(BuildContext context) {

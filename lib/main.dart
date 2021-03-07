@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         unselectedWidgetColor: AppColours.golden_button_bg,
         primarySwatch: Colors.grey,
       ),
-      home: HireGuardScreen(),
+      home: SplashScreen(),
 //      home: SplashScreen(),
     );
   }

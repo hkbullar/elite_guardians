@@ -1,13 +1,20 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:elite_guardians/dashboard/DashBoardScreen.dart';
+import 'package:elite_guardians/global/API.dart';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/CommonWidgets.dart';
 import 'package:elite_guardians/global/Constants.dart';
+import 'package:elite_guardians/global/Global.dart';
+import 'package:elite_guardians/global/PLoader.dart';
+import 'package:elite_guardians/global/ServiceHttp.dart';
 import 'package:elite_guardians/global/Size.dart';
 import 'package:elite_guardians/loginpages/SignUpScreen.dart';
+import 'package:elite_guardians/pojo/LoginPojo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -34,84 +41,70 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Padding(
         padding: EdgeInsets.all(Size.size(25)),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                Constants.LOCAL_IMAGE+"logo.png",height: Size.size(150),
-              ),
-              SizedBox(height: Size.size(20)),
-              TextFormField(
-                validator: (value) => value.isEmpty ? 'Email cannot be blank': null,
-                textInputAction: TextInputAction.next,
-                controller: _emailController,
-                style: TextStyle(color: Colors.white),
-                focusNode: _usernameFocus,
-                onFieldSubmitted: (term)
-                {
-                  _fieldFocusChange(context, _usernameFocus, _passwordFocus);
-                },
-                decoration: CommonWidgets.loginFormDecoration("Email",Icons.mail_outline),
-              ),
-              SizedBox(height: Size.size(20)),
-              TextFormField(
-                enableSuggestions: false,
-                autocorrect: false,
-                obscureText: true,
-                validator: (value) => value.isEmpty ? 'Password cannot be blank': null,
-                textInputAction: TextInputAction.next,
-                controller: _passwordController,
-                style: TextStyle(color: Colors.white),
-                focusNode: _passwordFocus,
-                onFieldSubmitted: (term)
-                {
-                  _fieldFocusChange(context, _usernameFocus, _passwordFocus);
-                },
-                decoration: CommonWidgets.loginFormDecoration("Password",Icons.lock_outline),
-              ),
-              SizedBox(height: Size.size(5),),
-              Row(
-                children: [
-                  Expanded(
-                    child: InkWell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(7.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.check_circle,color: AppColours.golden_button_bg,),
-                            SizedBox(width: Size.size(5)),
-                            Text('Remember me',style: TextStyle(color: AppColours.off_white,fontSize: Size.size(14))),
-                          ],
-                        ),
-                      ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  Constants.LOCAL_IMAGE+"logo.png",height: Size.size(150),
+                ),
+                SizedBox(height: Size.size(20)),
+                TextFormField(
+                  validator: (value) => value.isEmpty ? 'Email cannot be blank': null,
+                  textInputAction: TextInputAction.next,
+                  controller: _emailController,
+                  style: TextStyle(color: Colors.white),
+                  focusNode: _usernameFocus,
+                  onFieldSubmitted: (term)
+                  {
+                    _fieldFocusChange(context, _usernameFocus, _passwordFocus);
+                  },
+                  decoration: CommonWidgets.loginFormDecoration("Email",Icons.mail_outline),
+                ),
+                SizedBox(height: Size.size(20)),
+                TextFormField(
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  obscureText: true,
+                  validator: (value) => value.isEmpty ? 'Password cannot be blank': null,
+                  textInputAction: TextInputAction.next,
+                  controller: _passwordController,
+                  style: TextStyle(color: Colors.white),
+                  onFieldSubmitted: (value){FocusScope.of(context).unfocus();},
+                  focusNode: _passwordFocus,
+                  decoration: CommonWidgets.loginFormDecoration("Password",Icons.lock_outline),
+                ),
+                SizedBox(height: Size.size(5),),
+                Row(
+                  children: [
+                    Expanded(child: Padding(
+                      padding: const EdgeInsets.all(7.0),
+                      child: Text("Forgot Password ?",textAlign: TextAlign.end,style: TextStyle(color: AppColours.off_white,fontSize: Size.size(14)),),
+                    )),
+                  ],
+                ),
+                SizedBox(height: Size.size(25)),
+                SizedBox(height: MediaQuery.of(context).size.width/99),
+                CommonWidgets.goldenFullWidthButton("LOGIN",onClick: ()=> _loginClick(context)),
+                SizedBox(height: Size.size(30)),
+                InkWell(
+                  onTap: (){
+                    navigationToSignUp();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                       Text('Don\'t have an account? ',style: TextStyle(color: AppColours.off_white,fontSize: Size.size(16))),
+                       Text('Signup Here',style: TextStyle(color: AppColours.golden_button_bg,fontSize: Size.size(18))),
+                      ],
                     ),
                   ),
-                  Expanded(child: Padding(
-                    padding: const EdgeInsets.all(7.0),
-                    child: Text("Forgot Password ?",textAlign: TextAlign.end,style: TextStyle(color: AppColours.off_white,fontSize: Size.size(14)),),
-                  )),
-                ],
-              ),
-              SizedBox(height: Size.size(25)),
-              SizedBox(height: MediaQuery.of(context).size.width/99),
-              CommonWidgets.goldenFullWidthButton("LOGIN",onClick: ()=> _loginClick()),
-              SizedBox(height: Size.size(30)),
-              InkWell(
-                onTap: (){
-                  navigationToSignUp();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                     Text('Don\'t have an account? ',style: TextStyle(color: AppColours.off_white,fontSize: Size.size(16))),
-                     Text('Signup Here',style: TextStyle(color: AppColours.golden_button_bg,fontSize: Size.size(18))),
-                    ],
-                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -123,9 +116,16 @@ class _LoginScreenState extends State<LoginScreen> {
     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => SignUpScreen()));
   }
 
-  _loginClick()
+  _loginClick(BuildContext con)
   {
-    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => DashBoardScreen()));
+    if(CommonWidgets.isValidate(_formKey)) {
+      Map jsonPost = {
+        Constants.EMAIL: _emailController.text,
+        Constants.PASSWORD: _passwordController.text,
+      };
+      FocusScope.of(context).unfocus();
+      API(context).login(jsonPost);
+    }
   }
 
   _fieldFocusChange(BuildContext context, FocusNode currentFocus,FocusNode nextFocus)

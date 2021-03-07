@@ -1,11 +1,20 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:elite_guardians/dashboard/DashBoardScreen.dart';
+import 'package:elite_guardians/global/API.dart';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/CommonWidgets.dart';
 import 'package:elite_guardians/global/Constants.dart';
+import 'package:elite_guardians/global/Global.dart';
+import 'package:elite_guardians/global/PLoader.dart';
+import 'package:elite_guardians/global/ServiceHttp.dart';
 import 'package:elite_guardians/global/Size.dart';
+import 'package:elite_guardians/pojo/ErrorPojo.dart';
+import 'package:elite_guardians/pojo/LoginPojo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -108,21 +117,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     enableSuggestions: false,
                     autocorrect: false,
                     obscureText: true,
-                    validator: (value) => value.isEmpty ? 'Password cannot be blank': null,
+                    validator: (value) => value.isEmpty ? 'Password cannot be blank':value!=_passwordController.text?"Passwords didn't match": null,
                     textInputAction: TextInputAction.next,
                     controller: _confirmPasswordController,
                     style: TextStyle(color: Colors.white),
                     focusNode: _conPasswordFocus,
                     onFieldSubmitted: (term)
                     {
-                      _fieldFocusChange(context, _passwordFocus, _conPasswordFocus);
+                      FocusScope.of(context).unfocus();
                     },
                     decoration: CommonWidgets.loginFormDecoration("Confirm Password",Icons.lock_outline),
                   ),
                   SizedBox(height: 20,),
 
                   SizedBox(height: MediaQuery.of(context).size.width/99),
-                  CommonWidgets.goldenFullWidthButton("SIGNUP",onClick: ()=>_signUpClick()),
+                  CommonWidgets.goldenFullWidthButton("SIGNUP",onClick: ()=>_signUpClick(context)),
                   SizedBox(height: MediaQuery.of(context).size.height/15),
                   InkWell(
                     onTap: (){
@@ -171,16 +180,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-  _signUpClick(){
+  _signUpClick(BuildContext con){
     if(CommonWidgets.isValidate(_formKey)){
     Map jsonPost = {
-      Constants.FIRST_NAME: _nameController.text,
+      Constants.NAME: _nameController.text,
       Constants.EMAIL: _emailController.text,
       Constants.PASSWORD: _passwordController.text,
-      Constants.PASSWORD_CONFIRMATION: _confirmPasswordController.text
+      Constants.USER_TYPE: "customer"
     };
-    print(jsonPost);
-    // ServiceHttp().registerUser(jsonPost,context);
+      print(jsonPost);
+      FocusScope.of(context).unfocus();
+      API(context).register(jsonPost);
   }}
   _fieldFocusChange(BuildContext context, FocusNode currentFocus,FocusNode nextFocus) {
     currentFocus.unfocus();

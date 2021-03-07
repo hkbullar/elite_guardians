@@ -42,6 +42,12 @@ class CommonWidgets{
       hintText: text,
     );
   }
+
+  static TextEditingController formFieldFixText(String value){
+    TextEditingController _controller = new TextEditingController();
+    _controller.text=value;
+   return _controller;
+  }
  static Widget goldenFullWidthButton(String text,{Function onClick})
  {
    return Row(
@@ -95,6 +101,7 @@ class CommonWidgets{
      ],
    );
  }
+
   static Widget settingsIcon(IconData icon){
    return Container(
        padding: EdgeInsets.all(10),

@@ -1,9 +1,11 @@
 class Constants{
   static const String FIRST_NAME = "first_name";
+  static const String NAME = "name";
   static const String LAST_NAME = "last_name";
   static const String EMAIL = "email";
   static const String PHONE = "phone";
   static const String PASSWORD = "password";
+  static const String USER_TYPE = "user_type";
   static const String PASSWORD_CONFIRMATION = "password_confirmation";
   static const String ID = "id";
   static const String LANGUAGE_CODE = "language";
@@ -54,7 +56,6 @@ class Constants{
   static const String DummY_TOken= "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMDMxMTMzYmM4NTBkMzgzMDFlODZiY2U0OTVjZTQ0NTRkM2U3MDNhY2IwNWUzZWJiZmRiMGVmM2YxZTA4NjE5YWNkOGY4ZWIyNzI4MjdjYTkiLCJpYXQiOjE2MDI3NjY4MTAsIm5iZiI6MTYwMjc2NjgxMCwiZXhwIjoxNjM0MzAyODEwLCJzdWIiOiI3Iiwic2NvcGVzIjpbXX0.bv6pXNob6ESvN0--V_qioU9aaVtwSonP7O2yuO1cev3_vts7thqFVBDBj493T8TEP6T6pDfJhECxF9YDKsPtNclT66pveBctMFubRIlaS2ieKAq27DiPeXCSXJ9JDGZvuK0y5_qUgCbcb9GoU7mT3Z6uS3zmAtgviBVVWet4I6INrEhS7xIhUHz47tdnxajms04ieCyEeU4zMgx87Xcak7RGR1itoMvu1iix32blbLl55qnWZCFZelZlbzZrDlEZ3r9oFUVc8l7RN8c1xFI6yU8DSyq-Zf8oUc3eq5EAsDfKUFxRbDVfwMdg60mfoCO0Qe0UuN3nLvpYNKJ0nPCnvtBIFKT08vvX4RS_VBIjoyC8EfsiMJ4Dx8ie8aV8L62EF5ExxqZzcv8HaYtxUndDaMVlQh1FAYUqUNnba_vhDBWu0MLkV2PEYlEeFl_ob5XsBpp3Ab2i7pZTe68wJDiOACLrPKOXb_OHSr0ojmePbJo2SSLI0mQUJkWyTzzVXNRxSkqOosqYE8X6432OWeiX6KF1WXhyHTDs817VQI3GLteQYpjuACcsDRFC2TLFmscG1o8sZP6Gp8UDEcvQgTepY3cY4xbbRTK8H53iDeAV14FM58cUBxmx9AqIxa7x5DCS2rX-vUfm7z_mp215eGHcDqFn2_F8jHOiRSkyz3G3Chw";
 
   //CREATE BUSINESS KEYS
-  static const String NAME ="name";
   static const String CATEGORY_ID="cat_id";
   static const String SUBCATEGORY_ID="subcat_id";
   static const String ADDRESS="address";

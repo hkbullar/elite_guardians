@@ -1,7 +1,11 @@
 
+import 'dart:convert';
+
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/CommonWidgets.dart';
 import 'package:elite_guardians/global/Constants.dart';
+import 'package:elite_guardians/global/Global.dart';
+import 'package:elite_guardians/pojo/User.dart';
 import 'package:elite_guardians/screens/ChangePasswordScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,14 +23,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   var editButtonPressed=false;
 
+  User userinfo;
+
   @override
   void initState() {
-    setState(() {
-      _nameController.text="John Deo";
+    Global.getUser().then((value) async {
+      setState(() {
+        userinfo = User.fromJson(json.decode(value));
+        _nameController.text=userinfo.name;
+      });
     });
-
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                   FractionalTranslation(
                       translation: Offset(0,-0.5),
-                      child: Text("John Deo",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: AppColours.white),)),
+                      child: Text(userinfo!=null?userinfo.name:"wait",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: AppColours.white),)),
                 ],
               ),
             ),
@@ -84,10 +93,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   SizedBox(height: 20),
                   TextFormField(
                     enabled: false,
-                    initialValue: "john.deo@gmail.com",
+                    controller: CommonWidgets.formFieldFixText(userinfo!=null?userinfo.email:""),
                     textInputAction: TextInputAction.next,
                     style: TextStyle(color: Colors.white),
-                    decoration: CommonWidgets.loginFormDecoration("Full Name",Icons.mail_outline),
+                    decoration: CommonWidgets.loginFormDecoration("Email",Icons.mail_outline),
                   ),
                   SizedBox(height: 20),
                   Row(
