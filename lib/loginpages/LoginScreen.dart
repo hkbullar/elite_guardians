@@ -1,20 +1,12 @@
-import 'dart:async';
-import 'dart:convert';
 
-import 'package:elite_guardians/dashboard/DashBoardScreen.dart';
 import 'package:elite_guardians/global/API.dart';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/CommonWidgets.dart';
 import 'package:elite_guardians/global/Constants.dart';
-import 'package:elite_guardians/global/Global.dart';
-import 'package:elite_guardians/global/PLoader.dart';
-import 'package:elite_guardians/global/ServiceHttp.dart';
 import 'package:elite_guardians/global/Size.dart';
 import 'package:elite_guardians/loginpages/SignUpScreen.dart';
-import 'package:elite_guardians/pojo/LoginPojo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   @override

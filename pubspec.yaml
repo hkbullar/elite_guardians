@@ -25,6 +25,7 @@ dependencies:
   progress_dialog:
   flutter_absolute_path:
   shared_preferences:
+  location_permissions:
   dio:
   toast:
   path_provider:

@@ -25,17 +25,16 @@ class _JobsScreenState extends State<JobsScreen> {
   _listOfData() {
     return SafeArea(
       child: Container(
-          child: ListView.separated(
-              itemCount: 2,
-              separatorBuilder: (context, i) {
-                return Divider(thickness: 2.0,);
-              },
+          child: ListView.builder(
+              itemCount: 4,
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: (){
                     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => JobDetailsScreen()));
                   },
-                  child: Card(elevation: 5.0,
+                  child: Card(
+                      elevation: 5.0,
+                      color: AppColours.golden_button_bg,
                       margin: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0)),
@@ -49,44 +48,40 @@ class _JobsScreenState extends State<JobsScreen> {
                                 Expanded(
                                   child: CommonWidgets.selectedFontWidget(
                                       "02-03-2021" + " at " +
-                                          "12:25", AppColours.black, 15.0,
+                                          "12:25 PM", AppColours.black, 15.0,
                                       FontWeight.bold),
                                 ),
                                 CommonWidgets.selectedFontWidget(
-                                    "220" + " GHS", AppColours.off_white,
+                                    "220" + " Punds", AppColours.white,
                                     15.0,
                                     FontWeight.bold),
                               ],
                             ),
 
-                            SizedBox(height: 20.0),
+                            SizedBox(height: 10.0),
                             CommonWidgets.selectedFontWidget("From:",
                                 AppColours.black, 15.0, FontWeight.bold),
-                            CommonWidgets.selectedFontWidget("Chandigarh",
+                            CommonWidgets.selectedFontWidget("127, 129 Kilburn High Rd, North Maida Vale, London NW6 6JJ, UK",
                                 AppColours.black, 13.0, FontWeight.w500),
-                            SizedBox(height: 20.0),
+                            SizedBox(height: 10.0),
                             CommonWidgets.selectedFontWidget("To:",
                                 AppColours.black, 15.0, FontWeight.bold),
-                            CommonWidgets.selectedFontWidget("Punjab",
+                            CommonWidgets.selectedFontWidget("280 Harrow Rd, London W2 5ES, UK",
                                 AppColours.black, 13.0, FontWeight.w500),
-                            SizedBox(height: 20.0),
+                            SizedBox(height: 10.0),
                             Row(mainAxisAlignment: MainAxisAlignment
                                 .spaceEvenly,
                               children: [
                                 RaisedButton(
                                   elevation: 5.0,
-                                  onPressed: () {
-
-                                  }, color: AppColours.white,
+                                  onPressed: () {}, color: Colors.red,
                                   child: CommonWidgets.selectedFontWidget(
                                       "Reject",
-                                      AppColours.golden_button_bg, 14.0,
+                                      AppColours.white, 14.0,
                                       FontWeight.w500),),
                                 RaisedButton(
                                   elevation: 5.0,
-                                  onPressed: () {
-
-                                  }, color: AppColours.golden_button_bg,
+                                  onPressed: () {}, color: Colors.green,
                                   child: CommonWidgets.selectedFontWidget(
                                       "Accept",
                                       AppColours.white, 14.0,
