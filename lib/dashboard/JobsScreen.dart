@@ -68,8 +68,7 @@ String errorText;
                       child: CommonWidgets.selectedFontWidget("${generateDate(booking.date)} at ${formatTime(booking.time)}", AppColours.black, 15.0,
                           FontWeight.bold),
                     ),
-                    CommonWidgets.selectedFontWidget(
-                        "220" + " Punds", AppColours.white,
+                    CommonWidgets.selectedFontWidget(booking.price!=0?"${booking.price} Pounds":"", AppColours.white,
                         15.0,
                         FontWeight.bold),
                   ],
@@ -86,7 +85,7 @@ String errorText;
                 CommonWidgets.selectedFontWidget(booking.arrivalLocation!=null?booking.arrivalLocation:"",
                     AppColours.black, 13.0, FontWeight.w500),
                 SizedBox(height: 10.0),
-                Row(mainAxisAlignment: MainAxisAlignment
+                booking.price!=0?Row(mainAxisAlignment: MainAxisAlignment
                     .spaceEvenly,
                   children: [
                     RaisedButton(
@@ -104,7 +103,11 @@ String errorText;
                           AppColours.white, 14.0,
                           FontWeight.w500),)
                   ],
-                ),
+                ):Row(
+                  children: [Expanded(child: CommonWidgets.selectedFontWidget(
+                      "Awaiting Quote",
+                      AppColours.black, 18.0,
+                      FontWeight.bold),)],),
               ],
             ),
           )),
