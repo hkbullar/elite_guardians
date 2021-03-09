@@ -7,6 +7,7 @@ import 'package:elite_guardians/global/Global.dart';
 import 'package:elite_guardians/global/PLoader.dart';
 import 'package:elite_guardians/global/ServiceHttp.dart';
 import 'package:elite_guardians/pojo/ErrorPojo.dart';
+import 'package:elite_guardians/pojo/JobsListPojo.dart';
 import 'package:elite_guardians/pojo/LoginPojo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,31 @@ class API{
         }, onError: (value) {
           loader.hide();
           CommonWidgets.showMessage(context, ErrorPojo.fromJson(json.decode(value)).errors.error[0]);
+        });
+  }
+  jobsList({void onSuccess(value),void onError(value)}){
+
+    ServiceHttp().httpRequestGet("get-booking-request",
+        onSuccess: (value) async {
+          JobsListPojo pojo=JobsListPojo.fromJson(json.decode(value));
+          onSuccess(pojo.bookings);
+        }, onError: (value) {
+          Map<String, dynamic> map = json.decode(value);
+          onError(map["error"]);
+         // CommonWidgets.showMessage(context, ErrorPojo.fromJson(json.decode(value)).errors.error[0]);
+        });
+  }
+  createRequest(Map jsonPost){
+    PLoader loader=PLoader(context);
+    loader.show();
+    ServiceHttp().httpRequestPost("create-booking-request",map: jsonPost,
+        onSuccess: (value) async {
+          loader.hide();
+          Global.toast(context, "Request Created Successfully");
+        }, onError: (value) {
+          loader.hide();
+          Map<String, dynamic> map = json.decode(value);
+          CommonWidgets.showMessage(context,map["error"]);
         });
   }
 }

@@ -29,7 +29,7 @@ class ServiceHttp{
   }
   httpRequestGet(String url,{void onSuccess(value),void onError(value)}) async{
     var token = await Global.getToken();
-    var response= await http.get(BASE_URL_LOCAL+url,
+    var response= await http.get(BASE_URL+url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': token.isNotEmpty?'Bearer $token':"",

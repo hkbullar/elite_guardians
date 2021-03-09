@@ -17,10 +17,15 @@ class Constants{
 
   static const String SEARCH_USER = "search";
 
-  //CREATE COMMENT KEYS
-  static const String COMMENT_USER_ID = "user_id";
-  static const String COMMENT_FEED_ID = "feeds_id";
-  static const String COMMENT_CONTENT = "comment";
+  //CREATE REQUEST KEYS
+  static const String REQUEST_DESTINATION = "destination_location";
+  static const String REQUEST_ARRIVAL = "arrival_location";
+  static const String REQUEST_DATE = "date";
+  static const String REQUEST_TIME = "time";
+  static const String REQUEST_SECURITY = "security_guard";
+  static const String REQUEST_COMMENTS = "comment";
+  static const String REQUEST_IS_ADMIN = "is_admin";
+  static const String REQUEST_NOW_OR_LATER = "nowlater";
 
   //LIKE/DISLIKE KEYS
   static const String LIKE_USER_ID = "user_id";

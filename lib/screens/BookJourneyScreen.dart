@@ -1,7 +1,10 @@
 
+import 'package:elite_guardians/global/API.dart';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/CommonWidgets.dart';
+import 'package:elite_guardians/global/Constants.dart';
 import 'package:elite_guardians/global/EliteAppBar.dart';
+import 'package:elite_guardians/global/Size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -13,13 +16,19 @@ class BookJourneyScreen extends StatefulWidget
 }
 
 class _BookJourneyScreenState extends State<BookJourneyScreen> {
-  DateTime selectedDate;
+  DateTime selectedDate=DateTime.now();
   int bookNowOrLater=0;
-  int guardSelection=0;
+  int guardSelection=1;
   bool guardCheckedOrNot=false;
   TimeOfDay timeFrom;
   @override
+  void initState() {
+    timeFrom=TimeOfDay.fromDateTime(selectedDate);
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
+    Size().init(context);
     return Scaffold(
       appBar: EliteAppBar("Book a Journey"),
       backgroundColor: AppColours.black,
@@ -156,7 +165,7 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
                 children: [
                   Expanded(
                     child: RadioListTile(
-                      value: 0,
+                      value: 1,
                       toggleable: true,
                       groupValue: guardSelection,
 //                      tileColor: AppColours.textFeildBG,
@@ -175,7 +184,7 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
                   SizedBox(width: 10),
                   Expanded(
                     child: RadioListTile(
-                      value: 1,
+                      value: 2,
                       toggleable: true,
                       groupValue: guardSelection,
 //                      tileColor: AppColours.textFeildBG,
@@ -203,7 +212,7 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
                 decoration: CommonWidgets.loginFormDecoration("Enter Your Comments",Icons.comment_bank_outlined),
               ),
               SizedBox(height: 20,),
-              CommonWidgets.goldenFullWidthButton("Get Quote",onClick: (){})
+              CommonWidgets.goldenFullWidthButton("Get Quote",onClick: (){_createRequestClick(context);})
             ],
           )
         ),
@@ -224,6 +233,29 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
         selectedDate = picked;
       });
   }
+  _createRequestClick(BuildContext con)
+  {
+
+    DateTime currentDate = DateTime.now();
+    int guardsCount=0;
+    if(guardCheckedOrNot){
+      guardsCount=guardSelection;
+    }
+    if(bookNowOrLater!=0){
+      currentDate=selectedDate;
+    }
+      Map jsonPost = {
+        Constants.REQUEST_DESTINATION: "Destination",
+        Constants.REQUEST_ARRIVAL: "Arrival",
+        Constants.REQUEST_DATE: DateFormat("yyyy-MM-dd").format(currentDate),
+        Constants.REQUEST_TIME: DateFormat.Hm().format(currentDate),
+        Constants.REQUEST_SECURITY: "$guardsCount",
+        Constants.REQUEST_IS_ADMIN: "0",
+      };
+      FocusScope.of(context).unfocus();
+      API(context).createRequest(jsonPost);
+
+  }
   _pickFromTime() async {
     TimeOfDay currentTime=TimeOfDay.now();
     TimeOfDay t = await showTimePicker(
@@ -233,6 +265,7 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
     if(t != null)
       setState(() {
         timeFrom = t;
+        selectedDate=DateTime(selectedDate.year, selectedDate.month, selectedDate.day,timeFrom.hour,timeFrom.minute,0);
       });
   }
   String formatTimeOfDay(TimeOfDay tod) {
