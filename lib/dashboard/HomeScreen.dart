@@ -50,37 +50,35 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
  Widget _listItem(int index){
-   return  Expanded(
-     child: InkWell(
-       onTap: (){
-         if(index==0)
-         {
-           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BookJourneyScreen()));
-         }
+   return  InkWell(
+     onTap: (){
+       if(index==0)
+       {
+         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BookJourneyScreen()));
+       }
 
-         if(index==1)
-         {
-           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => HireGuardScreen()));
-         }
+       if(index==1)
+       {
+         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => HireGuardScreen()));
+       }
 
-         if(index==2)
-         {
-           showSuggestDialog(context);
-         }
-       },
-       child: Card(
-         color: AppColours.textFeildBG,
-         child: Padding(
-           padding: const EdgeInsets.all(25.0),
-           child: Column(
-             crossAxisAlignment: CrossAxisAlignment.center,
-             mainAxisAlignment: MainAxisAlignment.center,
-             children: [
-               Image.asset(index==0?"${Constants.LOCAL_IMAGE}home_car.png":index==1?"${Constants.LOCAL_IMAGE}guardians.png":"${Constants.LOCAL_IMAGE}security_officer.png",height: Size.size(50),),
-               SizedBox(height: Size.size(20)),
-               Text(index==0?"Book a Journey":index==1?"Hire a Guardian":"Need Security Officer",textAlign: TextAlign.center,style: TextStyle(fontSize: Size.size(14),color: AppColours.white,fontWeight: FontWeight.bold),)
-             ],),
-         ),
+       if(index==2)
+       {
+         showSuggestDialog(context);
+       }
+     },
+     child: Card(
+       color: AppColours.textFeildBG,
+       child: Padding(
+         padding: const EdgeInsets.all(25.0),
+         child: Column(
+           crossAxisAlignment: CrossAxisAlignment.center,
+           mainAxisAlignment: MainAxisAlignment.center,
+           children: [
+             Image.asset(index==0?"${Constants.LOCAL_IMAGE}home_car.png":index==1?"${Constants.LOCAL_IMAGE}guardians.png":"${Constants.LOCAL_IMAGE}security_officer.png",height: Size.size(50),),
+             SizedBox(height: Size.size(20)),
+             Text(index==0?"Book a Journey":index==1?"Hire a Guardian":"Need Security Officer",textAlign: TextAlign.center,style: TextStyle(fontSize: Size.size(14),color: AppColours.white,fontWeight: FontWeight.bold),)
+           ],),
        ),
      ),
    );
