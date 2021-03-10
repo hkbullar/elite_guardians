@@ -11,18 +11,21 @@ import 'package:intl/intl.dart';
 
 class HireGuardScreen extends StatefulWidget
 {
+  HireGuardScreen({this.title});
+  String title;
   @override
-  _HireGuardScreenState createState() => _HireGuardScreenState();
+  _HireGuardScreenState createState() => _HireGuardScreenState(title);
 }
 
 class _HireGuardScreenState extends State<HireGuardScreen> {
+  _HireGuardScreenState(this.title);
   DateTime selectedDateFrom,selectedDateTo;
   List<CheckBoxListTileModel> checkBoxListTileModel =
   CheckBoxListTileModel.getUsers();
   int bookNowOrLater=0;
   int guardSelection=0;
   int weekDayOrFull=0;
-
+  String title;
   bool guardCheckedOrNot=false;
 
   TimeOfDay timeFrom,timeTo;
@@ -35,7 +38,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
   Widget build(BuildContext context) {
     Size().init(context);
     return Scaffold(
-      appBar: EliteAppBar("Hire Guards"),
+      appBar: EliteAppBar(title==null?"Hire Guards":"Hire ${title}"),
       backgroundColor: AppColours.black,
       body: SingleChildScrollView(
         child: Padding(
@@ -264,28 +267,35 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                     return _checkBox(index);
                   })
                   ):SizedBox(),
-              SizedBox(height: Size.size(15)),
-              TextField(
-                enabled: false,
-                style: TextStyle(color: Colors.white),
-                decoration: CommonWidgets.loginFormDecoration("Number of Guardians Needed ?",Icons.person_outline),
-              ),
-              SizedBox(height: Size.size(20)),
-              Row(
+
+              title==null?Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  guardListTile(1),
-                  SizedBox(width: Size.size(10)),
-                  guardListTile(2),
+                  SizedBox(height: Size.size(15)),
+                  TextField(
+                    enabled: false,
+                    style: TextStyle(color: Colors.white),
+                    decoration: CommonWidgets.loginFormDecoration("Number of Guardians Needed ?",Icons.person_outline),
+                  ),
+                  SizedBox(height: Size.size(20)),
+                  Row(
+                    children: [
+                      guardListTile(1),
+                      SizedBox(width: Size.size(10)),
+                      guardListTile(2),
+                    ],
+                  ),
+                  SizedBox(height: Size.size(10)),
+                  Row(
+                    children: [
+                      guardListTile(3),
+                      SizedBox(width: Size.size(10)),
+                      guardListTile(4),
+                    ],
+                  ),
                 ],
-              ),
-              SizedBox(height: Size.size(10)),
-              Row(
-                children: [
-                  guardListTile(3),
-                  SizedBox(width: Size.size(10)),
-                  guardListTile(4),
-                ],
-              ),
+              ):SizedBox(),
+
               SizedBox(height: Size.size(20)),
               Padding(
                 padding: EdgeInsets.all(Size.size(8)),

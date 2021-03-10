@@ -69,7 +69,7 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
                       value: 0,
                       toggleable: true,
                       groupValue: bookNowOrLater,
-//                     tileColor: AppColours.textFeildBG,
+                    tileColor: AppColours.textFeildBG,
                       title: Text("Now",style: TextStyle(color: AppColours.white,fontSize: 16)),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -88,7 +88,7 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
                       value: 1,
                       toggleable: true,
                       groupValue: bookNowOrLater,
-//                    tileColor: AppColours.textFeildBG,
+                    tileColor: AppColours.textFeildBG,
                       title: Text("Later",style: TextStyle(color: AppColours.white,fontSize: 16)),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -151,7 +151,7 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
               ],):SizedBox(),
               SizedBox(height: 20),
               CheckboxListTile(
-//               tileColor: AppColours.textFeildBG,
+              tileColor: AppColours.textFeildBG,
                   activeColor: AppColours.golden_button_bg,
                   title: Text("Need Guardian?",style: TextStyle(color: AppColours.white,fontSize: 16)),
                   value: guardCheckedOrNot,

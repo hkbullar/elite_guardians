@@ -66,6 +66,9 @@ flutter:
    - assets/images/man_black.png
    - assets/images/woman_black.png
    - assets/images/intersex_black.png
+   - assets/images/guardians.png
+   - assets/images/home_car.png
+   - assets/images/security_officer.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
