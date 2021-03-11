@@ -24,7 +24,6 @@ class ServiceHttp{
     else
      {
     onError(response.body);
-
     }
   }
   httpRequestGet(String url,{void onSuccess(value),void onError(value)}) async{

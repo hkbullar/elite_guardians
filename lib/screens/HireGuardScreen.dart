@@ -38,7 +38,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
   Widget build(BuildContext context) {
     Size().init(context);
     return Scaffold(
-      appBar: EliteAppBar(title==null?"Hire Guards":"Hire ${title}"),
+      appBar: EliteAppBar(title==null?"Hire Guardians":"Hire ${title}"),
       backgroundColor: AppColours.black,
       body: SingleChildScrollView(
         child: Padding(
@@ -134,7 +134,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       value: 0,
                       toggleable: true,
                       groupValue: bookNowOrLater,
-                     tileColor: AppColours.textFeildBG,
+//                     tileColor: AppColours.textFeildBG,
                       title: Text("Once",style: TextStyle(color: AppColours.white,fontSize: Size.size(16))),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -153,7 +153,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       value: 1,
                       toggleable: true,
                       groupValue: bookNowOrLater,
-                      tileColor: AppColours.textFeildBG,
+//                      tileColor: AppColours.textFeildBG,
                       title: Text("Multiple Days",style: TextStyle(color: AppColours.white,fontSize: Size.size(16))),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -222,7 +222,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       value: 0,
                       toggleable: true,
                       groupValue: weekDayOrFull,
-                      tileColor: AppColours.textFeildBG,
+//                      tileColor: AppColours.textFeildBG,
                       title: Text("Full Week",style: TextStyle(color: AppColours.white,fontSize: Size.size(16))),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -241,7 +241,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       value: 1,
                       toggleable: true,
                       groupValue: weekDayOrFull,
-                     tileColor: AppColours.textFeildBG,
+////                     tileColor: AppColours.textFeildBG,
                       title: Text("Selected Days",style: TextStyle(color: AppColours.white,fontSize: Size.size(16))),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -319,7 +319,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
         value: value,
         toggleable: true,
         groupValue: guardSelection,
-        tileColor: AppColours.textFeildBG,
+//        tileColor: AppColours.textFeildBG,
         title: Text("$value",style: TextStyle(color: AppColours.white,fontSize: Size.size(16))),
         activeColor: AppColours.golden_button_bg,
         onChanged: (val)
@@ -333,6 +333,8 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
       ),
     );
   }
+
+
   _selectFromDate(BuildContext context) async {
     DateTime currentDate = DateTime.now();
     var tomorrow = DateTime(currentDate.year, currentDate.month+2, currentDate.day);
@@ -377,6 +379,8 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
       ),
     );
   }
+
+
   _selectToDate(BuildContext context) async {
     DateTime currentDate = selectedDateFrom==null?DateTime.now():selectedDateFrom;
     var tomorrow = DateTime(currentDate.year, currentDate.month+2, currentDate.day);
@@ -402,6 +406,8 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
         timeFrom = t;
       });
   }
+
+
   _pickToTime() async {
     TimeOfDay currentTime=timeFrom==null?TimeOfDay.now():timeFrom;
     TimeOfDay t = await showTimePicker(

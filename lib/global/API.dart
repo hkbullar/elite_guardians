@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:elite_guardians/dashboard/DashBoardScreen.dart';
 import 'package:elite_guardians/global/CommonWidgets.dart';
 import 'package:elite_guardians/global/Constants.dart';
@@ -35,6 +34,7 @@ class API{
           CommonWidgets.showMessage(context,map["error"]);
         });
   }
+
   register(Map jsonPost){
     PLoader loader=PLoader(context);
     loader.show();
@@ -53,10 +53,10 @@ class API{
           CommonWidgets.showMessage(context, ErrorPojo.fromJson(json.decode(value)).errors.error[0]);
         });
   }
-  jobsList({void onSuccess(value),void onError(value)}){
 
+  jobsList({void onSuccess(value),void onError(value)}){
     ServiceHttp().httpRequestGet("get-booking-request",
-        onSuccess: (value) async {
+        onSuccess: (value) async{
           JobsListPojo pojo=JobsListPojo.fromJson(json.decode(value));
           onSuccess(pojo.bookings);
         }, onError: (value) {
@@ -65,6 +65,7 @@ class API{
          // CommonWidgets.showMessage(context, ErrorPojo.fromJson(json.decode(value)).errors.error[0]);
         });
   }
+
   createRequest(Map jsonPost){
     PLoader loader=PLoader(context);
     loader.show();
