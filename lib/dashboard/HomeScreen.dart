@@ -16,8 +16,10 @@ class HomeScreen extends StatefulWidget
 class _HomeScreenState extends State<HomeScreen> {
   List<String> securityUsersList=[];
   String dropDownValue;
+
   @override
-  void initState() {
+  void initState()
+  {
     securityUsersList.add("Steward");
     securityUsersList.add("Security Guard");
     securityUsersList.add("Door Supervisor");
@@ -28,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     Size().init(context);
@@ -49,7 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
       )
     );
   }
- Widget _listItem(int index){
+
+  Widget _listItem(int index){
    return  InkWell(
      onTap: (){
        if(index==0)
@@ -64,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
        if(index==2)
        {
-         showSuggestDialog(context);
+         securityOfficerTypesDialogue(context);
        }
      },
      child: Card(
@@ -83,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
      ),
    );
   }
-  showSuggestDialog(BuildContext context) {
+  securityOfficerTypesDialogue(BuildContext context) {
     Dialog alert = Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
         elevation: 0.0,
@@ -91,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: StatefulBuilder(
         builder: (BuildContext context, StateSetter setState){
           return Container(
-            child: categoryDropDown(setState),
+            child: securityOfficerTypesUI(setState),
           );
         }
         ));
@@ -102,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
- Widget categoryDropDown(StateSetter setState){
+ Widget securityOfficerTypesUI(StateSetter setState){
     return   Container(
       decoration: BoxDecoration(
           color: AppColours.golden_button_bg,
@@ -124,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
               )
             ],
           ),
-          SizedBox(height: 20,),
+          SizedBox(height: 20),
           Container(
             decoration: BoxDecoration(
                 color: AppColours.textFeildBG,

@@ -38,7 +38,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
   Widget build(BuildContext context) {
     Size().init(context);
     return Scaffold(
-      appBar: EliteAppBar(title==null?"Hire Guardians":"Hire ${title}"),
+      appBar: EliteAppBar(title==null?"Hire Guardian":"Hire ${title}"),
       backgroundColor: AppColours.black,
       body: SingleChildScrollView(
         child: Padding(
@@ -76,52 +76,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                   decoration: CommonWidgets.loginFormDecoration("Enter Your Location",Icons.location_on_outlined),
                 ),
               ),
-              SizedBox(height: Size.size(20)),
-              Row(children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding:  EdgeInsets.all(Size.size(8)),
-                        child: Text("Timing",style: TextStyle(color: AppColours.white,fontSize: Size.size(16)),),
-                      ),
-                      InkWell(
-                        onTap: (){
-                          _pickFromTime();
-                        },
-                        child: TextField(
-                          enabled: false,
-                          style: TextStyle(color: Colors.white),
-                          decoration: CommonWidgets.loginFormDecoration(timeFrom==null?"From":formatTimeOfDay(timeFrom),Icons.access_time_outlined),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(width: Size.size(10)),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(Size.size(8)),
-                        child: Text("",style: TextStyle(color: AppColours.white,fontSize: Size.size(16)),),
-                      ),
-                      InkWell(
-                        onTap: (){
-                          _pickToTime();
-                        },
-                        child: TextField(
-                          enabled: false,
-                          style: TextStyle(color: Colors.white),
-                          decoration: CommonWidgets.loginFormDecoration(timeTo==null?"To":formatTimeOfDay(timeTo),Icons.access_time_outlined),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],),
+
               SizedBox(height: Size.size(20)),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -134,7 +89,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       value: 0,
                       toggleable: true,
                       groupValue: bookNowOrLater,
-//                     tileColor: AppColours.textFeildBG,
+                     tileColor: AppColours.textFeildBG,
                       title: Text("Once",style: TextStyle(color: AppColours.white,fontSize: Size.size(16))),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -153,7 +108,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       value: 1,
                       toggleable: true,
                       groupValue: bookNowOrLater,
-//                      tileColor: AppColours.textFeildBG,
+                      tileColor: AppColours.textFeildBG,
                       title: Text("Multiple Days",style: TextStyle(color: AppColours.white,fontSize: Size.size(16))),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -222,7 +177,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       value: 0,
                       toggleable: true,
                       groupValue: weekDayOrFull,
-//                      tileColor: AppColours.textFeildBG,
+                      tileColor: AppColours.textFeildBG,
                       title: Text("Full Week",style: TextStyle(color: AppColours.white,fontSize: Size.size(16))),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -241,7 +196,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                       value: 1,
                       toggleable: true,
                       groupValue: weekDayOrFull,
-////                     tileColor: AppColours.textFeildBG,
+                     tileColor: AppColours.textFeildBG,
                       title: Text("Selected Days",style: TextStyle(color: AppColours.white,fontSize: Size.size(16))),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -267,7 +222,52 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                     return _checkBox(index);
                   })
                   ):SizedBox(),
-
+              SizedBox(height: Size.size(20)),
+              Row(children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding:  EdgeInsets.all(Size.size(8)),
+                        child: Text("Timing",style: TextStyle(color: AppColours.white,fontSize: Size.size(16)),),
+                      ),
+                      InkWell(
+                        onTap: (){
+                          _pickFromTime();
+                        },
+                        child: TextField(
+                          enabled: false,
+                          style: TextStyle(color: Colors.white),
+                          decoration: CommonWidgets.loginFormDecoration(timeFrom==null?"From":formatTimeOfDay(timeFrom),Icons.access_time_outlined),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: Size.size(10)),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(Size.size(8)),
+                        child: Text("",style: TextStyle(color: AppColours.white,fontSize: Size.size(16)),),
+                      ),
+                      InkWell(
+                        onTap: (){
+                          _pickToTime();
+                        },
+                        child: TextField(
+                          enabled: false,
+                          style: TextStyle(color: Colors.white),
+                          decoration: CommonWidgets.loginFormDecoration(timeTo==null?"To":formatTimeOfDay(timeTo),Icons.access_time_outlined),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],),
               title==null?Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -306,12 +306,15 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                 decoration: CommonWidgets.loginFormDecoration("Enter Your Comments",Icons.comment_bank_outlined),
               ),
               SizedBox(height: Size.size(20)),
-              CommonWidgets.goldenFullWidthButton("Get Quote",onClick: (){})
+              CommonWidgets.goldenFullWidthButton("Get Quote",onClick: (){_getQuoteClick();})
             ],
           )
         ),
       )
     );
+  }
+  _getQuoteClick(){
+
   }
  Widget guardListTile(int value){
    return Expanded(
@@ -319,7 +322,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
         value: value,
         toggleable: true,
         groupValue: guardSelection,
-//        tileColor: AppColours.textFeildBG,
+        tileColor: AppColours.textFeildBG,
         title: Text("$value",style: TextStyle(color: AppColours.white,fontSize: Size.size(16))),
         activeColor: AppColours.golden_button_bg,
         onChanged: (val)
@@ -333,8 +336,6 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
       ),
     );
   }
-
-
   _selectFromDate(BuildContext context) async {
     DateTime currentDate = DateTime.now();
     var tomorrow = DateTime(currentDate.year, currentDate.month+2, currentDate.day);
@@ -370,7 +371,11 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
               Checkbox(
                   value: checkBoxListTileModel[index].isCheck,
                   activeColor: AppColours.golden_button_bg,
-                  onChanged: (value){}),
+                  onChanged: (value){
+                    setState(() {
+                      checkBoxListTileModel[index].isCheck = !checkBoxListTileModel[index].isCheck;
+                    });
+                   }),
               Text(checkBoxListTileModel[index].title,style: TextStyle(fontSize: Size.size(16),color: AppColours.white),),
               SizedBox(height: Size.size(5))
             ],
@@ -379,8 +384,6 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
       ),
     );
   }
-
-
   _selectToDate(BuildContext context) async {
     DateTime currentDate = selectedDateFrom==null?DateTime.now():selectedDateFrom;
     var tomorrow = DateTime(currentDate.year, currentDate.month+2, currentDate.day);
@@ -406,8 +409,6 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
         timeFrom = t;
       });
   }
-
-
   _pickToTime() async {
     TimeOfDay currentTime=timeFrom==null?TimeOfDay.now():timeFrom;
     TimeOfDay t = await showTimePicker(

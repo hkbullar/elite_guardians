@@ -5,6 +5,7 @@ import 'package:elite_guardians/global/Constants.dart';
 import 'package:elite_guardians/global/Global.dart';
 import 'package:elite_guardians/global/PLoader.dart';
 import 'package:elite_guardians/global/ServiceHttp.dart';
+import 'package:elite_guardians/pojo/BookingPojo.dart';
 import 'package:elite_guardians/pojo/ErrorPojo.dart';
 import 'package:elite_guardians/pojo/JobsListPojo.dart';
 import 'package:elite_guardians/pojo/LoginPojo.dart';
@@ -75,6 +76,22 @@ class API{
           Global.toast(context, "Request Created Successfully");
         }, onError: (value) {
           loader.hide();
+          Map<String, dynamic> map = json.decode(value);
+          CommonWidgets.showMessage(context,map["error"]);
+        });
+  }
+  acceptReject(Map jsonPost,{bool rejected,void onResponse(value)}){
+    PLoader loader=PLoader(context);
+    loader.show();
+    ServiceHttp().httpRequestPost("update-comment",map: jsonPost,
+        onSuccess: (value) async {
+          BookingPojo pojo=BookingPojo.fromJson(json.decode(value));
+        onResponse(pojo.bookings);
+          loader.hide();
+          Global.toast(context, rejected!=null?"Request Rejected":"Request Accepted");
+        }, onError: (value) {
+          loader.hide();
+          onResponse(null);
           Map<String, dynamic> map = json.decode(value);
           CommonWidgets.showMessage(context,map["error"]);
         });

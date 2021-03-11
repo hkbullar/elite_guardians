@@ -27,6 +27,11 @@ class Constants{
   static const String REQUEST_IS_ADMIN = "is_admin";
   static const String REQUEST_NOW_OR_LATER = "nowlater";
 
+  //ACCEPT_REJECT_KEYS
+  static const String REQUEST_AR_ID = "id";
+  static const String REQUEST_AR_COMMENT = "comment";
+  static const String REQUEST_AR_ACCEPT_OR_REJECT = "status";
+
   //LIKE/DISLIKE KEYS
   static const String LIKE_USER_ID = "user_id";
   static const String LIKE_FEED_ID = "feeds_id";

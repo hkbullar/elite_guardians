@@ -9,6 +9,7 @@ class ServiceHttp{
 
   httpRequestPost(String url,{Map map,void onSuccess(value),void onError(value)}) async{
     var token = await Global.getToken();
+    print(token);
     var response= await http.post(BASE_URL+url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -28,6 +29,7 @@ class ServiceHttp{
   }
   httpRequestGet(String url,{void onSuccess(value),void onError(value)}) async{
     var token = await Global.getToken();
+    print(token);
     var response= await http.get(BASE_URL+url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
