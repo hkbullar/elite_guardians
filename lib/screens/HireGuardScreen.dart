@@ -1,3 +1,6 @@
+
+
+import 'package:elite_guardians/global/API.dart';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/CommonWidgets.dart';
 import 'package:elite_guardians/global/Constants.dart';
@@ -20,16 +23,17 @@ class HireGuardScreen extends StatefulWidget
 class _HireGuardScreenState extends State<HireGuardScreen> {
   _HireGuardScreenState(this.title);
   DateTime selectedDateFrom,selectedDateTo;
-  List<CheckBoxListTileModel> checkBoxListTileModel =
-  CheckBoxListTileModel.getUsers();
+  DateTime onceDate = DateTime.now();
+  DateTime _fromTime = DateTime.now();
+  DateTime _toTime = DateTime.now();
+  List<CheckBoxListTileModel> checkBoxListTileModel =CheckBoxListTileModel.getDays();
   int bookNowOrLater=0;
-  int guardSelection=0;
+  int guardSelection=1;
   int weekDayOrFull=0;
   String title;
   bool guardCheckedOrNot=false;
-
+  String location="location";
   TimeOfDay timeFrom,timeTo;
-
   PickResult selectedPlace;
 
   LatLng kInitialPosition = LatLng(51.507351,-0.127758);
@@ -76,7 +80,6 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                   decoration: CommonWidgets.loginFormDecoration("Enter Your Location",Icons.location_on_outlined),
                 ),
               ),
-
               SizedBox(height: Size.size(20)),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -168,7 +171,31 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                     ],
                   ),
                 )
-              ]):SizedBox(),
+              ]):Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(Size.size(8)),
+                          child: Text("Select Date",style: TextStyle(color: AppColours.white,fontSize: Size.size(16)),),
+                        ),
+                        InkWell(
+                          onTap: (){
+                            _selectOnceDate(context);
+                          },
+                          child: TextField(
+                            enabled: false,
+                            style: TextStyle(color: Colors.white),
+                            decoration: CommonWidgets.loginFormDecoration(onceDate==null?"Date":"${DateFormat("dd MMMM").format(onceDate)} (Tap to Change)",Icons.calendar_today),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(height: bookNowOrLater==1?Size.size(20):0),
               bookNowOrLater==1?Row(
                 children: [
@@ -314,8 +341,26 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
     );
   }
   _getQuoteClick(){
-
+    _createRequestClick(context);
   }
+
+  List<String> generateDaysList(){
+    List<String> daysList=[];
+    for(int i=0;i<checkBoxListTileModel.length;i++){
+      if(bookNowOrLater!=0){
+        if(weekDayOrFull==0){
+          daysList.add(checkBoxListTileModel[i].title);
+        }
+        else{
+          if(checkBoxListTileModel[i].isCheck){
+            daysList.add(checkBoxListTileModel[i].title);
+          }
+        }
+      }
+    }
+    return daysList;
+  }
+
  Widget guardListTile(int value){
    return Expanded(
       child: RadioListTile(
@@ -338,16 +383,45 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
   }
   _selectFromDate(BuildContext context) async {
     DateTime currentDate = DateTime.now();
+
     var tomorrow = DateTime(currentDate.year, currentDate.month+2, currentDate.day);
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: currentDate, // Refer step 1
+      initialDate: selectedDateFrom!=null?selectedDateFrom:currentDate, // Refer step 1
       firstDate: currentDate,
       lastDate: tomorrow,
     );
     if (picked != null && picked != selectedDateFrom)
       setState(() {
         selectedDateFrom = picked;
+      });
+  }
+  _selectToDate(BuildContext context) async {
+    DateTime currentDate = selectedDateFrom==null?DateTime.now():selectedDateFrom;
+    var tomorrow = DateTime(currentDate.year, currentDate.month+2, currentDate.day);
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDateTo!=null?selectedDateTo:currentDate, // Refer step 1
+      firstDate: currentDate,
+      lastDate: tomorrow,
+    );
+    if (picked != null && picked != selectedDateFrom)
+      setState(() {
+        selectedDateTo = picked;
+      });
+  }
+  _selectOnceDate(BuildContext context) async {
+    DateTime currentDate = DateTime.now();
+    var tomorrow = DateTime(currentDate.year, currentDate.month+2, currentDate.day);
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: onceDate, // Refer step 1
+      firstDate: currentDate,
+      lastDate: tomorrow,
+    );
+    if (picked != null && picked != onceDate)
+      setState(() {
+        onceDate = picked;
       });
   }
   Widget _checkBox(int index){
@@ -384,22 +458,13 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
       ),
     );
   }
-  _selectToDate(BuildContext context) async {
-    DateTime currentDate = selectedDateFrom==null?DateTime.now():selectedDateFrom;
-    var tomorrow = DateTime(currentDate.year, currentDate.month+2, currentDate.day);
-    final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: currentDate, // Refer step 1
-      firstDate: currentDate,
-      lastDate: tomorrow,
-    );
-    if (picked != null && picked != selectedDateFrom)
-      setState(() {
-        selectedDateTo = picked;
-      });
-  }
+
   _pickFromTime() async {
+
     TimeOfDay currentTime=TimeOfDay.now();
+    if(timeFrom!=null){
+      currentTime=timeFrom;
+    }
     TimeOfDay t = await showTimePicker(
         context: context,
         initialTime: currentTime
@@ -407,10 +472,15 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
     if(t != null)
       setState(() {
         timeFrom = t;
+        _fromTime=DateTime(_fromTime.year, _fromTime.month, _fromTime.day,timeFrom.hour,timeFrom.minute,0);
       });
   }
   _pickToTime() async {
+
     TimeOfDay currentTime=timeFrom==null?TimeOfDay.now():timeFrom;
+    if(timeTo!=null){
+      currentTime=timeTo;
+    }
     TimeOfDay t = await showTimePicker(
         context: context,
         initialTime: currentTime
@@ -418,6 +488,8 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
     if(t != null)
       setState(() {
         timeTo = t;
+
+        _toTime=DateTime(_toTime.year, _toTime.month, _toTime.day,timeFrom.hour,timeFrom.minute,0);
       });
   }
   String formatTimeOfDay(TimeOfDay tod) {
@@ -426,7 +498,72 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
     final format = DateFormat.jm();  //"6:00 AM"
     return format.format(dt);
   }
+  _createRequestClick(BuildContext con)
+  {
+    if(_validate()){
+      if(bookNowOrLater==0){
+        selectedDateFrom=onceDate;
+        selectedDateTo=onceDate;
+      }
+
+      Map jsonPost = {
+        Constants.REQUEST_HG_LOCATION: "Location",
+        Constants.REQUEST_HG_FROM_TIME: DateFormat.Hm().format(_fromTime),
+        Constants.REQUEST_HG_TO_TIME: DateFormat.Hm().format(_toTime),
+        Constants.REQUEST_HG_FROM_DATE: DateFormat("yyyy-MM-dd").format(selectedDateFrom),
+        Constants.REQUEST_HG_TO_DATE: DateFormat("yyyy-MM-dd").format(selectedDateTo),
+        Constants.REQUEST_HG_DAYS: generateDaysList(),
+        Constants.REQUEST_HG_COUNT: "$guardSelection",
+      };
+      API(con).createGuardianRequest(jsonPost);
+    }
+
+
+
+  }
+ bool _validate(){
+
+    if(location==null && location.isEmpty){
+      CommonWidgets.showMessage(context,"Please enter Location");
+      return false;
+    }
+    else if(bookNowOrLater==1){
+      if(selectedDateFrom==null){
+        CommonWidgets.showMessage(context,"Please select from Date");
+        return false;
+      }
+      else if(selectedDateTo==null){
+        CommonWidgets.showMessage(context,"Please select To Date");
+        return false;
+      }
+      else if(weekDayOrFull==1){
+        bool check=false;
+        for(int i=0;i<checkBoxListTileModel.length;i++){
+          if(checkBoxListTileModel[i].isCheck){
+            check=true;
+          }
+        }
+        if(!check){
+          CommonWidgets.showMessage(context,"Please select atleast one day");
+          return false;
+        }
+      }
+    }
+    else if(timeFrom==null){
+      CommonWidgets.showMessage(context,"Please select From Time");
+      return false;
+    }
+    else if(timeTo==null){
+      CommonWidgets.showMessage(context,"Please select To Time");
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
 }
+
+
 
 class CheckBoxListTileModel {
   int dayId;
@@ -436,7 +573,7 @@ class CheckBoxListTileModel {
 
   CheckBoxListTileModel({this.dayId, this.img, this.title, this.isCheck});
 
-  static List<CheckBoxListTileModel> getUsers() {
+  static List<CheckBoxListTileModel> getDays() {
     return <CheckBoxListTileModel>[
       CheckBoxListTileModel(
           dayId: 1,
@@ -468,4 +605,5 @@ class CheckBoxListTileModel {
           isCheck: false),
     ];
   }
+
 }

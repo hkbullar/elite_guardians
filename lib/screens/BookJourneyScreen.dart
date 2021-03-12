@@ -268,6 +268,7 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
         selectedDate=DateTime(selectedDate.year, selectedDate.month, selectedDate.day,timeFrom.hour,timeFrom.minute,0);
       });
   }
+
   String formatTimeOfDay(TimeOfDay tod) {
     final now = new DateTime.now();
     final dt = DateTime(now.year, now.month, now.day, tod.hour, tod.minute);

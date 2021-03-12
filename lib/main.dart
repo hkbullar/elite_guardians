@@ -2,6 +2,7 @@
 import 'package:elite_guardians/dashboard/HomeScreen.dart';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/loginpages/SplashScreen.dart';
+import 'package:elite_guardians/screens/HireGuardScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.grey,
       ),
       //home: JobsScreen(),
-     home: SplashScreen(),
+     home: HireGuardScreen(),
     );
   }
 }

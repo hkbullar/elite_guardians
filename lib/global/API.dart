@@ -80,6 +80,19 @@ class API{
           CommonWidgets.showMessage(context,map["error"]);
         });
   }
+  createGuardianRequest(Map jsonPost){
+    PLoader loader=PLoader(context);
+    loader.show();
+    ServiceHttp().httpRequestPost("save-guadian",map: jsonPost,
+        onSuccess: (value) async {
+          loader.hide();
+          Global.toast(context, "Request Created Successfully");
+        }, onError: (value) {
+          loader.hide();
+          Map<String, dynamic> map = json.decode(value);
+          CommonWidgets.showMessage(context,map["error"]);
+        });
+  }
   acceptReject(Map jsonPost,{bool rejected,void onResponse(value)}){
     PLoader loader=PLoader(context);
     loader.show();

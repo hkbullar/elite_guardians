@@ -27,6 +27,17 @@ class Constants{
   static const String REQUEST_IS_ADMIN = "is_admin";
   static const String REQUEST_NOW_OR_LATER = "nowlater";
 
+  //HIRE GUARD REQUEST KEYS
+  static const String REQUEST_HG_LOCATION = "location";
+  static const String REQUEST_HG_FROM_TIME = "from_time";
+  static const String REQUEST_HG_TO_TIME = "to_time";
+  static const String REQUEST_HG_FROM_DATE = "from_date";
+  static const String REQUEST_HG_TO_DATE = "to_date";
+  static const String REQUEST_HG_DAYS = "select_days";
+  static const String REQUEST_HG_COUNT = "counting";
+
+
+
   //ACCEPT_REJECT_KEYS
   static const String REQUEST_AR_ID = "id";
   static const String REQUEST_AR_COMMENT = "comment";
