@@ -1,14 +1,22 @@
 
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/CommonWidgets.dart';
 import 'package:elite_guardians/global/Constants.dart';
 import 'package:elite_guardians/global/Global.dart';
+import 'package:elite_guardians/global/PLoader.dart';
+import 'package:elite_guardians/global/Size.dart';
+import 'package:elite_guardians/pojo/EditProfilePojo.dart';
 import 'package:elite_guardians/pojo/User.dart';
 import 'package:elite_guardians/screens/ChangePasswordScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget
 {
@@ -19,9 +27,12 @@ class ProfileScreen extends StatefulWidget
 
 class _ProfileScreenState extends State<ProfileScreen> {
   var _nameController = TextEditingController();
+  var _phoneController = TextEditingController();
   int maleBoxVal=0;
-
+  final picker = ImagePicker();
   var editButtonPressed=false;
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  File _profileImage;
 
   User userinfo;
 
@@ -31,6 +42,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       setState(() {
         userinfo = User.fromJson(json.decode(value));
         _nameController.text=userinfo.name;
+        if(userinfo.gender!=null && userinfo.gender.isNotEmpty){
+          if(userinfo.gender==Constants.USER_MALE){maleBoxVal=0;}
+         else if(userinfo.gender==Constants.USER_FEMALE){maleBoxVal=1;}
+         else if(userinfo.gender==Constants.USER_ME){maleBoxVal=2;}
+        }
       });
     });
     super.initState();
@@ -39,6 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: scaffoldKey,
       backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
         child: Column(
@@ -49,15 +66,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [
-                  Container(
-                    width: 130,
-                    height: 130,
-                    decoration: new BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: AppColours.white,width: 6),
-                        image: DecorationImage(
-                          image: AssetImage("assets/images/ic_profile.png"),
-                        )
+                  InkWell(
+                    onTap: (){
+                      if(editButtonPressed)
+                      selectPickerType();
+                    },
+                    child: Container(
+                      width: 130,
+                      height: 130,
+                      decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: AppColours.white,width: 6),
+                          image: DecorationImage(
+                            image: profileImage())
+                      ),
                     ),
                   ),
                   editButtonPressed?FractionalTranslation(
@@ -99,88 +121,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     decoration: CommonWidgets.loginFormDecoration("Email",Icons.mail_outline),
                   ),
                   SizedBox(height: 20),
+                  TextFormField(
+                    enabled: editButtonPressed?true:false,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                    textInputAction: TextInputAction.done,
+                    controller: _phoneController,
+                    style: TextStyle(color: Colors.white),
+                    decoration: CommonWidgets.loginFormDecoration("Phone Number",Icons.lock_outline),
+                  ),
+                  SizedBox(height: 20),
                   Row(
                     children: [
-                      Expanded(
-                        child: InkWell(
-                          onTap: (){
-                            setState(() {
-                              if(editButtonPressed)
-                              maleBoxVal=0;
-                            });
-                          },
-                          child: Card(
-                            color: maleBoxVal==0?AppColours.golden_button_bg:AppColours.textFeildBG,
-                            child: Padding(
-                              padding: const EdgeInsets.all(25.0),
-                              child: Column(
-                                children: [
-                                  Image.asset(Constants.LOCAL_IMAGE+"man_black.png",height: 30,color: maleBoxVal==0?AppColours.black:AppColours.white,),
-                                  SizedBox(height: 10),
-                                  Text("MALE",style: TextStyle(color: maleBoxVal==0?AppColours.black:AppColours.white),)
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: InkWell(
-                          onTap: (){
-                            setState(() {
-                              if(editButtonPressed)
-                              maleBoxVal=1;
-                            });
-
-                          },
-                          child: Card(
-                            color: maleBoxVal==1?AppColours.golden_button_bg:AppColours.textFeildBG,
-                            child: Padding(
-                              padding: const EdgeInsets.all(25.0),
-                              child: Column(
-                                children: [
-                                  Image.asset(Constants.LOCAL_IMAGE+"woman_black.png",height: 30,color: maleBoxVal==1?AppColours.black:AppColours.white,),
-                                  SizedBox(height: 10),
-                                  Text("FEMALE",style: TextStyle(color: maleBoxVal==1?AppColours.black:AppColours.white),)
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: InkWell(
-                          onTap: (){
-                            setState(() {
-                              if(editButtonPressed)
-                              maleBoxVal=2;
-                            });
-                          },
-                          child: Card(
-                            color: maleBoxVal==2?AppColours.golden_button_bg:AppColours.textFeildBG,
-                            child: Padding(
-                              padding: const EdgeInsets.all(25.0),
-                              child: Column(
-                                children: [
-                                  Image.asset(Constants.LOCAL_IMAGE+"intersex_black.png",height: 30,color: maleBoxVal==2?AppColours.black:AppColours.white,),
-                                  SizedBox(height: 10,),
-                                  Text("I'M ME",style: TextStyle(color: maleBoxVal==2?AppColours.black:AppColours.white),)
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
+                      maleFemaleButton(0, "MALE", "man_black.png"),
+                      maleFemaleButton(1, "FEMALE", "woman_black.png"),
+                      maleFemaleButton(2, "I'M ME", "intersex_black.png")
                     ],
                   ),
                   SizedBox(height: 20),
-                  CommonWidgets.goldenFullWidthButton("Change Password",onClick: (){
+                  CommonWidgets.goldenFullWidthButton("Change Password",onClick: ()
+                  {
                     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => ChangePasswordScreen()));
                   }),
                   SizedBox(height: 20),
                   CommonWidgets.goldenFullWidthButton(editButtonPressed?"Save Changes":"Edit Profile",onClick: (){
                     setState(() {
+                      if(editButtonPressed)
+                      {
+                        editProfileClick();
+                      }
                       editButtonPressed=!editButtonPressed;
+
                     });
                   })
                 ],
@@ -190,5 +161,137 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       )
     );
+  }
+
+  profileImage(){
+    if(_profileImage==null){
+      if(userinfo!=null){
+        if(userinfo.image!=null && userinfo.image.isNotEmpty){
+          return NetworkImage(userinfo.image);
+        }
+        else{
+          return AssetImage("assets/images/ic_profile.png");
+        }
+      }
+      else{
+        return AssetImage("assets/images/ic_profile.png");
+      }
+    }
+    else{
+      return FileImage(_profileImage);
+    }
+  }
+  editProfileClick() async {
+    String gender="";
+    PLoader loader=PLoader(context);
+    loader.show();
+    if(maleBoxVal==0)gender=Constants.USER_MALE;
+    if(maleBoxVal==1)gender=Constants.USER_FEMALE;
+    if(maleBoxVal==2)gender=Constants.USER_ME;
+    Map<String, dynamic> jsonPost = {
+      Constants.EDIT_PROFILE_NAME: _nameController.text,
+      Constants.EDIT_PROFILE_GENDER: gender,
+      Constants.EDIT_PROFILE_PHONE_NUMBER: "11234",
+    };
+    FormData formData=FormData.fromMap(jsonPost);
+    if(_profileImage!=null)
+    {
+      formData.files.add(MapEntry("image", await MultipartFile.fromFile(_profileImage.path)));
+    }
+    var token = await Global.getToken();
+    Dio dio = new Dio();
+    dio.options.baseUrl="https://eliteguardian.co.uk/api/";
+    //dio.options.headers['Accept'] = 'application/json';
+    //dio.options.headers['Content-Type'] = 'application/json';
+    dio.options.headers["Authorization"] = 'Bearer '+token;
+    dio.post("update-profile", data: formData).then((value) async {
+      if(value.statusCode==200 || value.statusCode==201){
+        Map<String, dynamic> map = json.decode(value.toString());
+        EditProfilePojo loginPojo= EditProfilePojo.fromJson(map);
+        SharedPreferences preferences =await Global.getSharedPref();
+        preferences.setString(Constants.USER_PREF,json.encode(loginPojo.user.toJson()));
+        loader.hide();
+        Global.toast(context, loginPojo.message);
+        setState(() {
+          userinfo=loginPojo.user;
+        });
+      }
+      else{
+        Global.toast(context, value.statusMessage);
+      }
+
+    });
+  }
+
+  Widget maleFemaleButton(int defButtonValue,String text,String image,{Function onClick}){
+    return Expanded(
+      child: InkWell(
+        onTap: (){
+          setState(() {
+            if(editButtonPressed)
+              maleBoxVal=defButtonValue;
+          });
+        },
+        child: Card(
+          color: maleBoxVal==defButtonValue?AppColours.golden_button_bg:AppColours.textFeildBG,
+          child: Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Column(
+              children: [
+                Image.asset(Constants.LOCAL_IMAGE+image,height: 30,color: maleBoxVal==defButtonValue?AppColours.black:AppColours.white,),
+                SizedBox(height: 10),
+                Text(text,style: TextStyle(color: maleBoxVal==defButtonValue?AppColours.black:AppColours.white),)
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  selectPickerType(){
+    scaffoldKey.currentState
+        .showBottomSheet(
+            (context) => Container(
+          height: Size.size(250),
+          padding: EdgeInsets.all(25),
+          color: AppColours.golden_button_bg,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                       Text("Pick Photo from :",style: TextStyle(color: AppColours.textFeildBG,fontSize: 22,fontWeight: FontWeight.bold),),
+                        SizedBox(height: 30),
+                        CommonWidgets.blackFullWidthButton("Camera",onClick:(){
+                          Navigator.of(context).pop();
+                            getImage(ImageSource.camera);
+
+                         }),
+                         SizedBox(height: 30,),
+                          CommonWidgets.blackFullWidthButton("Gallery",onClick: () {
+                            Navigator.of(context).pop();
+                            getImage(ImageSource.gallery);
+
+              }),
+            ],
+          ),
+        ));
+  }
+
+  Future getImage(ImageSource source) async {
+    final pickedFile = await picker.getImage(
+      maxHeight: 200,
+        maxWidth: 200,
+        imageQuality: 50,
+        source: source
+    );
+
+    setState(() {
+      if (pickedFile != null) {
+        _profileImage = File(pickedFile.path);
+
+      } else {
+        print('No image selected.');
+      }
+    });
   }
 }

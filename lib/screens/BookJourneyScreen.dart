@@ -21,6 +21,8 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
   int guardSelection=1;
   bool guardCheckedOrNot=false;
   TimeOfDay timeFrom;
+  String fromLocation;
+  String toLocation;
   @override
   void initState() {
     timeFrom=TimeOfDay.fromDateTime(selectedDate);
@@ -40,7 +42,7 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("From",style: TextStyle(color: AppColours.white,fontSize: 16),),
+                child: Text("Source",style: TextStyle(color: AppColours.white,fontSize: 16),),
               ),
               TextField(
                 enabled: false,
@@ -50,7 +52,7 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
               SizedBox(height: 20,),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("To",style: TextStyle(color: AppColours.white,fontSize: 16),),
+                child: Text("Destination",style: TextStyle(color: AppColours.white,fontSize: 16),),
               ),
               TextField(
                 enabled: false,
@@ -69,7 +71,7 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
                       value: 0,
                       toggleable: true,
                       groupValue: bookNowOrLater,
-//                    tileColor: AppColours.textFeildBG,
+                    tileColor: AppColours.textFeildBG,
                       title: Text("Now",style: TextStyle(color: AppColours.white,fontSize: 16)),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -88,7 +90,7 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
                       value: 1,
                       toggleable: true,
                       groupValue: bookNowOrLater,
-//                    tileColor: AppColours.textFeildBG,
+                    tileColor: AppColours.textFeildBG,
                       title: Text("Later",style: TextStyle(color: AppColours.white,fontSize: 16)),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -151,7 +153,7 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
               ],):SizedBox(),
               SizedBox(height: 20),
               CheckboxListTile(
-//              titleColor: AppColours.textFeildBG,
+            tileColor: AppColours.textFeildBG,
                   activeColor: AppColours.golden_button_bg,
                   title: Text("Need Guardian?",style: TextStyle(color: AppColours.white,fontSize: 16)),
                   value: guardCheckedOrNot,
@@ -168,7 +170,7 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
                       value: 1,
                       toggleable: true,
                       groupValue: guardSelection,
-//                      tileColor: AppColours.textFeildBG,
+                      tileColor: AppColours.textFeildBG,
                       title: Text("1",style: TextStyle(color: AppColours.white,fontSize: 16)),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -187,7 +189,7 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
                       value: 2,
                       toggleable: true,
                       groupValue: guardSelection,
-//                      tileColor: AppColours.textFeildBG,
+                      tileColor: AppColours.textFeildBG,
                       title: Text("2",style: TextStyle(color: AppColours.white,fontSize: 16)),
                       activeColor: AppColours.golden_button_bg,
                       onChanged: (val)
@@ -235,26 +237,45 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
   }
   _createRequestClick(BuildContext con)
   {
-
-    DateTime currentDate = DateTime.now();
-    int guardsCount=0;
-    if(guardCheckedOrNot){
-      guardsCount=guardSelection;
+if(_vaildate()){
+  DateTime currentDate = DateTime.now();
+  int guardsCount=0;
+  if(guardCheckedOrNot){
+    guardsCount=guardSelection;
+  }
+  if(bookNowOrLater!=0){
+    currentDate=selectedDate;
+  }
+  Map jsonPost = {
+    Constants.REQUEST_DESTINATION: "Destination",
+    Constants.REQUEST_ARRIVAL: "Arrival",
+    Constants.REQUEST_DATE: DateFormat("yyyy-MM-dd").format(currentDate),
+    Constants.REQUEST_TIME: DateFormat.Hm().format(currentDate),
+    Constants.REQUEST_SECURITY: "$guardsCount",
+    Constants.REQUEST_IS_ADMIN: "0",
+  };
+  FocusScope.of(context).unfocus();
+  API(context).createRequest(jsonPost);
+  }
+  }
+  bool _vaildate(){
+    if(fromLocation==null){
+      CommonWidgets.showMessage(context,"Please Enter Source Location");
+      return false;
     }
-    if(bookNowOrLater!=0){
-      currentDate=selectedDate;
+    else if(toLocation==null){
+      CommonWidgets.showMessage(context,"Please Enter Destination Location");
+      return false;
     }
-      Map jsonPost = {
-        Constants.REQUEST_DESTINATION: "Destination",
-        Constants.REQUEST_ARRIVAL: "Arrival",
-        Constants.REQUEST_DATE: DateFormat("yyyy-MM-dd").format(currentDate),
-        Constants.REQUEST_TIME: DateFormat.Hm().format(currentDate),
-        Constants.REQUEST_SECURITY: "$guardsCount",
-        Constants.REQUEST_IS_ADMIN: "0",
-      };
-      FocusScope.of(context).unfocus();
-      API(context).createRequest(jsonPost);
-
+    else if(bookNowOrLater==1 && selectedDate==null){
+      CommonWidgets.showMessage(context,"Please Enter Date for Journey");
+      return false;
+    }
+    else if(bookNowOrLater==1 && timeFrom==null){
+      CommonWidgets.showMessage(context,"Please Enter Time of Journey");
+      return false;
+    }
+    return true;
   }
   _pickFromTime() async {
     TimeOfDay currentTime=TimeOfDay.now();

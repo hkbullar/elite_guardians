@@ -3,6 +3,8 @@ import 'package:elite_guardians/dashboard/DashBoardScreen.dart';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/Constants.dart';
 import 'package:elite_guardians/global/Global.dart';
+import 'package:elite_guardians/global/Size.dart';
+import 'package:elite_guardians/global/SlideFadeTransition.dart';
 import 'package:elite_guardians/loginpages/LoginScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    _loadWidget();
+   _loadWidget();
   }
 
   _loadWidget() async {
@@ -46,39 +48,43 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size().init(context);
     return Scaffold(
       body: InkWell(
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
             Image.asset(
-              Constants.LOCAL_IMAGE+"splash.jpeg",fit: BoxFit.cover,
+              Constants.LOCAL_IMAGE+"splash_new.png",fit: BoxFit.cover,
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Expanded(
                   flex: 7,
-                  child: Center(),
+                  child: Padding(
+                    padding:EdgeInsets.all(Size.size(25)),
+                    child: Center(
+                      child: Container(
+                        width: Size.size(180),
+                        child: Image.asset(
+                          Constants.LOCAL_IMAGE+"logo.png",
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
                 Expanded(
                   child: Column(
                     children: <Widget>[
+                      SlideFadeTransition(
+                          animationDuration: Duration(seconds: 2),
+                          child: Text("SAFE IN OUR HANDS",style: TextStyle(fontSize: Size.size(25),color: AppColours.white,fontWeight: FontWeight.bold),)),
+                      SizedBox(height: 10,),
                       CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColours.golden_button_bg),),
                       Container(
                         height: 10,
                       ),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Spacer(),
-                            Text(_versionName,style: TextStyle(color: AppColours.off_white),),
-                            Spacer(
-                              flex: 4,
-                            ),
-                            Text('Elite Academy',style: TextStyle(color: AppColours.off_white),),
-                            Spacer(),
-                          ])
                     ],
                   ),
                 ),

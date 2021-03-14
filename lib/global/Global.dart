@@ -38,6 +38,16 @@ class Global{
     String date="${dt.day}${Global.getDayOfMonthSuffix(dt.day)} ${formatter.format(dt)}";
     return date;
   }
+  static  String generateShortMonth(DateTime dt){
+    var formatter = new DateFormat('EEE');
+    String date="${DateFormat('EEE').format(dt)}";
+    return date;
+  }
+  static  String generateFullMonth(DateTime dt){
+    var formatter = new DateFormat('EEEE');
+    String date="${dt.day}${Global.getDayOfMonthSuffix(dt.day)} ${formatter.format(dt)}";
+    return date;
+  }
  static String getDayOfMonthSuffix(int dayNum) {
     if(!(dayNum >= 1 && dayNum <= 31)) {
       throw Exception('Invalid day of month');

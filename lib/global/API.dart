@@ -36,7 +36,8 @@ class API{
         });
   }
 
-  register(Map jsonPost){
+  register(Map jsonPost)
+  {
     PLoader loader=PLoader(context);
     loader.show();
     ServiceHttp().httpRequestPost("register",map: jsonPost,
@@ -73,7 +74,7 @@ class API{
     ServiceHttp().httpRequestPost("create-booking-request",map: jsonPost,
         onSuccess: (value) async {
           loader.hide();
-          Global.toast(context, "Request Created Successfully");
+          CommonWidgets.showBackMessage(context, "Request Created Successfully..!!\nDo you want to go back to Home Screen");
         }, onError: (value) {
           loader.hide();
           Map<String, dynamic> map = json.decode(value);
@@ -86,13 +87,37 @@ class API{
     ServiceHttp().httpRequestPost("save-guadian",map: jsonPost,
         onSuccess: (value) async {
           loader.hide();
-          Global.toast(context, "Request Created Successfully");
+          CommonWidgets.showBackMessage(context, "Request Created Successfully..!!\nDo you want to go back to Home Screen");
         }, onError: (value) {
           loader.hide();
           Map<String, dynamic> map = json.decode(value);
           CommonWidgets.showMessage(context,map["error"]);
         });
   }
+  changePassword(Map jsonPost){
+    PLoader loader=PLoader(context);
+    loader.show();
+    ServiceHttp().httpRequestPost("change-password-user",map: jsonPost,
+        onSuccess: (value) async {
+          loader.hide();
+          Map<String, dynamic> map = json.decode(value);
+          int status=map["status"];
+          if(status==200 || status==201)
+          {
+            Global.toast(context, "Password Changed Successfully");
+            Navigator.of(context).pop();
+          }
+          else
+            {
+            CommonWidgets.showMessage(context,map["message"]);
+          }
+        }, onError: (value) {
+          loader.hide();
+          Map<String, dynamic> map = json.decode(value);
+          CommonWidgets.showMessage(context,map["error"]);
+        });
+  }
+
   acceptReject(Map jsonPost,{bool rejected,void onResponse(value)}){
     PLoader loader=PLoader(context);
     loader.show();

@@ -24,7 +24,20 @@ class CommonWidgets{
   static heightFactor(BuildContext context){
     return MediaQuery.of(context).size.width;
   }
-
+  static Widget blackFullWidthButton(String text,{Function onClick})
+  {
+    return Row(
+        children: [
+          Expanded(
+            child: RaisedButton(
+                padding: EdgeInsets.all(14),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0)),
+                color: AppColours.textFeildBG,
+                child: Text(text,style: TextStyle(color: AppColours.golden_button_bg,fontWeight: FontWeight.bold,fontSize: 18),),
+                onPressed: onClick),
+          )]);
+  }
  static InputDecoration loginFormDecoration(String text,IconData data){
     return InputDecoration(
       prefixIcon: Icon(data,color: AppColours.white,),
@@ -101,6 +114,35 @@ class CommonWidgets{
      ],
    );
  }
+
+  static showBackMessage(BuildContext context,String message) {
+    // Create button
+    Widget yesButton = FlatButton(
+      child: Text("YES",style: TextStyle(color: AppColours.golden_button_bg,fontSize: 16)),
+      onPressed: () {
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+      },
+    );
+    Widget noButton = FlatButton(
+      child: Text("NO",style: TextStyle(color: AppColours.golden_button_bg,fontSize: 16)),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+        backgroundColor: AppColours.textFeildBG,
+        title: Text("Message",style: TextStyle(color: AppColours.golden_button_bg,fontSize: 20)),
+        content: Text(message,style: TextStyle(color: AppColours.golden_button_bg,fontSize: 14)),
+        actions: [yesButton,noButton]);
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
  static showMessage(BuildContext context,String message) {
     // Create button
     Widget okButton = FlatButton(

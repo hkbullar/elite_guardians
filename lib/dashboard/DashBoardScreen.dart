@@ -29,7 +29,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     String title="Home";
   User userinfo;
 
-    @override
+  @override
   void initState() {
       Global.getUser().then((value) async {
         setState(()
@@ -46,7 +46,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-
         backgroundColor: AppColours.black,
           drawer: Drawer(
             child: Container(
@@ -81,7 +80,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
+                              children:
+                              [
                                 Text(userinfo!=null?userinfo.name:"",style: TextStyle(color: AppColours.white, fontSize: 20)),
                                 Text(userinfo!=null?userinfo.email:"",style: TextStyle(color: AppColours.golden_button_bg, fontSize: 12)),
                               ],
@@ -93,13 +93,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ),
                   Container(height: 0.5,color: AppColours.dark_grey),
                   sideBarItem(Icons.home_outlined, 0),
-                  sideBarItem( Icons.person_outline, 1),
-                  sideBarItem( Icons.schedule_outlined, 2),
-                  sideBarItem( Icons.policy_outlined, 3),
-                  sideBarItem( Icons.contacts, 4),
-                  sideBarItem( Icons.contact_support_outlined, 5),
-                  sideBarItem( Icons.info_outline, 6),
-                  sideBarItem( Icons.logout, 7),
+                  sideBarItem(Icons.list_alt, 1),
+                  sideBarItem(Icons.person_outline, 2),
+                  sideBarItem(Icons.policy_outlined, 3),
+                  sideBarItem(Icons.contacts, 4),
+                  sideBarItem(Icons.contact_support_outlined, 5),
+                  sideBarItem(Icons.info_outline, 6),
+                  sideBarItem(Icons.logout, 7),
                 ],
               ),
             ),
@@ -108,9 +108,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             backgroundColor: AppColours.black,
             iconTheme:IconThemeData(color: Colors.white),
             centerTitle: true,
-            title: Text(titleList[_selectedIndex],style: TextStyle(color: AppColours.white),)),
+            title: Text(titleList[_selectedIndex],style: TextStyle(color: AppColours.white))),
             body: _widgetOptions.elementAt(_selectedIndex),
-
       ),
     );
   }
@@ -149,7 +148,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         });
       }
     }
-    else{
+    else
+      {
       showLogOutDialog(context);
     }
 

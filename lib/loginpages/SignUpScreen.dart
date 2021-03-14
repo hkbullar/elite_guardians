@@ -181,12 +181,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
   _signUpClick(BuildContext con){
+    String gender="";
+    if(maleBoxVal==0)gender=Constants.USER_MALE;
+    if(maleBoxVal==1)gender=Constants.USER_FEMALE;
+    if(maleBoxVal==2)gender=Constants.USER_ME;
     if(CommonWidgets.isValidate(_formKey)){
     Map jsonPost = {
       Constants.NAME: _nameController.text,
       Constants.EMAIL: _emailController.text,
       Constants.PASSWORD: _passwordController.text,
-      Constants.USER_TYPE: "customer"
+      Constants.USER_TYPE: "customer",
+      Constants.GENDER:gender
     };
       print(jsonPost);
       FocusScope.of(context).unfocus();

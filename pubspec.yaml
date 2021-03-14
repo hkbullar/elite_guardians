@@ -24,11 +24,12 @@ dependencies:
   http:
   progress_dialog:
   flutter_absolute_path:
-  shared_preferences:
+  shared_preferences: ^2.0.4
   location_permissions:
   dio:
   toast:
   path_provider:
+  image_picker:
   intl:
   google_maps_flutter:
   google_maps_place_picker:
@@ -68,6 +69,7 @@ flutter:
    - assets/images/intersex_black.png
    - assets/images/guardians.png
    - assets/images/home_car.png
+   - assets/images/splash_new.png
    - assets/images/security_officer.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
