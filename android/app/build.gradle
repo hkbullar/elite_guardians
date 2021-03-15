@@ -29,7 +29,7 @@ android {
     compileSdkVersion 30
     lintOptions {
         disable 'InvalidPackage'
-        checkReleaseBuilds false //<- add this line
+        checkReleaseBuilds false
     }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
