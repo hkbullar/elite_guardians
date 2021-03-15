@@ -29,7 +29,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   var _nameController = TextEditingController();
   var _phoneController = TextEditingController();
   int maleBoxVal=0;
-  final picker = ImagePicker();
   var editButtonPressed=false;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   File _profileImage;
@@ -191,7 +190,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     Map<String, dynamic> jsonPost = {
       Constants.EDIT_PROFILE_NAME: _nameController.text,
       Constants.EDIT_PROFILE_GENDER: gender,
-      Constants.EDIT_PROFILE_PHONE_NUMBER: "11234",
+      Constants.EDIT_PROFILE_PHONE_NUMBER: _phoneController.text,
     };
     FormData formData=FormData.fromMap(jsonPost);
     if(_profileImage!=null)
@@ -278,7 +277,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future getImage(ImageSource source) async {
-    final pickedFile = await picker.getImage(
+    final pickedFile = await ImagePicker.pickImage(
       maxHeight: 200,
         maxWidth: 200,
         imageQuality: 50,

@@ -25,7 +25,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
    _loadWidget();
   }
 
@@ -37,11 +36,9 @@ class _SplashScreenState extends State<SplashScreen> {
   void navigationPage() {
     Global.isRegistered().then((isLogged) {
       if (isLogged) {
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (context) => DashBoardScreen()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => DashBoardScreen()));
       } else {
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
       }
     });
     }

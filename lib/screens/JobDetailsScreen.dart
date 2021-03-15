@@ -23,6 +23,13 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
 _JobDetailsScreenState(this.booking);
   Booking booking;
   bool _isOpen=false;
+  bool isJourney=true;
+
+  @override
+  void initState() {
+    booking.location!=null?isJourney=false:isJourney=true;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     Size().init(context);
@@ -34,10 +41,10 @@ _JobDetailsScreenState(this.booking);
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CommonWidgets.requestTextContainer("From",booking.destinationLocation,Icons.location_on_outlined),
-              CommonWidgets.requestTextContainer("To",booking.arrivalLocation,Icons.location_on_outlined),
-              CommonWidgets.requestTextContainer("Date","${Global.generateDate(booking.date)}",Icons.date_range_outlined),
-              CommonWidgets.requestTextContainer("Time","${Global.formatTime(booking.time)}",Icons.watch_outlined),
+              CommonWidgets.requestTextContainer(isJourney?"From":"For",isJourney?"${booking.destinationLocation}":booking.location,Icons.location_on_outlined),
+              isJourney?CommonWidgets.requestTextContainer("To","${booking.arrivalLocation}",Icons.location_on_outlined):SizedBox(),
+              CommonWidgets.requestTextContainer("Date",isJourney?"${Global.generateDate(booking.date)}":"From: ${Global.generateDate(booking.fromDate)}\nTo: ${Global.generateDate(booking.toDate)}",Icons.date_range_outlined),
+              CommonWidgets.requestTextContainer(isJourney?"Time":"Timing",isJourney?"${Global.formatTime(booking.time)}":"From: ${booking.fromTime}\nTo: ${booking.toTime}",Icons.watch_outlined),
               booking.comment!=null && booking.comment.isNotEmpty?CommonWidgets.requestTextContainer("Comments",booking.comment,Icons.comment_bank_outlined):SizedBox(),
               booking.price!=null && booking.price!=0 && booking.status==0?CommonWidgets.requestTextContainer("Price","475",Icons.attach_money):
               CommonWidgets.requestTextContainer("Status",booking.status==0?"Awaiting Confirmation":"Accepted",booking.status==0?Icons.timelapse_outlined:Icons.check_circle_outline),

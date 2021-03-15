@@ -7,6 +7,8 @@ import 'package:elite_guardians/global/EliteAppBar.dart';
 import 'package:elite_guardians/global/Size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:intl/intl.dart';
 
 class BookJourneyScreen extends StatefulWidget
@@ -23,6 +25,9 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
   TimeOfDay timeFrom;
   String fromLocation;
   String toLocation;
+  LatLng kInitialPosition = LatLng(51.507351,-0.127758);
+  var _fromLocController = TextEditingController();
+  var _toLocController = TextEditingController();
   @override
   void initState() {
     timeFrom=TimeOfDay.fromDateTime(selectedDate);
@@ -44,20 +49,66 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text("Source",style: TextStyle(color: AppColours.white,fontSize: 16),),
               ),
-              TextField(
-                enabled: false,
-                style: TextStyle(color: Colors.white),
-                decoration: CommonWidgets.loginFormDecoration("Enter Your Location",Icons.location_on_outlined),
+              InkWell(
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) {
+                            return PlacePicker(
+                                apiKey: Constants.API_KEY,
+                                initialPosition: kInitialPosition,
+                                useCurrentLocation: true,
+                                selectInitialPosition: true,
+                                //usePlaceDetailSearch: true,
+                                onPlacePicked: (result) {
+                                  Navigator.of(context).pop();
+                                  setState(() {
+                                    //selectedPlace = result;
+                                    _fromLocController.text=result.formattedAddress;
+                                  });
+                                });})
+                  );
+                },
+                child: TextField(
+                  enabled: false,
+                  controller: _fromLocController,
+                  style: TextStyle(color: Colors.white),
+                  decoration: CommonWidgets.loginFormDecoration("Enter Your Location",Icons.location_on_outlined),
+                ),
               ),
               SizedBox(height: 20,),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text("Destination",style: TextStyle(color: AppColours.white,fontSize: 16),),
               ),
-              TextField(
-                enabled: false,
-                style: TextStyle(color: Colors.white),
-                decoration: CommonWidgets.loginFormDecoration("Enter Your Location",Icons.location_on_outlined),
+              InkWell(
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) {
+                            return PlacePicker(
+                                apiKey: Constants.API_KEY,
+                                initialPosition: kInitialPosition,
+                                useCurrentLocation: true,
+                                selectInitialPosition: true,
+                                //usePlaceDetailSearch: true,
+                                onPlacePicked: (result) {
+                                  Navigator.of(context).pop();
+                                  setState(() {
+                                    //selectedPlace = result;
+                                    _toLocController.text=result.formattedAddress;
+                                  });
+                                });})
+                  );
+                },
+                child: TextField(
+                  enabled: false,
+                  controller: _toLocController,
+                  style: TextStyle(color: Colors.white),
+                  decoration: CommonWidgets.loginFormDecoration("Enter Your Location",Icons.location_on_outlined),
+                ),
               ),
               SizedBox(height: 20,),
               Padding(
@@ -247,8 +298,8 @@ if(_vaildate()){
     currentDate=selectedDate;
   }
   Map jsonPost = {
-    Constants.REQUEST_DESTINATION: "Destination",
-    Constants.REQUEST_ARRIVAL: "Arrival",
+    Constants.REQUEST_DESTINATION: _fromLocController.text,
+    Constants.REQUEST_ARRIVAL: _toLocController.text,
     Constants.REQUEST_DATE: DateFormat("yyyy-MM-dd").format(currentDate),
     Constants.REQUEST_TIME: DateFormat.Hm().format(currentDate),
     Constants.REQUEST_SECURITY: "$guardsCount",
@@ -259,11 +310,11 @@ if(_vaildate()){
   }
   }
   bool _vaildate(){
-    if(fromLocation==null){
+    if(_fromLocController.text==null || _fromLocController.text.isEmpty){
       CommonWidgets.showMessage(context,"Please Enter Source Location");
       return false;
     }
-    else if(toLocation==null){
+    else if(_toLocController.text==null || _toLocController.text.isEmpty){
       CommonWidgets.showMessage(context,"Please Enter Destination Location");
       return false;
     }

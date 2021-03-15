@@ -33,6 +33,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
   int guardSelection=1;
   int weekDayOrFull=0;
   String title;
+  var _locationController = TextEditingController();
   bool guardCheckedOrNot=false;
   String location="location";
   TimeOfDay timeFrom,timeTo;
@@ -72,12 +73,14 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                                   Navigator.of(context).pop();
                                   setState(() {
                                     selectedPlace = result;
+                                    _locationController.text=selectedPlace.formattedAddress;
                                   });
                                 });})
                   );
                 },
                 child: TextField(
                   enabled: false,
+                  controller: _locationController,
                   style: TextStyle(color: Colors.white),
                   decoration: CommonWidgets.loginFormDecoration("Enter Your Location",Icons.location_on_outlined),
                 ),
@@ -521,7 +524,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
 
       Map jsonPost =
       {
-        Constants.REQUEST_HG_LOCATION: "Location",
+        Constants.REQUEST_HG_LOCATION: _locationController.text,
         Constants.REQUEST_HG_FROM_TIME: DateFormat.Hm().format(_fromTime),
         Constants.REQUEST_HG_TO_TIME: DateFormat.Hm().format(_toTime),
         Constants.REQUEST_HG_FROM_DATE: DateFormat("yyyy-MM-dd").format(selectedDateFrom),
@@ -536,7 +539,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
 
   }
  bool _validate(){
-    if(location==null && location.isEmpty){
+    if(_locationController.text==null && _locationController.text.isEmpty){
       CommonWidgets.showMessage(context,"Please enter Location");
       return false;
     }

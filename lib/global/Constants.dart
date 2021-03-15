@@ -14,7 +14,7 @@ class Constants{
   static const String TOKEN_TYPE = "token_type";
   static const String USER_PREF = "userpref";
   static const String FIREBASE_TOKEN = "firebase_token";
-  static const String ISREGISTERED = "isRegistered";
+  static const String ISREGISTERED = "is_registered";
 
   static const String SEARCH_USER = "search";
 
