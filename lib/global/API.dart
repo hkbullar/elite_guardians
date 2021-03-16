@@ -123,12 +123,15 @@ class API{
     loader.show();
     ServiceHttp().httpRequestPost("update-comment",map: jsonPost,
         onSuccess: (value) async {
-          BookingPojo pojo=BookingPojo.fromJson(json.decode(value));
-        onResponse(pojo.bookings);
           loader.hide();
+        if(rejected!=null){
+          onResponse(null);
+        }
+        else{
+          onResponse(BookingPojo.fromJson(json.decode(value)).bookings);
+        }
           Global.toast(context, rejected!=null?"Request Rejected":"Request Accepted");
         }, onError: (value) {
-          loader.hide();
           onResponse(null);
           Map<String, dynamic> map = json.decode(value);
           CommonWidgets.showMessage(context,map["error"]);

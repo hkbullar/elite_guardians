@@ -14,7 +14,7 @@ class User {
   int id;
   String name;
   String email;
-  int phoneNo;
+  String phoneNo;
   String image;
   String gender;
   dynamic emailVerifiedAt;

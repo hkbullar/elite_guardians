@@ -305,6 +305,7 @@ String errorText;
                       elevation: 5.0,
                       onPressed: ()
                       {
+                        Navigator.of(context).pop();
                         acceptRejectClick(booking.id, true,comment: _commentController.text);
 
                         }, color: Colors.red,

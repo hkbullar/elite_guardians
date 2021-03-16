@@ -22,7 +22,7 @@ class DashBoardScreen extends StatefulWidget
 class _DashBoardScreenState extends State<DashBoardScreen> {
 
   int _selectedIndex = 0;
-  static const List<String> titleList=<String>["Home","Jobs","Profile","Privacy Policy","Contact Us","Support","About Us","Log Out"];
+  static const List<String> titleList=<String>["Home","My Bookings","Profile","Privacy Policy","Contact Us","Support","About Us","Log Out"];
    List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),JobsScreen(),ProfileScreen(),AboutScreen(),AboutScreen(),AboutScreen(),AboutScreen(),
   ];

@@ -367,8 +367,6 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
     else{
       daysList.add(DateFormat('EEE').format(onceDate));
     }
-
-    print(daysList.toString());
     return daysList;
   }
 
@@ -473,7 +471,6 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
   }
 
   _pickFromTime() async {
-
     TimeOfDay currentTime=TimeOfDay.now();
     if(timeFrom!=null){
       currentTime=timeFrom;
@@ -539,7 +536,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
 
   }
  bool _validate(){
-    if(_locationController.text==null && _locationController.text.isEmpty){
+    if(_locationController.text==null || _locationController.text.isEmpty){
       CommonWidgets.showMessage(context,"Please enter Location");
       return false;
     }
@@ -561,6 +558,10 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
     }
     else if(timeTo==null){
       CommonWidgets.showMessage(context,"Please select To Time");
+      return false;
+    }
+    else if(timeFrom==timeTo){
+      CommonWidgets.showMessage(context,"From and To timing should be different");
       return false;
     }
     else{

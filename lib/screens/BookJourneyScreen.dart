@@ -318,6 +318,10 @@ if(_vaildate()){
       CommonWidgets.showMessage(context,"Please Enter Destination Location");
       return false;
     }
+    if(_fromLocController.text==_toLocController.text){
+      CommonWidgets.showMessage(context,"Source and Destination should be different");
+      return false;
+    }
     else if(bookNowOrLater==1 && selectedDate==null){
       CommonWidgets.showMessage(context,"Please Enter Date for Journey");
       return false;

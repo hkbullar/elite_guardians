@@ -30,6 +30,7 @@ _JobDetailsScreenState(this.booking);
     booking.location!=null?isJourney=false:isJourney=true;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     Size().init(context);
@@ -41,7 +42,7 @@ _JobDetailsScreenState(this.booking);
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CommonWidgets.requestTextContainer(isJourney?"From":"For",isJourney?"${booking.destinationLocation}":booking.location,Icons.location_on_outlined),
+              CommonWidgets.requestTextContainer(isJourney?"From":"For",isJourney?"${booking.destinationLocation}":"${booking.location}",Icons.location_on_outlined),
               isJourney?CommonWidgets.requestTextContainer("To","${booking.arrivalLocation}",Icons.location_on_outlined):SizedBox(),
               CommonWidgets.requestTextContainer("Date",isJourney?"${Global.generateDate(booking.date)}":"From: ${Global.generateDate(booking.fromDate)}\nTo: ${Global.generateDate(booking.toDate)}",Icons.date_range_outlined),
               CommonWidgets.requestTextContainer(isJourney?"Time":"Timing",isJourney?"${Global.formatTime(booking.time)}":"From: ${booking.fromTime}\nTo: ${booking.toTime}",Icons.watch_outlined),
@@ -54,22 +55,18 @@ _JobDetailsScreenState(this.booking);
                 children: [
                   RaisedButton(
                     elevation: 5.0,
-                    onPressed: () {
+                    onPressed: ()
+                    {
                       rejectDialogue(context, booking);
-                    }, color: AppColours.white,
-                    child: CommonWidgets.selectedFontWidget(
-                        "Reject",
-                        AppColours.golden_button_bg, 14.0,
-                        FontWeight.w500),),
+                    }, color: Colors.red,
+                    child: CommonWidgets.selectedFontWidget("Reject",AppColours.white, 14.0,FontWeight.w500)),
                   RaisedButton(
                     elevation: 5.0,
-                    onPressed: () {
+                    onPressed: ()
+                    {
                       acceptRejectClick(booking.id, false);
-                    }, color: AppColours.golden_button_bg,
-                    child: CommonWidgets.selectedFontWidget(
-                        "Accept",
-                        AppColours.white, 14.0,
-                        FontWeight.w500),)
+                    }, color: Colors.green,
+                    child: CommonWidgets.selectedFontWidget("Accept",AppColours.white, 14.0,FontWeight.w500))
                 ],
               ):SizedBox(),
             ],
@@ -78,6 +75,7 @@ _JobDetailsScreenState(this.booking);
       )
     );
   }
+
 rejectDialogue(BuildContext context,Booking booking) {
   _isOpen=true;
   Dialog rejectPopup = Dialog(
@@ -100,6 +98,7 @@ rejectDialogue(BuildContext context,Booking booking) {
     },
   ).then((value) =>_isOpen = false);
 }
+
 Widget rejectDialogueUI(StateSetter setState,Booking booking){
   var _commentController = TextEditingController();
   return   Container(
@@ -139,6 +138,7 @@ Widget rejectDialogueUI(StateSetter setState,Booking booking){
                   child: RaisedButton(
                     elevation: 5.0,
                     onPressed: () {
+                      Navigator.of(context).pop();
                       acceptRejectClick(booking.id, true,comment: _commentController.text);
 
                     }, color: Colors.red,
@@ -155,25 +155,22 @@ Widget rejectDialogueUI(StateSetter setState,Booking booking){
     ),
   );
 }
+
 acceptRejectClick(int id,bool ifRejected,{String comment}){
   if(ifRejected){
     Map jsonPost = {
       Constants.REQUEST_AR_COMMENT: comment,
       Constants.REQUEST_AR_ID: "$id",
-      Constants.REQUEST_AR_ACCEPT_OR_REJECT: "1",
+      Constants.REQUEST_AR_ACCEPT_OR_REJECT: 1,
     };
     API(context).acceptReject(jsonPost,onResponse: (value){
-      if(value!=null){
-        setState(() {
-          booking=value;
-        });
-      }
+    Navigator.of(context).pop();
     },rejected: true);
   }
   else{
     Map jsonPost = {
       Constants.REQUEST_AR_ID: "$id",
-      Constants.REQUEST_AR_ACCEPT_OR_REJECT: "2",
+      Constants.REQUEST_AR_ACCEPT_OR_REJECT: 2,
     };
     API(context).acceptReject(jsonPost,onResponse: (value){
       if(value!=null){
