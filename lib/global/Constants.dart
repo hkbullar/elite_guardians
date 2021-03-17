@@ -41,6 +41,7 @@ class Constants{
   //ACCEPT_REJECT_KEYS
   static const String REQUEST_AR_ID = "id";
   static const String REQUEST_AR_COMMENT = "comment";
+  static const String REQUEST_AR_TYPE = "type";
   static const String REQUEST_AR_ACCEPT_OR_REJECT = "status";
 
   //EDIT PROFILE KEYS

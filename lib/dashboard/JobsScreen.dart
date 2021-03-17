@@ -87,14 +87,14 @@ String errorText;
                   children: [
                     RaisedButton(
                       elevation: 5.0,
-                      onPressed: () {rejectDialogue(context, booking);}, color: Colors.red,
+                      onPressed: () {rejectDialogue(context,false,booking);}, color: Colors.red,
                       child: CommonWidgets.selectedFontWidget(
                           "Reject",
                           AppColours.white, 14.0,
                           FontWeight.w500),),
                     RaisedButton(
                       elevation: 5.0,
-                      onPressed: () {acceptRejectClick(booking.id, false);}, color: Colors.green,
+                      onPressed: () {acceptRejectClick(booking.id,false, false);}, color: Colors.green,
                       child: CommonWidgets.selectedFontWidget(
                           "Accept",
                           AppColours.white, 14.0,
@@ -125,7 +125,6 @@ String errorText;
               15.0, 10.0, 15.0, 10.0),
             child: Column(
               children: [
-
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -157,14 +156,14 @@ String errorText;
                       children: [
                         RaisedButton(
                           elevation: 5.0,
-                          onPressed: () {rejectDialogue(context, booking);}, color: Colors.red,
+                          onPressed: () {rejectDialogue(context,true,booking);}, color: Colors.red,
                           child: CommonWidgets.selectedFontWidget(
                               "Reject",
                               AppColours.white, 14.0,
                               FontWeight.w500),),
                         RaisedButton(
                           elevation: 5.0,
-                          onPressed: () {acceptRejectClick(booking.id, false);}, color: Colors.green,
+                          onPressed: () {acceptRejectClick(booking.id,true, false);}, color: Colors.green,
                           child: CommonWidgets.selectedFontWidget(
                               "Accept",
                               AppColours.white, 14.0,
@@ -197,11 +196,16 @@ String errorText;
     time="Timing: ${Global.formatTime(booking.fromTime)} To ${Global.formatTime(booking.toTime)}";
     return time;
   }
-  acceptRejectClick(int id,bool ifRejected,{String comment}){
+
+  acceptRejectClick(int id,bool isGuardian,bool ifRejected,{String comment}){
+    String type="customer";
+    if(isGuardian)
+      type="guardian";
     if(ifRejected){
       Map jsonPost = {
         Constants.REQUEST_AR_COMMENT: comment,
         Constants.REQUEST_AR_ID: "$id",
+        Constants.REQUEST_AR_TYPE: type,
         Constants.REQUEST_AR_ACCEPT_OR_REJECT: 1,
       };
       API(context).acceptReject(jsonPost,onResponse: (value){
@@ -211,6 +215,7 @@ String errorText;
     else{
       Map jsonPost = {
         Constants.REQUEST_AR_ID: "$id",
+        Constants.REQUEST_AR_TYPE: type,
         Constants.REQUEST_AR_ACCEPT_OR_REJECT: 2,
       };
       API(context).acceptReject(jsonPost,onResponse: (value){
@@ -243,7 +248,7 @@ String errorText;
     });
   }
 
-  rejectDialogue(BuildContext context,Booking booking) {
+  rejectDialogue(BuildContext context,bool isGuardian,Booking booking) {
     _isOpen=true;
     Dialog rejectPopup = Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
@@ -252,7 +257,7 @@ String errorText;
         child: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState){
               return Container(
-                child: rejectDialogueUI(setState,booking),
+                child: rejectDialogueUI(setState,isGuardian,booking),
               );
             }
         ));
@@ -265,7 +270,7 @@ String errorText;
       },
     ).then((value) =>_isOpen = false);
   }
-  Widget rejectDialogueUI(StateSetter setState,Booking booking){
+  Widget rejectDialogueUI(StateSetter setState,bool isGuardian,Booking booking){
     var _commentController = TextEditingController();
     return   Container(
       decoration: BoxDecoration(
@@ -297,7 +302,7 @@ String errorText;
                 controller: _commentController,
                 decoration: CommonWidgets.loginFormDecoration("Optional",Icons.comment_bank_outlined),
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
               Row(
                 children: [
                   Expanded(
@@ -306,7 +311,7 @@ String errorText;
                       onPressed: ()
                       {
                         Navigator.of(context).pop();
-                        acceptRejectClick(booking.id, true,comment: _commentController.text);
+                        acceptRejectClick(booking.id, isGuardian,true,comment: _commentController.text);
 
                         }, color: Colors.red,
                       child: CommonWidgets.selectedFontWidget(

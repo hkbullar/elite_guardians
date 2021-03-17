@@ -41,7 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       setState(() {
         userinfo = User.fromJson(json.decode(value));
         _nameController.text=userinfo.name;
-        _phoneController.text=userinfo.phoneNo;
+        _phoneController.text="${userinfo.phoneNo}";
         if(userinfo.gender!=null && userinfo.gender.isNotEmpty){
           if(userinfo.gender==Constants.USER_MALE){maleBoxVal=0;}
          else if(userinfo.gender==Constants.USER_FEMALE){maleBoxVal=1;}
@@ -191,12 +191,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     Map<String, dynamic> jsonPost = {
       Constants.EDIT_PROFILE_NAME: _nameController.text,
       Constants.EDIT_PROFILE_GENDER: gender,
-      Constants.EDIT_PROFILE_PHONE_NUMBER: "${_phoneController.text}",
+      Constants.EDIT_PROFILE_PHONE_NUMBER: int.parse(_phoneController.text),
     };
     FormData formData=FormData.fromMap(jsonPost);
     if(_profileImage!=null)
     {
-      formData.files.add(MapEntry("image", await MultipartFile.fromFile(_profileImage.path)));
+      formData.files.add(MapEntry("profile_image", await MultipartFile.fromFile(_profileImage.path)));
     }
     var token = await Global.getToken();
     Dio dio = new Dio();
@@ -269,7 +269,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           CommonWidgets.blackFullWidthButton("Gallery",onClick: () {
                             Navigator.of(context).pop();
                             getImage(ImageSource.gallery);
-
               }),
             ],
           ),

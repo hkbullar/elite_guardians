@@ -40,7 +40,20 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       });
     super.initState();
   }
+  profileImage(){
 
+      if(userinfo!=null){
+        if(userinfo.image!=null && userinfo.image.isNotEmpty){
+          return NetworkImage(userinfo.image);
+        }
+        else{
+          return AssetImage("assets/images/ic_profile.png");
+        }
+      }
+      else{
+        return AssetImage("assets/images/ic_profile.png");
+      }
+  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -71,7 +84,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                 shape: BoxShape.circle,
                                 border: Border.all(color: AppColours.white,width: 2),
                                 image: DecorationImage(
-                                  image: AssetImage("assets/images/ic_profile.png"),
+                                  image: profileImage(),
                                 )
                             ),
                           ),
