@@ -170,17 +170,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
           return NetworkImage(userinfo.image);
         }
         else{
-          return AssetImage("assets/images/ic_profile.png");
+          return AssetImage(Constants.LOCAL_IMAGE+"ic_profile.png");
         }
       }
       else{
-        return AssetImage("assets/images/ic_profile.png");
+        return AssetImage(Constants.LOCAL_IMAGE+"ic_profile.png");
       }
     }
     else{
       return FileImage(_profileImage);
     }
   }
+
   editProfileClick() async {
     String gender="";
     PLoader loader=PLoader(context);
@@ -200,7 +201,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
     var token = await Global.getToken();
     Dio dio = new Dio();
-    dio.options.baseUrl="https://eliteguardian.co.uk/api/";
+    dio.options.baseUrl=Constants.BASE_URL;
     //dio.options.headers['Accept'] = 'application/json';
     //dio.options.headers['Content-Type'] = 'application/json';
     dio.options.headers["Authorization"] = 'Bearer '+token;

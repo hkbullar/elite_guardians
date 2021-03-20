@@ -115,7 +115,7 @@ class Constants{
   static const String LOCAL_IMAGE="assets/images/";
 
   //BASE URL FOR IMAGES
-  static const String IMAGE_BASE_URL="https://geeniuz.co/storage/app/";
+  static const String BASE_URL="https://eliteguardian.co.uk/api/";
 
   static const String IMAGE_BASE_URL_2="https://geeniuz.co/public/";
 

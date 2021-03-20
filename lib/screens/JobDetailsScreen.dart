@@ -24,6 +24,7 @@ _JobDetailsScreenState(this.booking);
   Booking booking;
   bool _isOpen=false;
   bool isJourney=true;
+  bool listRefresh=false;
 
   @override
   void initState() {
@@ -34,45 +35,48 @@ _JobDetailsScreenState(this.booking);
   @override
   Widget build(BuildContext context) {
     Size().init(context);
-    return Scaffold(
-      appBar: EliteAppBar("Job Details"),
-      backgroundColor: AppColours.black,
-      body: Padding(
-        padding: const EdgeInsets.all(25.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              CommonWidgets.requestTextContainer(isJourney?"From":"For",isJourney?"${booking.destinationLocation}":"${booking.location}",Icons.location_on_outlined),
-              isJourney?CommonWidgets.requestTextContainer("To","${booking.arrivalLocation}",Icons.location_on_outlined):SizedBox(),
-              CommonWidgets.requestTextContainer("Date",isJourney?"${Global.generateDate(booking.date)}":"From: ${Global.generateDate(booking.fromDate)}\nTo: ${Global.generateDate(booking.toDate)}",Icons.date_range_outlined),
-              CommonWidgets.requestTextContainer(isJourney?"Time":"Timing",isJourney?"${Global.formatTime(booking.time)}":"From: ${booking.fromTime}\nTo: ${booking.toTime}",Icons.watch_outlined),
-              booking.comment!=null && booking.comment.isNotEmpty?CommonWidgets.requestTextContainer("Comments",booking.comment,Icons.comment_bank_outlined):SizedBox(),
-              booking.price!=null && booking.price!=0 && booking.status==0?CommonWidgets.requestTextContainer("Price","475",Icons.attach_money):
-              CommonWidgets.requestTextContainer("Status",booking.status==0?"Awaiting Confirmation":"Accepted",booking.status==0?Icons.timelapse_outlined:Icons.check_circle_outline),
-              SizedBox(height: 10),
-              booking.price!=null && booking.price!=0 && booking.status==0?Row(mainAxisAlignment: MainAxisAlignment
-                  .spaceEvenly,
-                children: [
-                  RaisedButton(
-                    elevation: 5.0,
-                    onPressed: ()
-                    {
-                      rejectDialogue(context, booking);
-                    }, color: Colors.red,
-                    child: CommonWidgets.selectedFontWidget("Reject",AppColours.white, 14.0,FontWeight.w500)),
-                  RaisedButton(
-                    elevation: 5.0,
-                    onPressed: ()
-                    {
-                      acceptRejectClick(booking.id, false);
-                    }, color: Colors.green,
-                    child: CommonWidgets.selectedFontWidget("Accept",AppColours.white, 14.0,FontWeight.w500))
-                ],
-              ):SizedBox(),
-            ],
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: EliteAppBar("Job Details"),
+        backgroundColor: AppColours.black,
+        body: Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                CommonWidgets.requestTextContainer(isJourney?"From":"For",isJourney?"${booking.destinationLocation}":"${booking.location}",Icons.location_on_outlined),
+                isJourney?CommonWidgets.requestTextContainer("To","${booking.arrivalLocation}",Icons.location_on_outlined):SizedBox(),
+                CommonWidgets.requestTextContainer("Date",isJourney?"${Global.generateDate(booking.date)}":"From: ${Global.generateDate(booking.fromDate)}\nTo: ${Global.generateDate(booking.toDate)}",Icons.date_range_outlined),
+                CommonWidgets.requestTextContainer(isJourney?"Time":"Timing",isJourney?"${Global.formatTime(booking.time)}":"From: ${booking.fromTime}\nTo: ${booking.toTime}",Icons.watch_outlined),
+                booking.comment!=null && booking.comment.isNotEmpty?CommonWidgets.requestTextContainer("Comments",booking.comment,Icons.comment_bank_outlined):SizedBox(),
+                booking.price!=null && booking.price!=0 && booking.status==0?CommonWidgets.requestTextContainer("Price","${booking.price}",Icons.attach_money):
+                CommonWidgets.requestTextContainer("Status",booking.status==0?"Awaiting Confirmation":"Accepted",booking.status==0?Icons.timelapse_outlined:Icons.check_circle_outline),
+                SizedBox(height: 10),
+                booking.price!=null && booking.price!=0 && booking.status==0?Row(mainAxisAlignment: MainAxisAlignment
+                    .spaceEvenly,
+                  children: [
+                    RaisedButton(
+                      elevation: 5.0,
+                      onPressed: ()
+                      {
+                        rejectDialogue(context, booking);
+                      }, color: Colors.red,
+                      child: CommonWidgets.selectedFontWidget("Reject",AppColours.white, 14.0,FontWeight.w500)),
+                    RaisedButton(
+                      elevation: 5.0,
+                      onPressed: ()
+                      {
+                        acceptRejectClick(booking.id, false);
+                      }, color: Colors.green,
+                      child: CommonWidgets.selectedFontWidget("Accept",AppColours.white, 14.0,FontWeight.w500))
+                  ],
+                ):SizedBox(),
+              ],
+            ),
           ),
-        ),
-      )
+        )
+      ),
     );
   }
 
@@ -161,24 +165,32 @@ acceptRejectClick(int id,bool ifRejected,{String comment}){
     Map jsonPost = {
       Constants.REQUEST_AR_COMMENT: comment,
       Constants.REQUEST_AR_ID: "$id",
+      Constants.REQUEST_AR_TYPE: isJourney?"customer":"guardian",
       Constants.REQUEST_AR_ACCEPT_OR_REJECT: 1,
     };
     API(context).acceptReject(jsonPost,onResponse: (value){
-    Navigator.of(context).pop();
+      listRefresh=true;
+      Navigator.pop(context, listRefresh);
     },rejected: true);
   }
   else{
     Map jsonPost = {
       Constants.REQUEST_AR_ID: "$id",
+      Constants.REQUEST_AR_TYPE: isJourney?"customer":"guardian",
       Constants.REQUEST_AR_ACCEPT_OR_REJECT: 2,
     };
     API(context).acceptReject(jsonPost,onResponse: (value){
       if(value!=null){
+        listRefresh=true;
         setState(() {
           booking=value;
         });
       }
     });
   }
+}
+Future<bool> _onWillPop() async {
+  Navigator.pop(context, listRefresh);
+  return  false;
 }
 }

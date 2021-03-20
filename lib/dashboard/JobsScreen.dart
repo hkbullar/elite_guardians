@@ -52,7 +52,7 @@ String errorText;
  Widget journeyListItem(Booking booking){
     return InkWell(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => JobDetailsScreen(booking)));
+        requestListItemClick(booking);
       },
       child: Card(
           elevation: 5.0,
@@ -113,8 +113,8 @@ String errorText;
   Widget guardianJobListItem(Booking booking){
     return InkWell(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => JobDetailsScreen(booking)));
-      },
+        requestListItemClick(booking);
+        },
       child: Card(
           elevation: 5.0,
           color: AppColours.golden_button_bg,
@@ -180,6 +180,15 @@ String errorText;
             ),
           )),
     );
+  }
+  requestListItemClick(Booking booking) async {
+    var result = await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => JobDetailsScreen(booking)));
+  if(result!=null){
+   if(result==true){
+     _loading=true;
+     getJobsList();
+   }
+  }
   }
  String generateGuardianDate(Booking booking){
     String date;
