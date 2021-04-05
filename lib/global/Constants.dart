@@ -20,7 +20,11 @@ class Constants{
 
   //CREATE REQUEST KEYS
   static const String REQUEST_DESTINATION = "destination_location";
+  static const String REQUEST_DESTINATION_LATITUDE = "destination_lat";
+  static const String REQUEST_DESTINATION_LONGITUDE = "destination_long";
   static const String REQUEST_ARRIVAL = "arrival_location";
+  static const String REQUEST_ARRIVAL_LATITUDE = "arrival_lat";
+  static const String REQUEST_ARRIVAL_LONGITUDE = "arrival_long";
   static const String REQUEST_DATE = "date";
   static const String REQUEST_TIME = "time";
   static const String REQUEST_SECURITY = "security_guard";
@@ -30,6 +34,8 @@ class Constants{
 
   //HIRE GUARD REQUEST KEYS
   static const String REQUEST_HG_LOCATION = "location";
+  static const String REQUEST_HG_LOCATION_LATITUDE = "lat";
+  static const String REQUEST_HG_LOCATION_LONGITUDE = "long";
   static const String REQUEST_HG_FROM_TIME = "from_time";
   static const String REQUEST_HG_TO_TIME = "to_time";
   static const String REQUEST_HG_FROM_DATE = "from_date";
@@ -120,5 +126,5 @@ class Constants{
   static const String IMAGE_BASE_URL_2="https://geeniuz.co/public/";
 
   //GOOGLE PLACE API KEY
-  static const String API_KEY ="AIzaSyCXNju8F2rp5rhRp1W4igjTVDY8SpsdJQg";
+  static const String API_KEY ="AIzaSyD3hJNvatQ8W1cPBS4ZeLS8U8T5x0YQqMY";
 }

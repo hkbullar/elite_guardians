@@ -1,8 +1,9 @@
 
-import 'package:elite_guardians/global/AppColours.dart';
-import 'package:elite_guardians/global/CommonWidgets.dart';
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class AboutScreen extends StatefulWidget
 {
@@ -13,13 +14,15 @@ class AboutScreen extends StatefulWidget
 
 class _AboutScreenState extends State<AboutScreen> {
 
-
+  @override
+  void initState() {
+    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Center(
-       )
+    return WebView(
+      initialUrl: 'http://eliteguardian.co.uk/about-us',
     );
   }
 }

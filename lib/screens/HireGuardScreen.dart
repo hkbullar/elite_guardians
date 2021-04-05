@@ -31,6 +31,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
   List<DaysListModel> checkBoxListTileModel =DaysListModel.getDays();
   int bookNowOrLater=0;
   int guardSelection=1;
+  double locationLatitude,locationLongitude;
   int weekDayOrFull=0;
   String title;
   var _locationController = TextEditingController();
@@ -74,6 +75,8 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
                                   setState(() {
                                     selectedPlace = result;
                                     _locationController.text=selectedPlace.formattedAddress;
+                                    locationLatitude=selectedPlace.geometry.location.lat;
+                                    locationLongitude=selectedPlace.geometry.location.lng;
                                   });
                                 });})
                   );
@@ -522,6 +525,8 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
       Map jsonPost =
       {
         Constants.REQUEST_HG_LOCATION: _locationController.text,
+        Constants.REQUEST_HG_LOCATION_LATITUDE: locationLatitude,
+        Constants.REQUEST_HG_LOCATION_LONGITUDE:locationLongitude,
         Constants.REQUEST_HG_FROM_TIME: DateFormat.Hm().format(_fromTime),
         Constants.REQUEST_HG_TO_TIME: DateFormat.Hm().format(_toTime),
         Constants.REQUEST_HG_FROM_DATE: DateFormat("yyyy-MM-dd").format(selectedDateFrom),

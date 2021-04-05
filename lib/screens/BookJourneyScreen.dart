@@ -1,4 +1,6 @@
 
+import 'dart:ffi';
+
 import 'package:elite_guardians/global/API.dart';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/CommonWidgets.dart';
@@ -25,6 +27,7 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
   TimeOfDay timeFrom;
   String fromLocation;
   String toLocation;
+  double arrivalLat,arrivalLng,destinationLat,destinationLng;
   LatLng kInitialPosition = LatLng(51.507351,-0.127758);
   var _fromLocController = TextEditingController();
   var _toLocController = TextEditingController();
@@ -66,6 +69,8 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
                                   setState(() {
                                     //selectedPlace = result;
                                     _fromLocController.text=result.formattedAddress;
+                                    arrivalLat=result.geometry.location.lat;
+                                    arrivalLng=result.geometry.location.lng;
                                   });
                                 });})
                   );
@@ -99,6 +104,9 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
                                   setState(() {
                                     //selectedPlace = result;
                                     _toLocController.text=result.formattedAddress;
+                                    destinationLat=result.geometry.location.lat;
+                                    destinationLng=result.geometry.location.lng;
+                                    //result.geometry.location.
                                   });
                                 });})
                   );
@@ -299,7 +307,11 @@ if(_vaildate()){
   }
   Map jsonPost = {
     Constants.REQUEST_DESTINATION: _fromLocController.text,
+    Constants.REQUEST_DESTINATION_LATITUDE: destinationLat,
+    Constants.REQUEST_DESTINATION_LONGITUDE: destinationLng,
     Constants.REQUEST_ARRIVAL: _toLocController.text,
+    Constants.REQUEST_ARRIVAL_LATITUDE:arrivalLat,
+    Constants.REQUEST_ARRIVAL_LONGITUDE: arrivalLng,
     Constants.REQUEST_DATE: DateFormat("yyyy-MM-dd").format(currentDate),
     Constants.REQUEST_TIME: DateFormat.Hm().format(currentDate),
     Constants.REQUEST_SECURITY: "$guardsCount",

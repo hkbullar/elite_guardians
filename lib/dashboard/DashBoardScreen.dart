@@ -2,8 +2,10 @@
 import 'dart:convert';
 
 import 'package:elite_guardians/dashboard/AboutScreen.dart';
+import 'package:elite_guardians/dashboard/ContactUsScreen.dart';
 import 'package:elite_guardians/dashboard/HomeScreen.dart';
 import 'package:elite_guardians/dashboard/JobsScreen.dart';
+import 'package:elite_guardians/dashboard/PrivacyPolicyScreen.dart';
 import 'package:elite_guardians/dashboard/ProfileScreen.dart';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/Global.dart';
@@ -24,7 +26,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   int _selectedIndex = 0;
   static const List<String> titleList=<String>["Home","My Bookings","Profile","Privacy Policy","Contact Us","Support","About Us","Log Out"];
    List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),JobsScreen(),ProfileScreen(),AboutScreen(),AboutScreen(),AboutScreen(),AboutScreen(),
+    HomeScreen(),JobsScreen(),ProfileScreen(),PrivacyPolicyScreen(),ContactUsScreen(),AboutScreen(),AboutScreen(),
   ];
     String title="Home";
   User userinfo;

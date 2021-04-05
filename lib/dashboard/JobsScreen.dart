@@ -98,7 +98,7 @@ String errorText;
                       child: CommonWidgets.selectedFontWidget(
                           "Accept",
                           AppColours.white, 14.0,
-                          FontWeight.w500),)
+                          FontWeight.w500))
                   ],
                 ):booking.status==0?Row(
                   children: [Expanded(child: CommonWidgets.selectedFontWidget(
@@ -140,16 +140,12 @@ String errorText;
                       ],
                     ),
                     SizedBox(height: 10.0),
-                    CommonWidgets.selectedFontWidget("${generateGuardianDate(booking)}", AppColours.black, 15.0,
-                        FontWeight.bold),
+                    CommonWidgets.selectedFontWidget("${generateGuardianDate(booking)}", AppColours.black, 15.0,FontWeight.bold),
                     SizedBox(height: 5.0),
-                    CommonWidgets.selectedFontWidget(generateGuardianTime(booking),
-                        AppColours.black, 15.0, FontWeight.bold),
+                    CommonWidgets.selectedFontWidget(generateGuardianTime(booking),AppColours.black, 15.0, FontWeight.bold),
                     SizedBox(height: 10.0),
-                    CommonWidgets.selectedFontWidget("Location:",
-                        AppColours.black, 15.0, FontWeight.bold),
-                    CommonWidgets.selectedFontWidget(booking.location!=null?booking.location:"",
-                        AppColours.black, 13.0, FontWeight.w500),
+                    CommonWidgets.selectedFontWidget("Location:",AppColours.black, 15.0, FontWeight.bold),
+                    CommonWidgets.selectedFontWidget(booking.location!=null?booking.location:"",AppColours.black, 13.0, FontWeight.w500),
                     SizedBox(height: 10.0),
                     booking.price!=null && booking.price!=0 && booking.status==0?Row(mainAxisAlignment: MainAxisAlignment
                         .spaceEvenly,
@@ -164,16 +160,12 @@ String errorText;
                         RaisedButton(
                           elevation: 5.0,
                           onPressed: () {acceptRejectClick(booking.id,true, false);}, color: Colors.green,
-                          child: CommonWidgets.selectedFontWidget(
-                              "Accept",
-                              AppColours.white, 14.0,
-                              FontWeight.w500),)
+                          child: CommonWidgets.selectedFontWidget("Accept",AppColours.white, 14.0,FontWeight.w500))
                       ],
                     ):booking.status==0?Row(
-                      children: [Expanded(child: CommonWidgets.selectedFontWidget(
-                          "Awaiting Quote",
-                          AppColours.black, 18.0,
-                          FontWeight.bold),)],):SizedBox(),
+                      children: [
+                        Expanded(
+                          child: CommonWidgets.selectedFontWidget("Awaiting Quote",AppColours.black, 18.0,FontWeight.bold),)],):SizedBox(),
                   ],
                 ),
               ],
@@ -294,7 +286,7 @@ String errorText;
             children: [
               Expanded(child: Text("Please add your comments:",style: TextStyle(color: AppColours.black,fontWeight: FontWeight.bold,fontSize: Size.size(18)),)),
               InkWell(
-                onTap: (){Navigator.of(context).pop();},
+                onTap: () => Navigator.of(context).pop(),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Icon(Icons.close, color: Colors.black),

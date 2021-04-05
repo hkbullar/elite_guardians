@@ -28,7 +28,11 @@ dependencies:
   permission_handler: ^6.1.0
   dio:
   toast:
+  webview_flutter:
+  firebase_core:
+  cloud_firestore:
   path_provider:
+  flutter_polyline_points:
   image_picker:
   intl:
   google_maps_flutter:
