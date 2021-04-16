@@ -34,8 +34,8 @@ class Constants{
 
   //HIRE GUARD REQUEST KEYS
   static const String REQUEST_HG_LOCATION = "location";
-  static const String REQUEST_HG_LOCATION_LATITUDE = "lat";
-  static const String REQUEST_HG_LOCATION_LONGITUDE = "long";
+  static const String REQUEST_HG_LOCATION_LATITUDE = "location_lat";
+  static const String REQUEST_HG_LOCATION_LONGITUDE = "location_long";
   static const String REQUEST_HG_FROM_TIME = "from_time";
   static const String REQUEST_HG_TO_TIME = "to_time";
   static const String REQUEST_HG_FROM_DATE = "from_date";

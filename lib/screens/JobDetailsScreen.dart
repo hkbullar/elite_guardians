@@ -7,6 +7,7 @@ import 'package:elite_guardians/global/EliteAppBar.dart';
 import 'package:elite_guardians/global/Global.dart';
 import 'package:elite_guardians/global/Size.dart';
 import 'package:elite_guardians/pojo/Booking.dart';
+import 'package:elite_guardians/screens/TrackDriverGuardian.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,7 @@ _JobDetailsScreenState(this.booking);
                 booking.price!=null && booking.price!=0 && booking.status==0?CommonWidgets.requestTextContainer("Price","${booking.price}",Icons.attach_money):
                 CommonWidgets.requestTextContainer("Status",booking.status==0?"Awaiting Confirmation":"Accepted",booking.status==0?Icons.timelapse_outlined:Icons.check_circle_outline),
                 SizedBox(height: 10),
+
                 booking.price!=null && booking.price!=0 && booking.status==0?Row(mainAxisAlignment: MainAxisAlignment
                     .spaceEvenly,
                   children: [
@@ -71,7 +73,19 @@ _JobDetailsScreenState(this.booking);
                       }, color: Colors.green,
                       child: CommonWidgets.selectedFontWidget("Accept",AppColours.white, 14.0,FontWeight.w500))
                   ],
-                ):SizedBox(),
+                ): SizedBox(),
+                booking.drivers!=null || booking.guardians!=null?CommonWidgets.goldenFullWidthButton(generateText(isJourney?booking.drivers[0]:null,isJourney?null:booking.guardians[0]),onClick: ()
+                {
+                    if(isJourney)
+                    {
+                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => TrackDriverGuardianScreen(booking.drivers[0],null)));
+                    }
+                    else
+                    {
+                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => TrackDriverGuardianScreen(null,booking.guardians[0])));
+                    }
+                }):CommonWidgets.selectedFontWidget(isJourney?"No Drivers assigned Yet":"No Guardian Assigned Yet",AppColours.white, 14.0,FontWeight.w500),
+
               ],
             ),
           ),
@@ -79,6 +93,32 @@ _JobDetailsScreenState(this.booking);
       ),
     );
   }
+
+ String generateText(Driver driver,Guardian guardian){
+    if(isJourney){
+      if(driver.startJob==0){
+        return "Journey Not Started Yet";
+      }
+      else if(driver.startJob==1){
+        return "Track Driver";
+      }
+      else{
+        return "Job Completed";
+      }
+    }
+    else{
+      if(guardian.startJob==0){
+        return "Job not started yet";
+      }
+      else if(guardian.startJob==1){
+        return "Track Guardian";
+      }
+      else{
+        return "Job Completed";
+      }
+    }
+  }
+
 
 rejectDialogue(BuildContext context,Booking booking) {
   _isOpen=true;
