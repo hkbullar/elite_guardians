@@ -85,7 +85,6 @@ _JobDetailsScreenState(this.booking);
                       Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => TrackDriverGuardianScreen(null,booking.guardians[0])));
                     }
                 }):CommonWidgets.selectedFontWidget(isJourney?"No Drivers assigned Yet":"No Guardian Assigned Yet",AppColours.white, 14.0,FontWeight.w500),
-
               ],
             ),
           ),
