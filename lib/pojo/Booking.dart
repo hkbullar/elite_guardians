@@ -5,6 +5,7 @@ class Booking {
     this.locationLat,
     this.locationLong,
     this.userId,
+    this.bookNowOrLater,
     this.counting,
     this.fromTime,
     this.userType,
@@ -42,6 +43,7 @@ class Booking {
   String locationLat;
   String locationLong;
   int userId;
+  int bookNowOrLater;
   String counting;
   String fromTime;
   String userType;
@@ -79,6 +81,7 @@ class Booking {
     locationLat: json["location_lat"] == null ? null : json["location_lat"],
     locationLong: json["location_long"] == null ? null : json["location_long"],
     userId: json["user_id"],
+    bookNowOrLater: json["book_now_or_later"],
     counting: json["counting"] == null ? null : json["counting"],
     fromTime: json["from_time"] == null ? null : json["from_time"],
     userType: json["user_type"] == null ? null : json["user_type"],
@@ -117,6 +120,7 @@ class Booking {
     "location_lat": locationLat == null ? null : locationLat,
     "location_long": locationLong == null ? null : locationLong,
     "user_id": userId,
+    "book_now_or_later": bookNowOrLater,
     "counting": counting == null ? null : counting,
     "from_time": fromTime == null ? null : fromTime,
     "user_type": userType == null ? null : userType,

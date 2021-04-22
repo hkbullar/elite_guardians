@@ -30,7 +30,7 @@ class Constants{
   static const String REQUEST_SECURITY = "security_guard";
   static const String REQUEST_COMMENTS = "comment";
   static const String REQUEST_IS_ADMIN = "is_admin";
-  static const String REQUEST_NOW_OR_LATER = "nowlater";
+  static const String REQUEST_NOW_OR_LATER = "book_now_or_later";
 
   //HIRE GUARD REQUEST KEYS
   static const String REQUEST_HG_LOCATION = "location";
@@ -127,4 +127,8 @@ class Constants{
 
   //GOOGLE PLACE API KEY
   static const String API_KEY ="AIzaSyD3hJNvatQ8W1cPBS4ZeLS8U8T5x0YQqMY";
+
+  static const STRIPE_PUBLISHABLE_KEY="pk_test_51Ij6z0SJevAuhzAiEOS2WOXD53ArVKDaJoU8SmvqJIB9iWwJKioa1QWuaUfVFGlpSt32LKhfwdkbjHROgLvVULqE009LRW5zSg";
+
+static const STRIPE_MERCHANT_ID="sk_test_51Ij6z0SJevAuhzAi519NSckdagTzIUQIpgHCqLkOQ6qKue84G94NPwgjspYFzh6VKoYDFSu1rnsRAKFmwdKPQHTX00kDiRE1v1";
 }

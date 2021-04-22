@@ -312,6 +312,7 @@ if(_vaildate()){
     Constants.REQUEST_ARRIVAL: _toLocController.text,
     Constants.REQUEST_ARRIVAL_LATITUDE:arrivalLat,
     Constants.REQUEST_ARRIVAL_LONGITUDE: arrivalLng,
+    Constants.REQUEST_NOW_OR_LATER: bookNowOrLater,
     Constants.REQUEST_DATE: DateFormat("yyyy-MM-dd").format(currentDate),
     Constants.REQUEST_TIME: DateFormat.Hm().format(currentDate),
     Constants.REQUEST_SECURITY: "$guardsCount",

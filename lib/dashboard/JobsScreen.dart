@@ -96,7 +96,7 @@ String errorText;
                       elevation: 5.0,
                       onPressed: () {acceptRejectClick(booking.id,false, false);}, color: Colors.green,
                       child: CommonWidgets.selectedFontWidget(
-                          "Accept",
+                          booking.bookNowOrLater==1?"Accept &\ Pay":"Accept",
                           AppColours.white, 14.0,
                           FontWeight.w500))
                   ],
@@ -225,17 +225,22 @@ String errorText;
     }
   }
 
-  loader(BuildContext context){
+  loader(BuildContext context)
+  {
     return  CircularProgressIndicator(
       valueColor: AlwaysStoppedAnimation<Color>(AppColours.golden_button_bg),
     );
   }
- getJobsList(){
+
+ getJobsList()
+ {
     errorText=null;
     _loading=true;
     API(context).jobsList(onSuccess: (value){setState(() {
       _loading=false;
-     if(_isOpen){Navigator.of(context).pop();}
+     if(_isOpen){Navigator.of(context).pop();
+
+     }
       if(value.isNotEmpty){
         bookings=value;
       }

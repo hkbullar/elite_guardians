@@ -11,6 +11,7 @@ import 'package:elite_guardians/screens/TrackDriverGuardian.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stripe_payment/stripe_payment.dart';
 
 class JobDetailsScreen extends StatefulWidget
 {
@@ -30,6 +31,12 @@ _JobDetailsScreenState(this.booking);
   @override
   void initState() {
     booking.location!=null?isJourney=false:isJourney=true;
+    StripePayment.setOptions(
+        StripeOptions(
+            publishableKey:Constants.STRIPE_PUBLISHABLE_KEY,
+            merchantId: Constants.STRIPE_MERCHANT_ID,
+            androidPayMode: 'test'
+        ));
     super.initState();
   }
 
@@ -50,6 +57,7 @@ _JobDetailsScreenState(this.booking);
                 isJourney?CommonWidgets.requestTextContainer("To","${booking.arrivalLocation}",Icons.location_on_outlined):SizedBox(),
                 CommonWidgets.requestTextContainer("Date",isJourney?"${Global.generateDate(booking.date)}":"From: ${Global.generateDate(booking.fromDate)}\nTo: ${Global.generateDate(booking.toDate)}",Icons.date_range_outlined),
                 CommonWidgets.requestTextContainer(isJourney?"Time":"Timing",isJourney?"${Global.formatTime(booking.time)}":"From: ${booking.fromTime}\nTo: ${booking.toTime}",Icons.watch_outlined),
+                isJourney && booking.securityGuard!=0?CommonWidgets.requestTextContainer("Guardians Required",booking.securityGuard==1?"One":booking.securityGuard==2?"Two":"",Icons.security_outlined):SizedBox(),
                 booking.comment!=null && booking.comment.isNotEmpty?CommonWidgets.requestTextContainer("Comments",booking.comment,Icons.comment_bank_outlined):SizedBox(),
                 booking.price!=null && booking.price!=0 && booking.status==0?CommonWidgets.requestTextContainer("Price","${booking.price}",Icons.attach_money):
                 CommonWidgets.requestTextContainer("Status",booking.status==0?"Awaiting Confirmation":"Accepted",booking.status==0?Icons.timelapse_outlined:Icons.check_circle_outline),
@@ -69,22 +77,18 @@ _JobDetailsScreenState(this.booking);
                       elevation: 5.0,
                       onPressed: ()
                       {
-                        acceptRejectClick(booking.id, false);
+                        if(isJourney){
+                          stripePay(booking.id);
+                        }
+                        else{
+                          acceptRejectClick(booking.id, false);
+                        }
+
                       }, color: Colors.green,
-                      child: CommonWidgets.selectedFontWidget("Accept",AppColours.white, 14.0,FontWeight.w500))
+                      child: CommonWidgets.selectedFontWidget(booking.bookNowOrLater==1?"Accept &\ Pay":"Accept",AppColours.white, 14.0,FontWeight.w500))
                   ],
                 ): SizedBox(),
-                booking.drivers!=null || booking.guardians!=null?CommonWidgets.goldenFullWidthButton(generateText(isJourney?booking.drivers[0]:null,isJourney?null:booking.guardians[0]),onClick: ()
-                {
-                    if(isJourney)
-                    {
-                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => TrackDriverGuardianScreen(booking.drivers[0],null)));
-                    }
-                    else
-                    {
-                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => TrackDriverGuardianScreen(null,booking.guardians[0])));
-                    }
-                }):CommonWidgets.selectedFontWidget(isJourney?"No Drivers assigned Yet":"No Guardian Assigned Yet",AppColours.white, 14.0,FontWeight.w500),
+                trackingButton(),
               ],
             ),
           ),
@@ -92,8 +96,38 @@ _JobDetailsScreenState(this.booking);
       ),
     );
   }
+Widget trackingButton(){
+    if(isJourney){
+      if(booking.drivers!=null && booking.drivers.isNotEmpty){
+       return CommonWidgets.goldenFullWidthButton(generateText(driver: booking.drivers[0]),onClick: ()
+        {
 
- String generateText(Driver driver,Guardian guardian){
+          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => TrackDriverGuardianScreen(booking)));
+
+        });
+      }
+      else{
+        return   CommonWidgets.selectedFontWidget("No Drivers assigned Yet",AppColours.white, 14.0,FontWeight.w500);
+      }
+
+    }
+    else{
+      if(booking.guardians!=null && booking.guardians.isNotEmpty){
+        return   CommonWidgets.goldenFullWidthButton(generateText(guardian: booking.guardians[0]),onClick: ()
+        {
+
+          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => TrackDriverGuardianScreen(booking)));
+
+        });
+      }
+      else{
+        return  CommonWidgets.selectedFontWidget("No Guardian Assigned Yet",AppColours.white, 14.0,FontWeight.w500);
+      }
+
+    }
+}
+
+ String generateText({Driver driver,Guardian guardian}){
     if(isJourney){
       if(driver.startJob==0){
         return "Journey Not Started Yet";
@@ -221,6 +255,15 @@ acceptRejectClick(int id,bool ifRejected,{String comment}){
     API(context).acceptReject(jsonPost,onResponse: (value){
       if(value!=null){
         listRefresh=true;
+        if(isJourney){
+          if(!ifRejected){
+            Map jsonPost1 = {
+              "booking_id": "$id",
+              "status": 1,
+            };
+            API(context).paymentDone(jsonPost1);
+          }
+        }
         setState(() {
           booking=value;
         });
@@ -231,5 +274,16 @@ acceptRejectClick(int id,bool ifRejected,{String comment}){
 Future<bool> _onWillPop() async {
   Navigator.pop(context, listRefresh);
   return  false;
+}
+stripePay(int id){
+
+  StripePayment.paymentRequestWithCardForm(
+      CardFormPaymentRequest()).then((paymentMethod) {
+    Global.toast(context, 'Received ${paymentMethod.id}');
+    acceptRejectClick(id, false);
+
+  }).onError((error, stackTrace){
+    Global.toast(context, 'Received $error');
+  });
 }
 }

@@ -137,4 +137,19 @@ class API{
           CommonWidgets.showMessage(context,map["error"]);
         });
   }
+  paymentDone(Map jsonPost,{void onResponse(value)}){
+    PLoader loader=PLoader(context);
+    loader.show();
+    ServiceHttp().httpRequestPost("update-payment-status",map: jsonPost,
+        onSuccess: (value) async {
+          loader.hide();
+            onResponse(value);
+
+          Global.toast(context,"Payment Recieved");
+        }, onError: (value) {
+          onResponse(null);
+          Map<String, dynamic> map = json.decode(value);
+          CommonWidgets.showMessage(context,map["error"]);
+        });
+  }
 }
