@@ -1,4 +1,5 @@
 
+import 'package:elite_guardians/global/AA.dart';
 import 'package:elite_guardians/global/API.dart';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/CommonWidgets.dart';
@@ -9,6 +10,7 @@ import 'package:elite_guardians/pojo/Booking.dart';
 import 'package:elite_guardians/screens/JobDetailsScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 class JobsScreen extends StatefulWidget
 {
@@ -24,6 +26,7 @@ String errorText;
   @override
   void initState() {
     getJobsList();
+    StripeService.init();
     super.initState();
   }
   @override
@@ -94,7 +97,15 @@ String errorText;
                           FontWeight.w500),),
                     RaisedButton(
                       elevation: 5.0,
-                      onPressed: () {acceptRejectClick(booking.id,false, false);}, color: Colors.green,
+                      onPressed: () {
+                        if( booking.bookNowOrLater==1)
+                        {
+                          payViaNewCard(context, "${booking.price*100}", booking.id);
+                        }
+                        else{
+                          acceptRejectClick(booking.id,false, false);
+                        }
+                        }, color: Colors.green,
                       child: CommonWidgets.selectedFontWidget(
                           booking.bookNowOrLater==1?"Accept &\ Pay":"Accept",
                           AppColours.white, 14.0,
@@ -333,5 +344,16 @@ String errorText;
       ),
     );
   }
-
+  payViaNewCard(BuildContext context,String amount,int id) async {
+    ProgressDialog dialog = new ProgressDialog(context);
+    dialog.style(message: 'Please wait...');
+    await dialog.show();
+    var response = await StripeService.payWithNewCard(amount: amount, currency: 'INR');//GBR for UK  and INR for India
+    await dialog.hide();
+    if(response.success){
+      acceptRejectClick(id,false, false);
+    }
+    print(response.message);
+    Global.toast(context, response.message);
+  }
 }

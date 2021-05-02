@@ -1,5 +1,4 @@
 
-import 'dart:ffi';
 
 import 'package:elite_guardians/global/API.dart';
 import 'package:elite_guardians/global/AppColours.dart';
@@ -50,7 +49,7 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("Source",style: TextStyle(color: AppColours.white,fontSize: 16),),
+                child: Text("Source",style: TextStyle(color: AppColours.white,fontSize: 16)),
               ),
               InkWell(
                 onTap: (){
@@ -66,7 +65,8 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
                                 //usePlaceDetailSearch: true,
                                 onPlacePicked: (result) {
                                   Navigator.of(context).pop();
-                                  setState(() {
+                                  setState(()
+                                  {
                                     //selectedPlace = result;
                                     _fromLocController.text=result.formattedAddress;
                                     arrivalLat=result.geometry.location.lat;

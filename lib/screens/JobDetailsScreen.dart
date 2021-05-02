@@ -1,4 +1,5 @@
 
+import 'package:elite_guardians/global/AA.dart';
 import 'package:elite_guardians/global/API.dart';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/CommonWidgets.dart';
@@ -11,6 +12,7 @@ import 'package:elite_guardians/screens/TrackDriverGuardian.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 
 class JobDetailsScreen extends StatefulWidget
@@ -31,12 +33,8 @@ _JobDetailsScreenState(this.booking);
   @override
   void initState() {
     booking.location!=null?isJourney=false:isJourney=true;
-    StripePayment.setOptions(
-        StripeOptions(
-            publishableKey:Constants.STRIPE_PUBLISHABLE_KEY,
-            merchantId: Constants.STRIPE_MERCHANT_ID,
-            androidPayMode: 'test'
-        ));
+    StripeService.init();
+
     super.initState();
   }
 
@@ -78,7 +76,12 @@ _JobDetailsScreenState(this.booking);
                       onPressed: ()
                       {
                         if(isJourney){
-                          stripePay(booking.id);
+                          if(booking.bookNowOrLater==1){
+                            payViaNewCard(context,"${booking.price*100}",booking.id);
+                          }
+                          else{
+                            acceptRejectClick(booking.id, false);
+                          }
                         }
                         else{
                           acceptRejectClick(booking.id, false);
@@ -235,7 +238,8 @@ Widget rejectDialogueUI(StateSetter setState,Booking booking){
 
 acceptRejectClick(int id,bool ifRejected,{String comment}){
   if(ifRejected){
-    Map jsonPost = {
+    Map jsonPost =
+    {
       Constants.REQUEST_AR_COMMENT: comment,
       Constants.REQUEST_AR_ID: "$id",
       Constants.REQUEST_AR_TYPE: isJourney?"customer":"guardian",
@@ -271,19 +275,22 @@ acceptRejectClick(int id,bool ifRejected,{String comment}){
     });
   }
 }
+
 Future<bool> _onWillPop() async {
   Navigator.pop(context, listRefresh);
   return  false;
 }
-stripePay(int id){
 
-  StripePayment.paymentRequestWithCardForm(
-      CardFormPaymentRequest()).then((paymentMethod) {
-    Global.toast(context, 'Received ${paymentMethod.id}');
+payViaNewCard(BuildContext context,String amount,int id) async {
+  ProgressDialog dialog = new ProgressDialog(context);
+  dialog.style(message: 'Please wait...');
+  await dialog.show();
+  var response = await StripeService.payWithNewCard(amount: amount, currency: 'INR');//GBR for UK  and INR for India
+  await dialog.hide();
+  if(response.success){
     acceptRejectClick(id, false);
-
-  }).onError((error, stackTrace){
-    Global.toast(context, 'Received $error');
-  });
+  }
+  print(response.message);
+  Global.toast(context, response.message);
 }
 }

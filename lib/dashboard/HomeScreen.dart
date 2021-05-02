@@ -1,4 +1,5 @@
 
+import 'package:elite_guardians/global/AA.dart';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/Constants.dart';
 import 'package:elite_guardians/global/Size.dart';
@@ -6,6 +7,7 @@ import 'package:elite_guardians/screens/BookJourneyScreen.dart';
 import 'package:elite_guardians/screens/HireGuardScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 class HomeScreen extends StatefulWidget
 {
@@ -52,13 +54,23 @@ class _HomeScreenState extends State<HomeScreen> {
       )
     );
   }
+  payViaNewCard(BuildContext context) async {
+    ProgressDialog dialog = new ProgressDialog(context);
+    dialog.style(message: 'Please wait...');
+    await dialog.show();
+    var response =
+    await StripeService.payWithNewCard(amount: "11", currency: 'USD');
+    await dialog.hide();
+    print(response.message);
 
+  }
   Widget _listItem(int index){
    return  InkWell(
      onTap: (){
        if(index==0)
        {
-         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BookJourneyScreen()));
+        // payViaNewCard(context);
+        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BookJourneyScreen()));
        }
 
        if(index==1)

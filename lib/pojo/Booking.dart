@@ -20,7 +20,6 @@ class Booking {
     this.selectDays,
     this.createdAt,
     this.updatedAt,
-    this.user,
     this.guardians,
     this.startGuradianBooking,
     this.destinationLocation,
@@ -58,7 +57,6 @@ class Booking {
   List<String> selectDays;
   DateTime createdAt;
   DateTime updatedAt;
-  User user;
   List<Guardian> guardians;
   List<dynamic> startGuradianBooking;
   String destinationLocation;
@@ -96,7 +94,6 @@ class Booking {
     selectDays: json["select_days"] == null ? null : List<String>.from(json["select_days"].map((x) => x)),
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
-    user: User.fromJson(json["user"]),
     guardians: json["guardians"] == null ? null : List<Guardian>.from(json["guardians"].map((x) => Guardian.fromJson(x))),
     startGuradianBooking: json["start_guradian_booking"] == null ? null : List<dynamic>.from(json["start_guradian_booking"].map((x) => x)),
     destinationLocation: json["destination_location"] == null ? null : json["destination_location"],
@@ -135,7 +132,6 @@ class Booking {
     "select_days": selectDays == null ? null : List<dynamic>.from(selectDays.map((x) => x)),
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
-    "user": user.toJson(),
     "guardians": guardians == null ? null : List<dynamic>.from(guardians.map((x) => x.toJson())),
     "start_guradian_booking": startGuradianBooking == null ? null : List<dynamic>.from(startGuradianBooking.map((x) => x)),
     "destination_location": destinationLocation == null ? null : destinationLocation,
@@ -241,70 +237,6 @@ class Guardian {
     "start_at": startAt.toIso8601String(),
     "end_at": endAt.toIso8601String(),
     "total_hour": totalHour,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-  };
-}
-
-class User {
-  User({
-    this.id,
-    this.name,
-    this.email,
-    this.phoneNo,
-    this.image,
-    this.gender,
-    this.emailVerifiedAt,
-    this.onlineOffline,
-    this.lat,
-    this.long,
-    this.userSubType,
-    this.createdAt,
-    this.updatedAt,
-  });
-
-  int id;
-  String name;
-  String email;
-  dynamic phoneNo;
-  String image;
-  dynamic gender;
-  dynamic emailVerifiedAt;
-  dynamic onlineOffline;
-  String lat;
-  dynamic long;
-  dynamic userSubType;
-  DateTime createdAt;
-  DateTime updatedAt;
-
-  factory User.fromJson(Map<String, dynamic> json) => User(
-    id: json["id"],
-    name: json["name"],
-    email: json["email"],
-    phoneNo: json["phone_no"],
-    image: json["image"],
-    gender: json["gender"],
-    emailVerifiedAt: json["email_verified_at"],
-    onlineOffline: json["online_offline"],
-    lat: json["lat"],
-    long: json["long"],
-    userSubType: json["user_sub_type"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "email": email,
-    "phone_no": phoneNo,
-    "image": image,
-    "gender": gender,
-    "email_verified_at": emailVerifiedAt,
-    "online_offline": onlineOffline,
-    "lat": lat,
-    "long": long,
-    "user_sub_type": userSubType,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
   };
