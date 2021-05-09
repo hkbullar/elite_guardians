@@ -1,5 +1,6 @@
 
-import 'package:elite_guardians/global/AA.dart';
+import 'package:elite_guardians/global/PLoader.dart';
+import 'package:elite_guardians/global/StripeTransactionResponse.dart';
 import 'package:elite_guardians/global/API.dart';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/CommonWidgets.dart';
@@ -12,8 +13,6 @@ import 'package:elite_guardians/screens/TrackDriverGuardian.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:progress_dialog/progress_dialog.dart';
-import 'package:stripe_payment/stripe_payment.dart';
 
 class JobDetailsScreen extends StatefulWidget
 {
@@ -53,7 +52,7 @@ _JobDetailsScreenState(this.booking);
               children: [
                 CommonWidgets.requestTextContainer(isJourney?"From":"For",isJourney?"${booking.destinationLocation}":"${booking.location}",Icons.location_on_outlined),
                 isJourney?CommonWidgets.requestTextContainer("To","${booking.arrivalLocation}",Icons.location_on_outlined):SizedBox(),
-                CommonWidgets.requestTextContainer("Date",isJourney?"${Global.generateDate(booking.date)}":"From: ${Global.generateDate(booking.fromDate)}\nTo: ${Global.generateDate(booking.toDate)}",Icons.date_range_outlined),
+                CommonWidgets.requestTextContainer("Date",isJourney?"${Global.generateDate(booking.date)}":"${generateGuardianDate(booking)}",Icons.date_range_outlined),
                 CommonWidgets.requestTextContainer(isJourney?"Time":"Timing",isJourney?"${Global.formatTime(booking.time)}":"From: ${booking.fromTime}\nTo: ${booking.toTime}",Icons.watch_outlined),
                 isJourney && booking.securityGuard!=0?CommonWidgets.requestTextContainer("Guardians Required",booking.securityGuard==1?"One":booking.securityGuard==2?"Two":"",Icons.security_outlined):SizedBox(),
                 booking.comment!=null && booking.comment.isNotEmpty?CommonWidgets.requestTextContainer("Comments",booking.comment,Icons.comment_bank_outlined):SizedBox(),
@@ -129,7 +128,18 @@ Widget trackingButton(){
 
     }
 }
+String generateGuardianDate(Booking booking){
 
+  String date;
+
+  if(booking.fromDate.day==booking.toDate.day){
+    date="For: ${Global.generateDate(booking.fromDate)}";
+
+  }else{
+    date="From: ${Global.generateDate(booking.fromDate)}\nTo:       ${Global.generateDate(booking.toDate)}";
+  }
+  return date;
+}
  String generateText({Driver driver,Guardian guardian}){
     if(isJourney){
       if(driver.startJob==0){
@@ -247,6 +257,7 @@ acceptRejectClick(int id,bool ifRejected,{String comment}){
     };
     API(context).acceptReject(jsonPost,onResponse: (value){
       listRefresh=true;
+
       Navigator.pop(context, listRefresh);
     },rejected: true);
   }
@@ -282,12 +293,12 @@ Future<bool> _onWillPop() async {
 }
 
 payViaNewCard(BuildContext context,String amount,int id) async {
-  ProgressDialog dialog = new ProgressDialog(context);
-  dialog.style(message: 'Please wait...');
-  await dialog.show();
-  var response = await StripeService.payWithNewCard(amount: amount, currency: 'INR');//GBR for UK  and INR for India
-  await dialog.hide();
+  PLoader loader=PLoader(context);
+  loader.show();
+  var response = await StripeService.payWithNewCard(amount: amount, currency: 'INR');//GB for UK  and INR for India
+  loader.hide();
   if(response.success){
+    Global.toast(context,"Amount $amount received Successfully");
     acceptRejectClick(id, false);
   }
   print(response.message);

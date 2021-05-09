@@ -1,5 +1,5 @@
 
-import 'package:elite_guardians/global/AA.dart';
+import 'package:elite_guardians/global/StripeTransactionResponse.dart';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/Constants.dart';
 import 'package:elite_guardians/global/Size.dart';

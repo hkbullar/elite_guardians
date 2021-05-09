@@ -1,5 +1,6 @@
 
-import 'package:elite_guardians/global/AA.dart';
+import 'package:elite_guardians/global/PLoader.dart';
+import 'package:elite_guardians/global/StripeTransactionResponse.dart';
 import 'package:elite_guardians/global/API.dart';
 import 'package:elite_guardians/global/AppColours.dart';
 import 'package:elite_guardians/global/CommonWidgets.dart';
@@ -194,8 +195,10 @@ String errorText;
   }
   }
  String generateGuardianDate(Booking booking){
+
     String date;
-    if(booking.fromDate==booking.toDate){
+
+    if(booking.fromDate.day==booking.toDate.day){
       date="For: ${Global.generateDate(booking.fromDate)}";
 
     }else{
@@ -345,11 +348,12 @@ String errorText;
     );
   }
   payViaNewCard(BuildContext context,String amount,int id) async {
-    ProgressDialog dialog = new ProgressDialog(context);
-    dialog.style(message: 'Please wait...');
-    await dialog.show();
-    var response = await StripeService.payWithNewCard(amount: amount, currency: 'INR');//GBR for UK  and INR for India
-    await dialog.hide();
+    PLoader loader=PLoader(context);
+    loader.show();
+
+
+    var response = await StripeService.payWithNewCard(amount: amount, currency: 'INR');//GB for UK  and INR for India
+   loader.hide();
     if(response.success){
       acceptRejectClick(id,false, false);
     }

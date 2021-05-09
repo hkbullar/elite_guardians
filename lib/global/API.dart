@@ -27,7 +27,7 @@ class API{
           preferences.setBool(Constants.ISREGISTERED, true);
           preferences.setString(Constants.USER_PREF,json.encode(loginPojo.user.toJson()));
           loader.hide();
-          Global.toast(context, "Logged In Successfully");
+          Global.toast(context, "Logged In Successfully\nWelcome to ELITE");
           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => DashBoardScreen()));
         }, onError: (value) {
           loader.hide();
@@ -48,7 +48,7 @@ class API{
           preferences.setBool(Constants.ISREGISTERED, true);
           preferences.setString(Constants.USER_PREF,json.encode(loginPojo.user.toJson()));
           loader.hide();
-          Global.toast(context, "Registered Successfully");
+          Global.toast(context, "Registered Successfully\nWelcome to ELITE");
           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => DashBoardScreen()));
         }, onError: (value) {
           loader.hide();
@@ -124,13 +124,13 @@ class API{
     ServiceHttp().httpRequestPost("update-comment",map: jsonPost,
         onSuccess: (value) async {
           loader.hide();
+        Global.toast(context, rejected!=null?"Request Rejected":"Request Accepted");
         if(rejected!=null){
           onResponse(null);
         }
         else{
           onResponse(BookingPojo.fromJson(json.decode(value)).bookings);
         }
-          Global.toast(context, rejected!=null?"Request Rejected":"Request Accepted");
         }, onError: (value) {
           onResponse(null);
           Map<String, dynamic> map = json.decode(value);
