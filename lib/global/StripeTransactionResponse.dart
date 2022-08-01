@@ -86,7 +86,7 @@ class StripeService {
         'description': 'Software development services',
         'payment_method_types[]': 'card'
       };
-      var response = await http.post(StripeService.paymentApiUrl,
+      var response = await http.post(Uri.parse(StripeService.paymentApiUrl),
           body: body, headers: StripeService.headers);
       print(response.body);
       return jsonDecode(response.body);

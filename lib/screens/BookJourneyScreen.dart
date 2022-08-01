@@ -9,7 +9,7 @@ import 'package:elite_guardians/global/Size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_maps_place_picker/google_maps_place_picker.dart';
+import 'package:google_places_picker/google_places_picker.dart';
 import 'package:intl/intl.dart';
 
 class BookJourneyScreen extends StatefulWidget
@@ -33,7 +33,33 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
   @override
   void initState() {
     timeFrom=TimeOfDay.fromDateTime(selectedDate);
+    PluginGooglePlacePicker.initialize(
+      androidApiKey: Constants.API_KEY,
+      iosApiKey: Constants.API_KEY,
+    );
     super.initState();
+  }
+  _showAutocomplete(bool isFrom) async {
+    var country = "US";
+    var place = await PluginGooglePlacePicker.showAutocomplete(
+        mode: PlaceAutocompleteMode.MODE_OVERLAY,
+        countryCode: country,
+        typeFilter: TypeFilter.ESTABLISHMENT);
+
+    if (!mounted) return;
+
+    setState(() {
+      if(isFrom){
+        _fromLocController.text=place.address;
+        arrivalLat=place.latitude;
+        arrivalLng=place.longitude;
+      }
+      else{
+        _toLocController.text=place.address;
+        destinationLat=place.latitude;
+        destinationLng=place.longitude;
+      }
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -53,27 +79,7 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
               ),
               InkWell(
                 onTap: (){
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) {
-                            return PlacePicker(
-                                apiKey: Constants.API_KEY,
-                                initialPosition: kInitialPosition,
-                                useCurrentLocation: true,
-                                selectInitialPosition: true,
-                                //usePlaceDetailSearch: true,
-                                onPlacePicked: (result) {
-                                  Navigator.of(context).pop();
-                                  setState(()
-                                  {
-                                    //selectedPlace = result;
-                                    _fromLocController.text=result.formattedAddress;
-                                    arrivalLat=result.geometry.location.lat;
-                                    arrivalLng=result.geometry.location.lng;
-                                  });
-                                });})
-                  );
+                  _showAutocomplete(true);
                 },
                 child: TextField(
                   enabled: false,
@@ -89,27 +95,7 @@ class _BookJourneyScreenState extends State<BookJourneyScreen> {
               ),
               InkWell(
                 onTap: (){
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) {
-                            return PlacePicker(
-                                apiKey: Constants.API_KEY,
-                                initialPosition: kInitialPosition,
-                                useCurrentLocation: true,
-                                selectInitialPosition: true,
-                                //usePlaceDetailSearch: true,
-                                onPlacePicked: (result) {
-                                  Navigator.of(context).pop();
-                                  setState(() {
-                                    //selectedPlace = result;
-                                    _toLocController.text=result.formattedAddress;
-                                    destinationLat=result.geometry.location.lat;
-                                    destinationLng=result.geometry.location.lng;
-                                    //result.geometry.location.
-                                  });
-                                });})
-                  );
+                  _showAutocomplete(false);
                 },
                 child: TextField(
                   enabled: false,

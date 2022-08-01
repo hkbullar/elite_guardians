@@ -6,12 +6,10 @@ import 'package:elite_guardians/global/CommonWidgets.dart';
 import 'package:elite_guardians/global/Constants.dart';
 import 'package:elite_guardians/global/DaysListModel.dart';
 import 'package:elite_guardians/global/EliteAppBar.dart';
-import 'package:elite_guardians/global/Global.dart';
 import 'package:elite_guardians/global/Size.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_maps_place_picker/google_maps_place_picker.dart';
+import 'package:google_places_picker/google_places_picker.dart';
 import 'package:intl/intl.dart';
 
 class HireGuardScreen extends StatefulWidget
@@ -38,10 +36,21 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
   bool guardCheckedOrNot=false;
   String location="location";
   TimeOfDay timeFrom,timeTo;
-  PickResult selectedPlace;
+  Place selectedPlace;
 
   LatLng kInitialPosition = LatLng(51.507351,-0.127758);
+  _showAutocomplete() async {
+    var country = "US";
+    var place = await PluginGooglePlacePicker.showAutocomplete(
+        mode: PlaceAutocompleteMode.MODE_OVERLAY,
+        countryCode: country,
+        typeFilter: TypeFilter.ESTABLISHMENT);
 
+    if (!mounted) return;
+    setState(() {
+      selectedPlace=place;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     Size().init(context);
@@ -60,26 +69,7 @@ class _HireGuardScreenState extends State<HireGuardScreen> {
               ),
               InkWell(
                 onTap: (){
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) {
-                            return PlacePicker(
-                                apiKey: Constants.API_KEY,
-                                initialPosition: kInitialPosition,
-                                useCurrentLocation: true,
-                                selectInitialPosition: true,
-                                //usePlaceDetailSearch: true,
-                                onPlacePicked: (result) {
-                                  Navigator.of(context).pop();
-                                  setState(() {
-                                    selectedPlace = result;
-                                    _locationController.text=selectedPlace.formattedAddress;
-                                    locationLatitude=selectedPlace.geometry.location.lat;
-                                    locationLongitude=selectedPlace.geometry.location.lng;
-                                  });
-                                });})
-                  );
+                  _showAutocomplete();
                 },
                 child: TextField(
                   enabled: false,

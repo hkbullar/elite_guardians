@@ -9,9 +9,7 @@ import 'package:elite_guardians/global/Global.dart';
 import 'package:elite_guardians/global/Size.dart';
 import 'package:elite_guardians/pojo/Booking.dart';
 import 'package:elite_guardians/screens/JobDetailsScreen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:progress_dialog/progress_dialog.dart';
 
 class JobsScreen extends StatefulWidget
 {
@@ -358,6 +356,6 @@ String errorText;
       acceptRejectClick(id,false, false);
     }
     print(response.message);
-    Global.toast(context, response.message);
+    Global().toast(context, response.message);
   }
 }

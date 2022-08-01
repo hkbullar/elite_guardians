@@ -27,7 +27,7 @@ class API{
           preferences.setBool(Constants.ISREGISTERED, true);
           preferences.setString(Constants.USER_PREF,json.encode(loginPojo.user.toJson()));
           loader.hide();
-          Global.toast(context, "Logged In Successfully\nWelcome to ELITE");
+          Global().toast(context, "Logged In Successfully\nWelcome to ELITE");
           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => DashBoardScreen()));
         }, onError: (value) {
           loader.hide();
@@ -48,7 +48,7 @@ class API{
           preferences.setBool(Constants.ISREGISTERED, true);
           preferences.setString(Constants.USER_PREF,json.encode(loginPojo.user.toJson()));
           loader.hide();
-          Global.toast(context, "Registered Successfully\nWelcome to ELITE");
+          Global().toast(context, "Registered Successfully\nWelcome to ELITE");
           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => DashBoardScreen()));
         }, onError: (value) {
           loader.hide();
@@ -104,7 +104,7 @@ class API{
           int status=map["status"];
           if(status==200 || status==201)
           {
-            Global.toast(context, "Password Changed Successfully");
+            Global().toast(context, "Password Changed Successfully");
             Navigator.of(context).pop();
           }
           else
@@ -124,7 +124,7 @@ class API{
     ServiceHttp().httpRequestPost("update-comment",map: jsonPost,
         onSuccess: (value) async {
           loader.hide();
-        Global.toast(context, rejected!=null?"Request Rejected":"Request Accepted");
+        Global().toast(context, rejected!=null?"Request Rejected":"Request Accepted");
         if(rejected!=null){
           onResponse(null);
         }
@@ -145,7 +145,7 @@ class API{
           loader.hide();
             onResponse(value);
 
-          Global.toast(context,"Payment Recieved");
+          Global().toast(context,"Payment Recieved");
         }, onError: (value) {
           onResponse(null);
           Map<String, dynamic> map = json.decode(value);

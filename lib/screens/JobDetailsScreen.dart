@@ -298,10 +298,10 @@ payViaNewCard(BuildContext context,String amount,int id) async {
   var response = await StripeService.payWithNewCard(amount: amount, currency: 'INR');//GB for UK  and INR for India
   loader.hide();
   if(response.success){
-    Global.toast(context,"Amount $amount received Successfully");
+    Global().toast(context,"Amount $amount received Successfully");
     acceptRejectClick(id, false);
   }
   print(response.message);
-  Global.toast(context, response.message);
+  Global().toast(context, response.message);
 }
 }

@@ -5,9 +5,8 @@ import 'package:elite_guardians/global/Constants.dart';
 import 'package:elite_guardians/global/Size.dart';
 import 'package:elite_guardians/screens/BookJourneyScreen.dart';
 import 'package:elite_guardians/screens/HireGuardScreen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
 
 class HomeScreen extends StatefulWidget
 {

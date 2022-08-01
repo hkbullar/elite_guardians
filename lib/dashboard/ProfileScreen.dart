@@ -213,13 +213,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         SharedPreferences preferences =await Global.getSharedPref();
         preferences.setString(Constants.USER_PREF,json.encode(loginPojo.user.toJson()));
         loader.hide();
-        Global.toast(context, loginPojo.message);
+        Global().toast(context, loginPojo.message);
         setState(() {
           userinfo=loginPojo.user;
         });
       }
       else{
-        Global.toast(context, value.statusMessage);
+        Global().toast(context, value.statusMessage);
       }
     });
   }
@@ -278,7 +278,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future getImage(ImageSource source) async {
-    final pickedFile = await ImagePicker.pickImage(
+    final pickedFile = await ImagePicker().pickImage(
       maxHeight: 200,
         maxWidth: 200,
         imageQuality: 50,

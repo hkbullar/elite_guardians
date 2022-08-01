@@ -175,7 +175,6 @@ class _TrackDriverGuardianScreenState extends State<TrackDriverGuardianScreen> {
           Map<String, dynamic> firestormInfo = documentSnapshot.data();
           setState(() {
            currentLocation=LatLng(double.tryParse("${firestormInfo["latitude"]}"), double.tryParse("${firestormInfo["longitude"]}"));
-
           });
         }
     })
